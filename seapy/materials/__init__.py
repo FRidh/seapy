@@ -1,7 +1,18 @@
+"""
+Materials
+=========
+
+Materials.
+
+.. automodule:: seapy.materials.material
+.. automodule:: seapy.materails.materialgas
+.. automodule:: seapy.materials.materialsolid
 
 
-from MaterialGas import MaterialGas
-from MaterialSolid import MaterialSolid
+"""
+
+from .materialgas import MaterialGas
+from .materialsolid import MaterialSolid
 
 
 import inspect, sys

@@ -1,3 +1,1 @@
-hg+https://bitbucket.org/Surgo/blockdiag
-sphinxcontrib-blockdiag==1.1.1
 matplotlib

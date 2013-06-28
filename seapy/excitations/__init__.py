@@ -1,6 +1,17 @@
+"""
+Excitations
+===========
 
-from ExcitationRain import ExcitationRain
-from ExcitationPoint import ExcitationPoint
+.. inheritance-diagram:: seapy.excitations.excitation
+
+.. automodule:: seapy.excitations.excitation
+
+.. automodule:: seapy.excitations.excitationpoint
+
+"""
+
+#from .excitationrain import ExcitationRain
+from .excitationpoint import ExcitationPointForce, ExcitationPointMoment, ExcitationPointVolume
 
 
 import inspect, sys

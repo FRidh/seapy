@@ -1,7 +1,17 @@
+"""
+Subsystems
+==========
+
+This module contains abstract base classes for subsystems.
+
+.. automodule:: seapy.subsystems.subsystem
+.. automodule:: seapy.subsystems.subsystemacoustical
+.. automodule:: seapy.subsystems.subsystemstructural
 
 
-from SubsystemCavity import SubsystemCavity
-from SubsystemStructural import SubsystemStructural
+"""
+from .subsystemacoustical import SubsystemAcoustical
+from .subsystemstructural import SubsystemStructural
 
 
 import inspect, sys
