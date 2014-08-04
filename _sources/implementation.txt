@@ -24,7 +24,7 @@ An SEA model in SeaPy is represented by the descendents of the following abstrac
 
 as well as the main class representing the model
 
-* :class:`seapy.system.system.System`
+* :class:`seapy.system.System`
 
 The following figure gives an overview on how the classes are related.
 
