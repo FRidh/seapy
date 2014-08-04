@@ -1,0 +1,262 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.couplings.couplingsurfaceacoustical &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.couplings.couplingsurfaceacoustical</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Acoustical surface coupling</span>
+<span class="sd">---------------------------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.coupling</span> <span class="kn">import</span> <span class="n">Coupling</span>
+<span class="kn">from</span> <span class="nn">.couplingsurfaceplateacoustical</span> <span class="kn">import</span> <span class="n">CouplingSurfacePlateAcoustical</span>
+    
+    
+<div class="viewcode-block" id="tau"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.tau.html#seapy.couplings.couplingsurfaceacoustical.tau">[docs]</a><span class="k">def</span> <span class="nf">tau</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">rho_0</span><span class="p">,</span> <span class="n">rho_s</span><span class="p">,</span> <span class="n">c_0</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Non-resonant transmission coefficient by Leppington et al (1987).</span>
+<span class="sd">    </span>
+<span class="sd">    :param f: Frequency</span>
+<span class="sd">    :param fc: Critical frequency</span>
+<span class="sd">    :param rho_0: Density air</span>
+<span class="sd">    :param rho_s: Density plate</span>
+<span class="sd">    :param c_0: Speed of sound in air</span>
+<span class="sd">    :param S: Surface</span>
+<span class="sd">    :param U: Shape function</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: \\tau = \\left( \\frac{\\rho_0 c_0}{\\pi f \\rho_s \\left(1-f^2/f_c^2 \\right)} \\right)^2  \\left(  \\ln{\\left[ \\frac{2 \\pi f \\sqrt{S}}{c_0} \\right]}  + 0.160 + U(l_x,l_y) + \\frac{1}{4 \\mu^6} \\left[(2\\mu^2-1)(\\mu^2+1)^2\\ln{\\left(\\mu^2-1\\right)} + (2\\mu^2+1)(\\mu^2-1)^2 \\ln{\\left(\\mu^2+1\\right)} - 4\\mu^2 - 8\\mu^6 \\ln{\\mu}  \\right] \\right)</span>
+<span class="sd">        </span>
+<span class="sd">    See Craik, equation 4.22, page 101.</span>
+<span class="sd">        </span>
+<span class="sd">    .. note:: The shape function :math:`U(l_x,l_y)` is assumed to be zero.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: The term B3*(C1 + C2 + C3) (see source) can be ignored except close to the critical frequency. We will nevertheless calculate them, and in case they become `nan` we replace the factor with zero.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mu2</span> <span class="o">=</span> <span class="n">fc</span><span class="o">/</span><span class="n">f</span> <span class="c"># mu^2</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span> <span class="n">rho_0</span> <span class="o">*</span> <span class="n">c_0</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">rho_s</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">mu2</span><span class="o">**</span><span class="mf">2.0</span><span class="p">))</span> <span class="p">)</span><span class="o">**</span><span class="mf">2.0</span>
+    
+    <span class="n">B1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">f</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">/</span><span class="n">c_0</span><span class="p">)</span>
+    <span class="n">B2</span> <span class="o">=</span> <span class="mf">0.160</span> <span class="o">+</span> <span class="n">U</span>
+
+    <span class="c">#B3 = np.nan_to_num( 1.0 / (4.0*mu2**3.0) )</span>
+    <span class="c">#C1 = np.nan_to_num( (2.0*mu2-1.0)*(mu2+1.0)**2.0*np.log(mu2-1.0) )</span>
+    <span class="c">#C2 = np.nan_to_num( (2.0*mu2+1.0)*(mu2-1.0)**2.0*np.log(mu2+1.0) )</span>
+    <span class="c">#C3 = np.nan_to_num( -4.0*mu2 - 8.0*mu2**3.0*np.log(np.sqrt(mu2)) )</span>
+    
+    <span class="n">B3</span> <span class="o">=</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span><span class="o">*</span><span class="n">mu2</span><span class="o">**</span><span class="mf">3.0</span><span class="p">)</span> <span class="p">)</span>
+    
+    <span class="n">C1</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">mu2</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">mu2</span><span class="o">+</span><span class="mf">1.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mu2</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">C2</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">mu2</span><span class="o">+</span><span class="mf">1.0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">mu2</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mu2</span><span class="o">+</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">C3</span> <span class="o">=</span> <span class="p">(</span> <span class="o">-</span><span class="mf">4.0</span><span class="o">*</span><span class="n">mu2</span> <span class="o">-</span> <span class="mf">8.0</span><span class="o">*</span><span class="n">mu2</span><span class="o">**</span><span class="mf">3.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mu2</span><span class="p">))</span> <span class="p">)</span>
+    
+    <span class="c">#print(&#39;mu2&#39; + str(mu2))</span>
+    <span class="c">#print(&#39;A&#39; + str(A))</span>
+    <span class="c">#print(&#39;B1&#39; + str(B1))</span>
+    <span class="c">#print(&#39;B2&#39; + str(B2))</span>
+    <span class="c">#print(&#39;B3&#39; + str(B3))</span>
+    <span class="c">#print(&#39;C1&#39; + str(C1))</span>
+    <span class="c">#print(&#39;C2&#39; + str(C2))</span>
+    <span class="c">#print(&#39;C3&#39; + str(C3))</span>
+    
+    <span class="k">return</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">B1</span> <span class="o">+</span> <span class="n">B2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span> <span class="n">B3</span><span class="o">*</span><span class="p">(</span><span class="n">C1</span> <span class="o">+</span> <span class="n">C2</span> <span class="o">+</span> <span class="n">C3</span><span class="p">))</span> <span class="p">)</span>
+
+    </div>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical">[docs]</a><span class="k">class</span> <span class="nc">CouplingSurfaceAcoustical</span><span class="p">(</span><span class="n">Coupling</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Coupling for cavity3D to cavity transmission.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_coupling_plate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Coupling between plate and room.        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">junction</span><span class="o">.</span><span class="n">linked_couplings</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coupling</span><span class="p">,</span> <span class="n">CouplingSurfacePlateAcoustical</span><span class="p">)</span> <span class="ow">and</span> <span class="n">coupling</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">coupling</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;No coupling between plate and room present.&quot;</span><span class="p">)</span>
+        
+    <span class="c">#density = None</span>
+    <span class="c">#&quot;&quot;&quot;Density of the wall between the rooms.</span>
+    
+    <span class="c">#.. note:: This attribute might in the future be replaced by a reference to the component representing the wall.</span>
+    
+    <span class="c">#&quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.area"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.area">[docs]</a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Area.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coupling_plate</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">area</span>
+    
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.impedance_from"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.impedance_from">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Choses the right impedance of subsystem_from.</span>
+<span class="sd">        Applies boundary conditions correction as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">impedance</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.impedance_to"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.impedance_to">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Choses the right impedance of subsystem_from.</span>
+<span class="sd">        Applies boundary conditions correction as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>     
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">impedance</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.tau"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.tau">[docs]</a>    <span class="k">def</span> <span class="nf">tau</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Non-resonant transmission coefficient by Leppington et al (1987).</span>
+
+<span class="sd">        .. seealso:: :func:`seapy.couplings.couplingsurfaceacoustical.tau`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="n">fc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coupling_plate</span><span class="o">.</span><span class="n">critical_frequency</span>
+        <span class="n">rho_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coupling_plate</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span>
+        <span class="n">mu2</span> <span class="o">=</span> <span class="n">fc</span><span class="o">/</span><span class="n">f</span> <span class="c"># mu^2</span>
+        <span class="n">rho_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span>
+        <span class="n">c_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">soundspeed_group</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span>
+        
+        <span class="k">return</span> <span class="n">tau</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">fc</span><span class="p">,</span> <span class="n">rho_0</span><span class="p">,</span> <span class="n">rho_s</span><span class="p">,</span> <span class="n">c_0</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">U</span><span class="p">)</span>
+        
+        <span class="c">#A = ( rho_0 * c_0 / (np.pi*f*rho_s*(1.0-mu2**2.0)) )**2.0</span>
+        
+        <span class="c">#B1 = np.log(2.0*np.pi*f*np.sqrt(S)/c_0)</span>
+        <span class="c">#B2 = 0.160 + U</span>
+        <span class="c">#B3 = 1.0 / (4.0*mu2**3.0)</span>
+        
+        <span class="c">#C1 = (2.0*mu2-1)*(mu2+1.0)**2.0*np.log(mu2-1)</span>
+        <span class="c">#C2 = (2.0*mu2+1)*(mu2-1.0)**2.0*np.log(mu2+1)</span>
+        <span class="c">#C3 = -4.0*mu2 - 8.0*mu2**3.0*np.log(np.sqrt(mu2))</span>
+        
+        <span class="c">#return A * (B1 + B2 + B3*(C1 + C2 + C3))</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.sound_reduction_index"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.sound_reduction_index">[docs]</a>    <span class="k">def</span> <span class="nf">sound_reduction_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sound reduction index.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: R_{12} = 10 \\log_{10}{\\frac{1}{\\tau_{12}}}</span>
+<span class="sd">    </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * transmission coefficient :math:`tau`.</span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 1.26, page 10.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfaceAcoustical.clf"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.clf">[docs]</a>    <span class="k">def</span> <span class="nf">clf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coupling loss factor for transmission from a 3D cavity to a 3D cavity.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\eta_{12} = \\frac{c S \\tau_{12}}{8 \\pi f V}</span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 4.20, page 100.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span> <span class="o">/</span> <span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

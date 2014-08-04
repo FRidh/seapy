@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.plate.Component2DPlate &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Components (seapy.components)" href="../components.html" />
+    <link rel="next" title="seapy.components.plate.SubsystemLong" href="seapy.components.plate.SubsystemLong.html" />
+    <link rel="prev" title="seapy.components.beam.SubsystemShear" href="seapy.components.beam.SubsystemShear.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.plate.SubsystemLong.html" title="seapy.components.plate.SubsystemLong"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemShear.html" title="seapy.components.beam.SubsystemShear"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" accesskey="U">Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-components-plate-component2dplate">
+<h1>seapy.components.plate.Component2DPlate<a class="headerlink" href="#seapy-components-plate-component2dplate" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.components.plate.Component2DPlate">
+<em class="property">class </em><tt class="descclassname">seapy.components.plate.</tt><tt class="descname">Component2DPlate</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/plate.html#Component2DPlate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.plate.Component2DPlate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.components.structural.ComponentStructural.html#seapy.components.structural.ComponentStructural" title="seapy.components.structural.ComponentStructural"><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.structural.ComponentStructural</span></tt></a></p>
+<p>Two-dimensional plate component.</p>
+<p>The following subsystems are implemented for this component:</p>
+<ul class="simple">
+<li><a class="reference internal" href="seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong" title="seapy.components.plate.SubsystemLong"><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.plate.SubsystemLong</span></tt></a></li>
+<li><a class="reference internal" href="seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend" title="seapy.components.plate.SubsystemBend"><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.plate.SubsystemBend</span></tt></a></li>
+<li><a class="reference internal" href="seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear" title="seapy.components.plate.SubsystemShear"><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.plate.SubsystemShear</span></tt></a></li>
+</ul>
+<dl class="method">
+<dt id="seapy.components.plate.Component2DPlate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="headerlink" href="#seapy.components.plate.Component2DPlate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; System</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">seapy.components.component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.plate.Component2DPlate.__init__" title="seapy.components.plate.Component2DPlate.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt>([subsystems])</td>
+<td>Disable this component.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt>([subsystems])</td>
+<td>Enable this coupling.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SUBSYSTEMS</span></tt></td>
+<td>dict() -&gt; new empty dictionary</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.plate.Component2DPlate.area" title="seapy.components.plate.Component2DPlate.area"><tt class="xref py py-obj docutils literal"><span class="pre">area</span></tt></a></td>
+<td>Area of the plate.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.plate.Component2DPlate.area_moment_of_inertia" title="seapy.components.plate.Component2DPlate.area_moment_of_inertia"><tt class="xref py py-obj docutils literal"><span class="pre">area_moment_of_inertia</span></tt></a></td>
+<td>Area moment of inertia.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">availableSubsystems</span></tt></td>
+<td>list() -&gt; new empty list</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">height</span></tt></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">length</span></tt></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_junctions</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_subsystems</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">mass</span></tt></td>
+<td>Mass <img class="math" src="../../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> of the component.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.plate.Component2DPlate.mass_per_area" title="seapy.components.plate.Component2DPlate.mass_per_area"><tt class="xref py py-obj docutils literal"><span class="pre">mass_per_area</span></tt></a></td>
+<td>Mass per unit area.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">material</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.plate.Component2DPlate.radius_of_gyration" title="seapy.components.plate.Component2DPlate.radius_of_gyration"><tt class="xref py py-obj docutils literal"><span class="pre">radius_of_gyration</span></tt></a></td>
+<td>Radius of gyration <img class="math" src="../../_images/math/dd95c55069c86910ffbe2f9833321d0034fd8036.png" alt="\kappa"/> is given by dividing the height of the plate by <img class="math" src="../../_images/math/c5bb2d2f0ae7ad544bd175c13e0ce9fcde1c9acf.png" alt="\sqrt{12}"/>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">velocity</span></tt></td>
+<td>Velocity of the component <img class="math" src="../../_images/math/b0611127712f413fd07441e9f255df4d6d97d61f.png" alt="v_{component}"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">velocity_level</span></tt></td>
+<td>Velocity level <img class="math" src="../../_images/math/b8c3f89546f63fe8a97bbf79915bfbb58341f36c.png" alt="L_v"/>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">volume</span></tt></td>
+<td>Volume <img class="math" src="../../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> of the component.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">width</span></tt></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="seapy.components.plate.Component2DPlate.area">
+<tt class="descname">area</tt><a class="reference internal" href="../../_modules/seapy/components/plate.html#Component2DPlate.area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.plate.Component2DPlate.area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Area of the plate.</p>
+<div class="math">
+<p><img src="../../_images/math/5bfe8901adc4de03933b8c09113132bcd66e28e0.png" alt="A = l w"/></p>
+</div><p>with:</p>
+<ul class="simple">
+<li>length <img class="math" src="../../_images/math/d99efde75c84ef402a92cd4497530d2366fb112f.png" alt="l"/></li>
+<li>width <img class="math" src="../../_images/math/8659700e6646cd91bc02c32affaa5ec046ee9935.png" alt="w"/></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.plate.Component2DPlate.area_moment_of_inertia">
+<tt class="descname">area_moment_of_inertia</tt><a class="reference internal" href="../../_modules/seapy/components/plate.html#Component2DPlate.area_moment_of_inertia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.plate.Component2DPlate.area_moment_of_inertia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Area moment of inertia.</p>
+<div class="math">
+<p><img src="../../_images/math/1d9e819531f07d488f24d38c3bba7cfc1b527483.png" alt="J = \frac{h^3}{12}"/></p>
+</div><p>with:</p>
+<ul class="simple">
+<li>plate thickness/height <img class="math" src="../../_images/math/cbb80ad77aa7a5e227d5a46bc44d235284106cfc.png" alt="h"/></li>
+</ul>
+<p>Following equation includes resistance to deflection and is thus part of the bending wave subsystem:</p>
+<div class="math">
+<p><img src="../../_images/math/863847fc5e6f5bd272da9ef760e0ee426ee720c9.png" alt="J = \frac{h^3}{12 \left( 1 - \nu^2 \right)}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.plate.Component2DPlate.mass_per_area">
+<tt class="descname">mass_per_area</tt><a class="reference internal" href="../../_modules/seapy/components/plate.html#Component2DPlate.mass_per_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.plate.Component2DPlate.mass_per_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mass per unit area. Also called the surface density.</p>
+<div class="math">
+<p><img src="../../_images/math/479eda5e009f584ce7d5e7a385a3edc3fcbe8764.png" alt="m^{''} = \rho h"/></p>
+</div><p>with:</p>
+<ul class="simple">
+<li>density <img class="math" src="../../_images/math/f574498915fa9e02eeb5141c24835d077eba3e75.png" alt="\rho"/></li>
+<li>plate thickness/height <img class="math" src="../../_images/math/cbb80ad77aa7a5e227d5a46bc44d235284106cfc.png" alt="h"/></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.plate.Component2DPlate.radius_of_gyration">
+<tt class="descname">radius_of_gyration</tt><a class="reference internal" href="../../_modules/seapy/components/plate.html#Component2DPlate.radius_of_gyration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.plate.Component2DPlate.radius_of_gyration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radius of gyration <img class="math" src="../../_images/math/dd95c55069c86910ffbe2f9833321d0034fd8036.png" alt="\kappa"/> is given by dividing the height of the plate by <img class="math" src="../../_images/math/c5bb2d2f0ae7ad544bd175c13e0ce9fcde1c9acf.png" alt="\sqrt{12}"/>.</p>
+<div class="math">
+<p><img src="../../_images/math/326a1df2f3ea06d7856ce0cdd25d0361dc894e2d.png" alt="\kappa = \frac{h}{\sqrt{12}}"/></p>
+</div><p>with:</p>
+<ul class="simple">
+<li>plate thickness/height <img class="math" src="../../_images/math/cbb80ad77aa7a5e227d5a46bc44d235284106cfc.png" alt="h"/></li>
+</ul>
+<p>See Lyon, above eq. 8.2.5</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.components.beam.SubsystemShear.html"
+                        title="previous chapter">seapy.components.beam.SubsystemShear</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.components.plate.SubsystemLong.html"
+                        title="next chapter">seapy.components.plate.SubsystemLong</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.components.plate.Component2DPlate.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.plate.SubsystemLong.html" title="seapy.components.plate.SubsystemLong"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemShear.html" title="seapy.components.beam.SubsystemShear"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" >Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

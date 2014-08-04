@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.component &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.components.component</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">ABC</span>
+<span class="sd">---</span>
+
+<span class="sd">Abstract class for all components.</span>
+
+<span class="sd">.. autoclass:: seapy.components.component.Component</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">Base</span><span class="p">,</span> <span class="n">MaterialLink</span><span class="p">,</span> <span class="n">LinkedList</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">cmath</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">WeakSet</span>
+
+
+<div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component">[docs]</a><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Abstract Base Class for components.&quot;&quot;&quot;</span>
+    
+    <span class="n">SORT</span> <span class="o">=</span> <span class="s">&#39;Component&#39;</span>
+
+    <span class="n">material</span> <span class="o">=</span> <span class="n">MaterialLink</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Material which this component consists of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">_DEPENDENCIES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;material&#39;</span><span class="p">]</span>   <span class="c"># The right way to do it...</span>
+    
+    <span class="n">linked_junctions</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    junctions this component is part of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">linked_subsystems</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subsystems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="n">length</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Height.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Width.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SUBSYSTEMS</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dictionary with systems that are available for this component.</span>
+<span class="sd">    By default each of these subsystems is added to the component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="Component.__init__"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: Identifier</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param system: System</span>
+<span class="sd">        :type system: :class:`seapy.system.System`</span>
+<span class="sd">        :param component: Component</span>
+<span class="sd">        :type component: :class:`seapy.components.component`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+        
+        </div>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destructor.&quot;&quot;&quot;</span>
+        <span class="c">#subsystems = self.linked_subsystems</span>
+        <span class="c">#for subsystem in self.linked_subsystems:</span>
+            <span class="c">#logging.info(&quot;Destructor %s: Deleting linked subsystem %s&quot;, self.name, subsystem)</span>
+            <span class="c">#self.system.removeObject(subsystem)</span>
+        
+        <span class="c">#logging.info(&quot;Destructor %s: Deleting reference to linked material %s&quot;, self.name, self.material) </span>
+        <span class="c">#self.material.__dict__[&#39;linked_component&#39;].remove(self.name)</span>
+        <span class="c">#logging.info(&quot;Destructor %s: Deleting component from components list&quot;, self.name)</span>
+        <span class="c">#self.system.components.remove(self.name)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__del__</span><span class="p">()</span> <span class="c"># Inherit destructor from base class</span>
+
+
+<div class="viewcode-block" id="Component.disable"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subsystems</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable this component. Optionally disable components&#39; subsystems.</span>
+<span class="sd">        </span>
+<span class="sd">        :param subsystems: Disable subsystems</span>
+<span class="sd">        :type subsystems: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">False</span>
+        
+        <span class="k">if</span> <span class="n">subsystems</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">subsystem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystems</span><span class="p">:</span>
+                <span class="n">subsystem</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="Component.enable"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subsystems</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable this coupling. Optionally enable components&#39; subsystems.</span>
+<span class="sd">        </span>
+<span class="sd">        :param subsystems: Enable subsystems</span>
+<span class="sd">        :type subsystems: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="k">if</span> <span class="n">subsystems</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">subsystem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystems</span><span class="p">:</span>
+                <span class="n">subsystem</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+                </div>
+    <span class="k">def</span> <span class="nf">_addSubsystems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add subsystems to component.</span>
+<span class="sd">        </span>
+<span class="sd">        .. note:: Add the mentioned subsystems to the component. </span>
+<span class="sd">        This function can only be called after creation of the Component </span>
+<span class="sd">        because it needs a weakref to the object given by system.getObject.</span>
+<span class="sd">        It would be possible to create a weakref &#39;manually&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">subsystem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUBSYSTEMS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_addSubsystem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&#39;_&#39;</span><span class="o">+</span><span class="n">name</span><span class="p">,</span> <span class="n">subsystem</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_addSubsystem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add subsystem to component. </span>
+<span class="sd">        This method is called only from :meth:`seapy.components.Component._addSubsystems`, which is called immediately after creation of the component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">properties</span><span class="p">[</span><span class="s">&#39;component&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+        <span class="c">#obj = model(name, self.system.getObject(self.name), **properties)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="c">#obj = self.system._addObject(name, model, **properties)</span>
+        <span class="c">#obj = model(name, self.system.getObject(self.name), **properties)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="sd">&quot;&quot;&quot;If object is indeed added to the system, then add it to this attribute.&quot;&quot;&quot;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;SubsystemLong&#39;</span><span class="p">:</span>
+                <span class="n">sort</span> <span class="o">=</span> <span class="s">&#39;subsystem_long&#39;</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;SubsystemBend&#39;</span><span class="p">:</span>
+                <span class="n">sort</span> <span class="o">=</span> <span class="s">&#39;subsystem_bend&#39;</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s">&#39;SubsystemShear&#39;</span><span class="p">:</span>
+                <span class="n">sort</span> <span class="o">=</span> <span class="s">&#39;subsystem_shear&#39;</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> 
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component.volume"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component.volume">[docs]</a>    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Volume :math:`V` of the component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component.mass"><a class="viewcode-back" href="../../../reference/generated/seapy.components.component.Component.html#seapy.components.component.Component.mass">[docs]</a>    <span class="k">def</span> <span class="nf">mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mass :math:`m` of the component.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :func:`float`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: m = \\rho V </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>   
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span>
+    </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

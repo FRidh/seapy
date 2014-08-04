@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.system.System &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="System (seapy.system)" href="../system.html" />
+    <link rel="prev" title="seapy.system.Band" href="seapy.system.Band.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.system.Band.html" title="seapy.system.Band"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../system.html" accesskey="U">System (<tt class="docutils literal"><span class="pre">seapy.system</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-system-system">
+<h1>seapy.system.System<a class="headerlink" href="#seapy-system-system" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.system.System">
+<em class="property">class </em><tt class="descclassname">seapy.system.</tt><tt class="descname">System</tt><a class="reference internal" href="../../_modules/seapy/system.html#System"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<p>The System class contains methods for solving the model.</p>
+<dl class="method">
+<dt id="seapy.system.System.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.__init__" title="seapy.system.System.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>()</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.addComponent" title="seapy.system.System.addComponent"><tt class="xref py py-obj docutils literal"><span class="pre">addComponent</span></tt></a>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add component to SEA model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.addCoupling" title="seapy.system.System.addCoupling"><tt class="xref py py-obj docutils literal"><span class="pre">addCoupling</span></tt></a>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add material to SEA model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.addJunction" title="seapy.system.System.addJunction"><tt class="xref py py-obj docutils literal"><span class="pre">addJunction</span></tt></a>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add junction to SEA model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.addMaterial" title="seapy.system.System.addMaterial"><tt class="xref py py-obj docutils literal"><span class="pre">addMaterial</span></tt></a>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add material to SEA model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.clearResults" title="seapy.system.System.clearResults"><tt class="xref py py-obj docutils literal"><span class="pre">clearResults</span></tt></a>()</td>
+<td>Clear the results.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.components_info" title="seapy.system.System.components_info"><tt class="xref py py-obj docutils literal"><span class="pre">components_info</span></tt></a>([tablefmt])</td>
+<td>Print information about components.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">System.createMatrix</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.excitations_info" title="seapy.system.System.excitations_info"><tt class="xref py py-obj docutils literal"><span class="pre">excitations_info</span></tt></a>([tablefmt])</td>
+<td>Print information about excitations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.getObject" title="seapy.system.System.getObject"><tt class="xref py py-obj docutils literal"><span class="pre">getObject</span></tt></a>(name)</td>
+<td>Get object by name.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.junctions_info" title="seapy.system.System.junctions_info"><tt class="xref py py-obj docutils literal"><span class="pre">junctions_info</span></tt></a>([tablefmt])</td>
+<td>Print information about junctions.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">System.materials_info</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">System.objects_info</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.removeObject" title="seapy.system.System.removeObject"><tt class="xref py py-obj docutils literal"><span class="pre">removeObject</span></tt></a>(name)</td>
+<td>Delete object from SEA model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.solveSystem" title="seapy.system.System.solveSystem"><tt class="xref py py-obj docutils literal"><span class="pre">solveSystem</span></tt></a>()</td>
+<td>Solve modal powers.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.subsystems_info" title="seapy.system.System.subsystems_info"><tt class="xref py py-obj docutils literal"><span class="pre">subsystems_info</span></tt></a>([tablefmt])</td>
+<td>Print information about subsystems.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.components" title="seapy.system.System.components"><tt class="xref py py-obj docutils literal"><span class="pre">components</span></tt></a></td>
+<td>All components in the system.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.couplings" title="seapy.system.System.couplings"><tt class="xref py py-obj docutils literal"><span class="pre">couplings</span></tt></a></td>
+<td>All couplings in the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.excitations" title="seapy.system.System.excitations"><tt class="xref py py-obj docutils literal"><span class="pre">excitations</span></tt></a></td>
+<td>All excitations in the system.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.junctions" title="seapy.system.System.junctions"><tt class="xref py py-obj docutils literal"><span class="pre">junctions</span></tt></a></td>
+<td>All junctions in the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.materials" title="seapy.system.System.materials"><tt class="xref py py-obj docutils literal"><span class="pre">materials</span></tt></a></td>
+<td>All materials in the system.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.objects" title="seapy.system.System.objects"><tt class="xref py py-obj docutils literal"><span class="pre">objects</span></tt></a></td>
+<td>All objects in the system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.reference_power" title="seapy.system.System.reference_power"><tt class="xref py py-obj docutils literal"><span class="pre">reference_power</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.reference_pressure" title="seapy.system.System.reference_pressure"><tt class="xref py py-obj docutils literal"><span class="pre">reference_pressure</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.reference_velocity" title="seapy.system.System.reference_velocity"><tt class="xref py py-obj docutils literal"><span class="pre">reference_velocity</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.system.System.solved" title="seapy.system.System.solved"><tt class="xref py py-obj docutils literal"><span class="pre">solved</span></tt></a></td>
+<td>bool(x) -&gt; bool</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.system.System.subsystems" title="seapy.system.System.subsystems"><tt class="xref py py-obj docutils literal"><span class="pre">subsystems</span></tt></a></td>
+<td>All subsystems in the system.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.addComponent">
+<tt class="descname">addComponent</tt><big>(</big><em>name</em>, <em>model</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.addComponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.addComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add component to SEA model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; Name of component.</li>
+<li><strong>model</strong> &#8211; Model or type of component. See <tt class="xref py py-attr docutils literal"><span class="pre">seapy.components.components_map</span></tt>.</li>
+<li><strong>properties</strong> &#8211; Other properties specific to the component.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.addCoupling">
+<tt class="descname">addCoupling</tt><big>(</big><em>name</em>, <em>model</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.addCoupling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.addCoupling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add material to SEA model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.addJunction">
+<tt class="descname">addJunction</tt><big>(</big><em>name</em>, <em>model</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.addJunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.addJunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add junction to SEA model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.addMaterial">
+<tt class="descname">addMaterial</tt><big>(</big><em>name</em>, <em>model</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.addMaterial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.addMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add material to SEA model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.clean">
+<tt class="descname">clean</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset modal energy to zero in all subsystems.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.clearResults">
+<tt class="descname">clearResults</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.clearResults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.clearResults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the results. Reset modal energies. Set <a class="reference internal" href="#seapy.system.System.solved" title="seapy.system.System.solved"><tt class="xref py py-attr docutils literal"><span class="pre">solved</span></tt></a> to False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.components">
+<tt class="descname">components</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.components" title="Permalink to this definition">¶</a></dt>
+<dd><p>All components in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of components.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.components_info">
+<tt class="descname">components_info</tt><big>(</big><em>tablefmt='simple'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.components_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.components_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about components.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.couplings">
+<tt class="descname">couplings</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.couplings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.couplings" title="Permalink to this definition">¶</a></dt>
+<dd><p>All couplings in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of couplings.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.excitations">
+<tt class="descname">excitations</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.excitations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.excitations" title="Permalink to this definition">¶</a></dt>
+<dd><p>All excitations in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of excitations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.excitations_info">
+<tt class="descname">excitations_info</tt><big>(</big><em>tablefmt='simple'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.excitations_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.excitations_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about excitations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.frequency">
+<tt class="descname">frequency</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.system.System.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frequency object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.getObject">
+<tt class="descname">getObject</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.getObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.getObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get object by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of <cite>object</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Proxy to <cite>object</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.info">
+<tt class="descname">info</tt><big>(</big><em>objects</em>, <em>attribute</em>, <em>tablefmt='simple'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print single attribute of objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.info_materials">
+<tt class="descname">info_materials</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.info_materials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.info_materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about materials.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.info_objects">
+<tt class="descname">info_objects</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.info_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.info_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about objects.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.junctions">
+<tt class="descname">junctions</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.junctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.junctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>All junctions in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of junctions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.junctions_info">
+<tt class="descname">junctions_info</tt><big>(</big><em>tablefmt='simple'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.junctions_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.junctions_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about junctions.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.materials">
+<tt class="descname">materials</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.materials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.materials" title="Permalink to this definition">¶</a></dt>
+<dd><p>All materials in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of materials.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.objects">
+<tt class="descname">objects</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>All objects in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of objects.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.power_balance_matrix">
+<tt class="descname">power_balance_matrix</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.power_balance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.power_balance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power balance matrix as function of frequency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>subsystems</strong> (<a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.4)"><em>list</em></a>) &#8211; is a list of subsystems. Reason to give the list as argument instead of using self.subsystems is that that list might change during execution.</li>
+<li><strong>f</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#int" title="(in Python v3.4)"><em>int</em></a>) &#8211; is the index of the center frequency of the frequency band</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>See Craik, equation 6.21, page 155.</p>
+<p>Yields power balance matrices.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.power_vector">
+<tt class="descname">power_vector</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.power_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.power_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector of input power normalized with angular frequency.</p>
+<p>See Craik, equation 6.21, page 155</p>
+<p>Yields power input vectors.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.reference_power">
+<tt class="descname">reference_power</tt><em class="property"> = 1e-12</em><a class="headerlink" href="#seapy.system.System.reference_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference power <img class="math" src="../../_images/math/16dd9360549a9808b71079cd371a6fa5187df1a8.png" alt="P_{0}"/>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.reference_pressure">
+<tt class="descname">reference_pressure</tt><em class="property"> = 2e-05</em><a class="headerlink" href="#seapy.system.System.reference_pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference pressure <img class="math" src="../../_images/math/db9883d64206b66186d6d083bca6c6e2151e6ce5.png" alt="p_{0}"/>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.reference_velocity">
+<tt class="descname">reference_velocity</tt><em class="property"> = 5e-08</em><a class="headerlink" href="#seapy.system.System.reference_velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference velocity <img class="math" src="../../_images/math/4674d6ce6d2d5ea59603a6644e340556c0b7342b.png" alt="v_{0}"/>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.removeObject">
+<tt class="descname">removeObject</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.removeObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.removeObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete object from SEA model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of <cite>object</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Proxy to <cite>object</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.solveSystem">
+<tt class="descname">solveSystem</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.solveSystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.solveSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve modal powers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><tt class="xref py py-func docutils literal"><span class="pre">bool()</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<p>This method solves the modal energies for every subsystem.
+The method <tt class="xref py py-meth docutils literal"><span class="pre">createMatrix()</span></tt> is called for every frequency band to construct a matrix of <a class="reference internal" href="../../glossary.html#term-loss-factors"><em class="xref std std-term">loss factors</em></a> and <a class="reference internal" href="../../glossary.html#term-modal-densities"><em class="xref std std-term">modal densities</em></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.solved">
+<tt class="descname">solved</tt><em class="property"> = False</em><a class="headerlink" href="#seapy.system.System.solved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch indicating whether the system (modal energies) were solved or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.system.System.subsystems">
+<tt class="descname">subsystems</tt><a class="reference internal" href="../../_modules/seapy/system.html#System.subsystems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.subsystems" title="Permalink to this definition">¶</a></dt>
+<dd><p>All subsystems in the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Generator of subsystems.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">python.types.GeneratorType</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.system.System.subsystems_info">
+<tt class="descname">subsystems_info</tt><big>(</big><em>tablefmt='simple'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/system.html#System.subsystems_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.system.System.subsystems_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print information about subsystems.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.system.Band.html"
+                        title="previous chapter">seapy.system.Band</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.system.System.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.system.Band.html" title="seapy.system.Band"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../system.html" >System (<tt class="docutils literal"><span class="pre">seapy.system</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

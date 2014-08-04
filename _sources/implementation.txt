@@ -1,0 +1,44 @@
+.. _implementation:
+
+SeaPy implementation
+####################
+
+.. toctree::
+   :maxdepth: 2
+   
+The previous chapter explained what Statistical Energy Analysis is. 
+In this chapter we will have a closer look on how SEA is implemented.
+
+=========
+Overview
+=========
+
+An SEA model in SeaPy is represented by the descendents of the following abstract objects:
+
+* :class:`seapy.components.Component.Component`
+* :class:`seapy.subsystems.Subsystem.Subsystem`
+* :class:`seapy.connections.Connection.Connection`
+* :class:`seapy.couplings.Coupling.Coupling`
+* :class:`seapy.materials.Material.Material`
+* :class:`seapy.excitations.Excitation.Excitation`
+
+as well as the main class representing the model
+
+* :class:`seapy.system.System.System`
+
+The following figure gives an overview on how the classes are related.
+
+.. graphviz::
+
+    digraph overview {
+      Subsystem -> Component -> System;
+      Coupling -> Connection -> System;
+      Connection -> Component
+      Coupling -> Subsystem
+      Coupling -> Component
+      Component -> Material -> System
+      Excitation -> Subsystem
+    }
+    
+Components can have multiple subsystems. Depending on the type of component these are added automatically when creating a component.
+If components are connected to eachother a connection needs to be created. The connection will automatically create all possible couplings between the subsystems.

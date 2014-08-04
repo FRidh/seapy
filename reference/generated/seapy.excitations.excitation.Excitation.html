@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.excitations.excitation.Excitation &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Excitations (seapy.excitations)" href="../excitations.html" />
+    <link rel="next" title="seapy.excitations.excitationpoint.ExcitationPoint" href="seapy.excitations.excitationpoint.ExcitationPoint.html" />
+    <link rel="prev" title="seapy.excitations.excitationpoint.ExcitationPointMoment" href="seapy.excitations.excitationpoint.ExcitationPointMoment.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.excitations.excitationpoint.ExcitationPoint.html" title="seapy.excitations.excitationpoint.ExcitationPoint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.excitations.excitationpoint.ExcitationPointMoment.html" title="seapy.excitations.excitationpoint.ExcitationPointMoment"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../excitations.html" accesskey="U">Excitations (<tt class="docutils literal"><span class="pre">seapy.excitations</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-excitations-excitation-excitation">
+<h1>seapy.excitations.excitation.Excitation<a class="headerlink" href="#seapy-excitations-excitation-excitation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.excitations.excitation.Excitation">
+<em class="property">class </em><tt class="descclassname">seapy.excitations.excitation.</tt><tt class="descname">Excitation</tt><big>(</big><em>name</em>, <em>subsystem</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.base.Base.html#seapy.base.Base" title="seapy.base.Base"><tt class="xref py py-class docutils literal"><span class="pre">seapy.base.Base</span></tt></a></p>
+<p>Abstract Base Class for excitations.</p>
+<dl class="method">
+<dt id="seapy.excitations.excitation.Excitation.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>subsystem</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.__init__" title="seapy.excitations.excitation.Excitation.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;subsystem,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Excitation.df</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.disable" title="seapy.excitations.excitation.Excitation.disable"><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt></a>([subsystem])</td>
+<td>Disable this excitation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.enable" title="seapy.excitations.excitation.Excitation.enable"><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt></a>([subsystem])</td>
+<td>Enable this excitation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">resistance</span></tt>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">conductance</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">impedance</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.power" title="seapy.excitations.excitation.Excitation.power"><tt class="xref py py-obj docutils literal"><span class="pre">power</span></tt></a></td>
+<td>Input power.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.power_level" title="seapy.excitations.excitation.Excitation.power_level"><tt class="xref py py-obj docutils literal"><span class="pre">power_level</span></tt></a></td>
+<td>Input power level.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.excitations.excitation.Excitation.subsystem" title="seapy.excitations.excitation.Excitation.subsystem"><tt class="xref py py-obj docutils literal"><span class="pre">subsystem</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>subsystem</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.excitations.excitation.Excitation.disable">
+<tt class="descname">disable</tt><big>(</big><em>subsystem=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable this excitation. Optionally disable excitations&#8217; subsystem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subsystem</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Disable subsystem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.excitations.excitation.Excitation.enable">
+<tt class="descname">enable</tt><big>(</big><em>subsystem=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable this excitation. Optionally enable excitations&#8217; subsystem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subsystem</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Enable subsystem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.excitations.excitation.Excitation.power">
+<tt class="descname">power</tt><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation.power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input power.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.excitations.excitation.Excitation.power_level">
+<tt class="descname">power_level</tt><a class="reference internal" href="../../_modules/seapy/excitations/excitation.html#Excitation.power_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.excitations.excitation.Excitation.power_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input power level.</p>
+<div class="math">
+<p><img src="../../_images/math/393829cdec5976e3cf0de4d7f142dc8cb19a5671.png" alt="L_{P} = 10 \log_{10}{\left( \frac{P}{P_0} \right)}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.excitations.excitation.Excitation.subsystem">
+<tt class="descname">subsystem</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.excitations.excitation.Excitation.subsystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subsystem that is being excited by this excitation</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.excitations.excitationpoint.ExcitationPointMoment.html"
+                        title="previous chapter">seapy.excitations.excitationpoint.ExcitationPointMoment</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.excitations.excitationpoint.ExcitationPoint.html"
+                        title="next chapter">seapy.excitations.excitationpoint.ExcitationPoint</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.excitations.excitation.Excitation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.excitations.excitationpoint.ExcitationPoint.html" title="seapy.excitations.excitationpoint.ExcitationPoint"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.excitations.excitationpoint.ExcitationPointMoment.html" title="seapy.excitations.excitationpoint.ExcitationPointMoment"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../excitations.html" >Excitations (<tt class="docutils literal"><span class="pre">seapy.excitations</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

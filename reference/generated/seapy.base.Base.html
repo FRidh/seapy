@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.base.Base &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Base (seapy.base)" href="../base.html" />
+    <link rel="next" title="seapy.base.LinkedList" href="seapy.base.LinkedList.html" />
+    <link rel="prev" title="seapy.base.MetaBase" href="seapy.base.MetaBase.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.base.LinkedList.html" title="seapy.base.LinkedList"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.base.MetaBase.html" title="seapy.base.MetaBase"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../base.html" accesskey="U">Base (<tt class="docutils literal"><span class="pre">seapy.base</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-base-base">
+<h1>seapy.base.Base<a class="headerlink" href="#seapy-base-base" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.base.Base">
+<em class="property">class </em><tt class="descclassname">seapy.base.</tt><tt class="descname">Base</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">builtins.object</span></tt></p>
+<p>Abstract Base Class for all components, junctions, 
+materials, subsystems, couplings and excitation.</p>
+<dl class="method">
+<dt id="seapy.base.Base.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier of object</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; system objects belongs to</li>
+<li><strong>properties</strong> (<a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.4)"><em>dict</em></a>) &#8211; Optional properties</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.__init__" title="seapy.base.Base.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Base.df</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.disable" title="seapy.base.Base.disable"><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt></a>()</td>
+<td>Disable this object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.base.Base.enable" title="seapy.base.Base.enable"><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt></a>()</td>
+<td>Enable this object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.info" title="seapy.base.Base.info"><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt></a>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.base.Base.plot" title="seapy.base.Base.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.classname" title="seapy.base.Base.classname"><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></a></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.base.Base.enabled" title="seapy.base.Base.enabled"><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></a></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.frequency" title="seapy.base.Base.frequency"><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></a></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.base.Base.included" title="seapy.base.Base.included"><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></a></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.base.Base.name" title="seapy.base.Base.name"><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier of object</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; system objects belongs to</li>
+<li><strong>properties</strong> (<a class="reference external" href="http://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.4)"><em>dict</em></a>) &#8211; Optional properties</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.classname">
+<tt class="descname">classname</tt><a class="reference internal" href="../../_modules/seapy/base.html#Base.classname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.classname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of class of the object. This is an alias for <tt class="docutils literal"><span class="pre">obj.__class__.__name__</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.base.Base.disable">
+<tt class="descname">disable</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable this object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.base.Base.enable">
+<tt class="descname">enable</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable this object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.enabled">
+<tt class="descname">enabled</tt><a class="reference internal" href="../../_modules/seapy/base.html#Base.enabled"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch indicating whether the object is enabled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A boolean indicating whether the object is enabled (<cite>True</cite>) or not (<cite>False</cite>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><tt class="xref py py-func docutils literal"><span class="pre">bool()</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.frequency">
+<tt class="descname">frequency</tt><a class="reference internal" href="../../_modules/seapy/base.html#Base.frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frequency.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="seapy.system.System.html#seapy.system.System.frequency" title="seapy.system.System.frequency"><tt class="xref py py-meth docutils literal"><span class="pre">seapy.system.System.frequency()</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.included">
+<tt class="descname">included</tt><a class="reference internal" href="../../_modules/seapy/base.html#Base.included"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.included" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether the object is included in the analysis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>extended</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Whether to show a list of dependencies with outcomes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool or list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.base.Base.info">
+<tt class="descname">info</tt><big>(</big><em>attributes=None</em><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dataframe.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.name">
+<tt class="descname">name</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.base.Base.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of object.</p>
+<p>The name of the object is unique.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="seapy.base.Name.html#seapy.base.Name" title="seapy.base.Name"><tt class="xref py py-class docutils literal"><span class="pre">Name</span></tt></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.base.Base.plot">
+<tt class="descname">plot</tt><big>(</big><em>quantity</em>, <em>yscale='linear'</em><big>)</big><a class="reference internal" href="../../_modules/seapy/base.html#Base.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.base.Base.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot <cite>quantity</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Seealso:</th><td class="field-body"><tt class="xref py py-func docutils literal"><span class="pre">seapy.tools.plot()</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.base.Base.system">
+<tt class="descname">system</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.base.Base.system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference to System this object belongs to.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.base.MetaBase.html"
+                        title="previous chapter">seapy.base.MetaBase</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.base.LinkedList.html"
+                        title="next chapter">seapy.base.LinkedList</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.base.Base.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.base.LinkedList.html" title="seapy.base.LinkedList"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.base.MetaBase.html" title="seapy.base.MetaBase"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../base.html" >Base (<tt class="docutils literal"><span class="pre">seapy.base</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

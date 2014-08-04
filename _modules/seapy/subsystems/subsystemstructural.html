@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.subsystems.subsystemstructural &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.subsystems.subsystemstructural</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Structural subsystem</span>
+<span class="sd">--------------------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.subsystem</span> <span class="kn">import</span> <span class="n">Subsystem</span>
+
+<div class="viewcode-block" id="SubsystemStructural"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural">[docs]</a><span class="k">class</span> <span class="nc">SubsystemStructural</span><span class="p">(</span><span class="n">Subsystem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for all structural subsystems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemStructural.conductance_point_average"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural.conductance_point_average">[docs]</a>    <span class="k">def</span> <span class="nf">conductance_point_average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average point conductance of a structural component.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{G} = \\frac{1}{4} M \overline{\\delta f}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, page 149, equation 8.5.2 as well as page 200.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">mass</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_frequency_spacing</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemStructural.resistance_point_average"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural.resistance_point_average">[docs]</a>    <span class="k">def</span> <span class="nf">resistance_point_average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average point resistance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">conductance_point_average</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemStructural.velocity"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural.velocity">[docs]</a>    <span class="k">def</span> <span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Vibrational velocity :math:`v`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: v = \\sqrt{\\frac{E}{m}}</span>
+<span class="sd">        </span>
+<span class="sd">        Craik, equation 3.11, page 55.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">mass</span><span class="p">)</span>
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemStructural.velocity_level"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural.velocity_level">[docs]</a>    <span class="k">def</span> <span class="nf">velocity_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Velocity level :math:`L_v`.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        The structural velocity level is calculated as</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: L_v = 20 \\log_{10}{\\left( \\frac{v}{v_0} \\right) }</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso:: :attr:`seapy.system.System.reference_velocity`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">20.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">reference_velocity</span> <span class="p">)</span> 
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

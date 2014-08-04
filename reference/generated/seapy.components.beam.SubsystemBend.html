@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.beam.SubsystemBend &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Components (seapy.components)" href="../components.html" />
+    <link rel="next" title="seapy.components.beam.SubsystemShear" href="seapy.components.beam.SubsystemShear.html" />
+    <link rel="prev" title="seapy.components.beam.SubsystemLong" href="seapy.components.beam.SubsystemLong.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemShear.html" title="seapy.components.beam.SubsystemShear"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemLong.html" title="seapy.components.beam.SubsystemLong"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" accesskey="U">Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-components-beam-subsystembend">
+<h1>seapy.components.beam.SubsystemBend<a class="headerlink" href="#seapy-components-beam-subsystembend" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.components.beam.SubsystemBend">
+<em class="property">class </em><tt class="descclassname">seapy.components.beam.</tt><tt class="descname">SubsystemBend</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.subsystems.subsystemstructural.SubsystemStructural.html#seapy.subsystems.subsystemstructural.SubsystemStructural" title="seapy.subsystems.subsystemstructural.SubsystemStructural"><tt class="xref py py-class docutils literal"><span class="pre">seapy.subsystems.subsystemstructural.SubsystemStructural</span></tt></a></p>
+<p>Subsystem for bending waves in a 1D system.</p>
+<dl class="method">
+<dt id="seapy.components.beam.SubsystemBend.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="headerlink" href="#seapy.components.beam.SubsystemBend.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">SeaPy.components.Component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.__init__" title="seapy.components.beam.SubsystemBend.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">addExcitation</span></tt>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add excitation to subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt>([couplings])</td>
+<td>Disable this subsystem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt>([couplings])</td>
+<td>Enable this subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.average_frequency_spacing" title="seapy.components.beam.SubsystemBend.average_frequency_spacing"><tt class="xref py py-obj docutils literal"><span class="pre">average_frequency_spacing</span></tt></a></td>
+<td>Average frequency spacing for bending waves.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">component</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">conductance</span></tt></td>
+<td>Conductance <img class="math" src="../../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">conductance_point_average</span></tt></td>
+<td>Average point conductance of a structural component.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">damping_term</span></tt></td>
+<td>The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">dlf</span></tt></td>
+<td>Damping loss factor of subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></td>
+<td>Total energy <img class="math" src="../../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> in subsystem.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.flexural_rigidity" title="seapy.components.beam.SubsystemBend.flexural_rigidity"><tt class="xref py py-obj docutils literal"><span class="pre">flexural_rigidity</span></tt></a></td>
+<td>Flexural rigidity or bending stiffness of a beam.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">impedance</span></tt></td>
+<td>Impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.impedance_point_force" title="seapy.components.beam.SubsystemBend.impedance_point_force"><tt class="xref py py-obj docutils literal"><span class="pre">impedance_point_force</span></tt></a></td>
+<td>Impedance for bending waves in a thin beam excited far way from the edges.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.impedance_point_moment" title="seapy.components.beam.SubsystemBend.impedance_point_moment"><tt class="xref py py-obj docutils literal"><span class="pre">impedance_point_moment</span></tt></a></td>
+<td>Moment impedance for bending waves excited in the center of the beam.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_from</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_to</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_excitations</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">mobility</span></tt></td>
+<td>Mobility <cite>Y</cite></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_density</span></tt></td>
+<td>Modal density.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_energy</span></tt></td>
+<td>Class capable of containing spectral values.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_overlap_factor</span></tt></td>
+<td>Modal overlap factor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">power_input</span></tt></td>
+<td>Total input power due to excitations.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">resistance</span></tt></td>
+<td>Resistance <img class="math" src="../../_images/math/9d86170e7de539c0ff999de09621ee0c7b6c8ed0.png" alt="R"/>, the real part of the impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">resistance_point_average</span></tt></td>
+<td>Average point resistance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.soundspeed_group" title="seapy.components.beam.SubsystemBend.soundspeed_group"><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_group</span></tt></a></td>
+<td>Group velocity for bending wave.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.beam.SubsystemBend.soundspeed_phase" title="seapy.components.beam.SubsystemBend.soundspeed_phase"><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_phase</span></tt></a></td>
+<td>Phase velocity for bending wave.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">tlf</span></tt></td>
+<td>Total loss factor.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">velocity</span></tt></td>
+<td>Vibrational velocity <img class="math" src="../../_images/math/0e22076955898e6c9bb38aa079135195c24dc81e.png" alt="v"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">velocity_level</span></tt></td>
+<td>Velocity level <img class="math" src="../../_images/math/b8c3f89546f63fe8a97bbf79915bfbb58341f36c.png" alt="L_v"/>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">wavenumber</span></tt></td>
+<td>Wave number.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.average_frequency_spacing">
+<tt class="descname">average_frequency_spacing</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.average_frequency_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.average_frequency_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average frequency spacing for bending waves. Valid when <img class="math" src="../../_images/math/38d3e3dc42a8a20c61aa62622e0913fd1bf665e1.png" alt="f &lt;&lt; c_{L,\phi}  / 4 \pi \kappa"/>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/27c47590d919d13bcaf280b2a6264943cf276f1e.png" alt="\overline{\delta f}_B^{1D} = \frac{c_{B, \phi}^{1D}}{L}"/></p>
+</div><p>See Lyon, eq. 8.1.10</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.flexural_rigidity">
+<tt class="descname">flexural_rigidity</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.flexural_rigidity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.flexural_rigidity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flexural rigidity or bending stiffness of a beam.</p>
+<div class="math">
+<p><img src="../../_images/math/9e3a461c8a112a7440f7e833ad2e9a1b4637d350.png" alt="B = \frac{E h^3 b}{12}"/></p>
+</div><p>with</p>
+<ul class="simple">
+<li>Young&#8217;s modulus <img class="math" src="../../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/></li>
+<li>Beam height <img class="math" src="../../_images/math/cbb80ad77aa7a5e227d5a46bc44d235284106cfc.png" alt="h"/></li>
+<li>Beam width <img class="math" src="../../_images/math/5e87bf41a96deddf6cb485ff530f153f2590e9cc.png" alt="b"/>:</li>
+</ul>
+<p>See Craik, equation 3.3, page 48.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.impedance_point_force">
+<tt class="descname">impedance_point_force</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.impedance_point_force"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.impedance_point_force" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impedance for bending waves in a thin beam excited far way from the edges.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/424de5e7ecf7750d2984ce0b73d936476c83380e.png" alt="Z_B^{F,1D} = 2 \rho S c_{L, \phi}^{1D} (1 + j)"/></p>
+</div><p>See Lyon, table 10.1, second row.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.impedance_point_moment">
+<tt class="descname">impedance_point_moment</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.impedance_point_moment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.impedance_point_moment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moment impedance for bending waves excited in the center of the beam.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/7e8769f7e8d45a4bc1f3862d7ebc3dd47d6c027f.png" alt="W = 2 \rho S c_B \frac{(1-j)}{k_B^2}"/></p>
+</div><p>See Lyon, table 10.2, second row.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.soundspeed_group">
+<tt class="descname">soundspeed_group</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.soundspeed_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.soundspeed_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group velocity for bending wave.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/8ae8153dc1cb33358d390bb0e8d52ab4958976b2.png" alt="c_{B,g}^{1D} = 2 c_{B,\phi}^{1D}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.beam.SubsystemBend.soundspeed_phase">
+<tt class="descname">soundspeed_phase</tt><a class="reference internal" href="../../_modules/seapy/components/beam.html#SubsystemBend.soundspeed_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.beam.SubsystemBend.soundspeed_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Phase velocity for bending wave.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.8)"><tt class="xref py py-class docutils literal"><span class="pre">numpy.ndarray</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/a5b257803e982635b458a4734d3ab22a75ebd9f4.png" alt="c_{B,\phi}^{2D} = \sqrt{\omega \kappa c_{L, \phi}^{1D} }"/></p>
+</div><p>See Lyon, above eq. 8.1.10</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.components.beam.SubsystemLong.html"
+                        title="previous chapter">seapy.components.beam.SubsystemLong</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.components.beam.SubsystemShear.html"
+                        title="next chapter">seapy.components.beam.SubsystemShear</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.components.beam.SubsystemBend.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemShear.html" title="seapy.components.beam.SubsystemShear"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.beam.SubsystemLong.html" title="seapy.components.beam.SubsystemLong"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" >Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

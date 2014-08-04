@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Couplings (seapy.couplings) &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../index.html" />
+    <link rel="up" title="Reference" href="index.html" />
+    <link rel="next" title="seapy.couplings.coupling.Coupling" href="generated/seapy.couplings.coupling.Coupling.html" />
+    <link rel="prev" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical" href="generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.couplings.coupling.Coupling.html" title="seapy.couplings.coupling.Coupling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="couplings-seapy-couplings">
+<span id="couplings"></span><h1>Couplings (<tt class="xref py py-mod docutils literal"><span class="pre">seapy.couplings</span></tt>)<a class="headerlink" href="#couplings-seapy-couplings" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abc">
+<h2>ABC<a class="headerlink" href="#abc" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling" title="seapy.couplings.coupling.Coupling"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.coupling.Coupling</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Abstract base class for couplings.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="structural">
+<h2>Structural<a class="headerlink" href="#structural" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.couplings.couplingpointstructural.CouplingPointStructural.html#seapy.couplings.couplingpointstructural.CouplingPointStructural" title="seapy.couplings.couplingpointstructural.CouplingPointStructural"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplingpointstructural.CouplingPointStructural</span></tt></a>(...)</td>
+<td>Model of a point coupling between structural components.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.couplings.couplinglinestructural.CouplingLineStructural.html#seapy.couplings.couplinglinestructural.CouplingLineStructural" title="seapy.couplings.couplinglinestructural.CouplingLineStructural"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplinglinestructural.CouplingLineStructural</span></tt></a>(...)</td>
+<td>Line coupling betweeen two structural subsystems.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="acoustical">
+<h2>Acoustical<a class="headerlink" href="#acoustical" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html#seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical" title="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical</span></tt></a>(...)</td>
+<td>Coupling for cavity3D to cavity transmission.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.couplings.couplingsurfaceacoustical.tau.html#seapy.couplings.couplingsurfaceacoustical.tau" title="seapy.couplings.couplingsurfaceacoustical.tau"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplingsurfaceacoustical.tau</span></tt></a>(f,&nbsp;...)</td>
+<td>Non-resonant transmission coefficient by Leppington et al (1987).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="structural-acoustical">
+<h2>Structural - Acoustical<a class="headerlink" href="#structural-acoustical" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical" title="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical</span></tt></a>(...)</td>
+<td>A model describing the coupling between a plate and a cavity.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.couplings.couplingsurfaceacousticalplate.CouplingSurfaceAcousticalPlate.html#seapy.couplings.couplingsurfaceacousticalplate.CouplingSurfaceAcousticalPlate" title="seapy.couplings.couplingsurfaceacousticalplate.CouplingSurfaceAcousticalPlate"><tt class="xref py py-obj docutils literal"><span class="pre">couplings.couplingsurfaceacousticalplate.CouplingSurfaceAcousticalPlate</span></tt></a>(...)</td>
+<td>A model describing the coupling between a cavity and a plate.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Couplings (<tt class="docutils literal"><span class="pre">seapy.couplings</span></tt>)</a><ul>
+<li><a class="reference internal" href="#abc">ABC</a></li>
+<li><a class="reference internal" href="#structural">Structural</a></li>
+<li><a class="reference internal" href="#acoustical">Acoustical</a></li>
+<li><a class="reference internal" href="#structural-acoustical">Structural - Acoustical</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html"
+                        title="previous chapter">seapy.subsystems.subsystemacoustical.SubsystemAcoustical</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/seapy.couplings.coupling.Coupling.html"
+                        title="next chapter">seapy.couplings.coupling.Coupling</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/couplings.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.couplings.coupling.Coupling.html" title="seapy.couplings.coupling.Coupling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical"
+             >previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

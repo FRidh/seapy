@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Base (seapy.base) &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../index.html" />
+    <link rel="up" title="Reference" href="index.html" />
+    <link rel="next" title="seapy.base.Base" href="generated/seapy.base.Base.html" />
+    <link rel="prev" title="seapy.system.Band" href="generated/seapy.system.Band.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.base.Base.html" title="seapy.base.Base"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.system.Band.html" title="seapy.system.Band"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="base-seapy-base">
+<span id="base"></span><h1>Base (<tt class="xref py py-mod docutils literal"><span class="pre">seapy.base</span></tt>)<a class="headerlink" href="#base-seapy-base" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Base<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.Base.html#seapy.base.Base" title="seapy.base.Base"><tt class="xref py py-obj docutils literal"><span class="pre">base.Base</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Abstract Base Class for all components, junctions,  materials, subsystems, couplings and excitation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="linkedlist">
+<h3>LinkedList<a class="headerlink" href="#linkedlist" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.LinkedList.html#seapy.base.LinkedList" title="seapy.base.LinkedList"><tt class="xref py py-obj docutils literal"><span class="pre">base.LinkedList</span></tt></a></td>
+<td>Receiving Many part of One-to-Many link.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="descriptors">
+<h3>Descriptors<a class="headerlink" href="#descriptors" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.Spectrum.html#seapy.base.Spectrum" title="seapy.base.Spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">base.Spectrum</span></tt></a>([dtype])</td>
+<td>Class capable of containing spectral values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.base.Name.html#seapy.base.Name" title="seapy.base.Name"><tt class="xref py py-obj docutils literal"><span class="pre">base.Name</span></tt></a></td>
+<td>Unique Name descriptor.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.Link.html#seapy.base.Link" title="seapy.base.Link"><tt class="xref py py-obj docutils literal"><span class="pre">base.Link</span></tt></a></td>
+<td>One-to-Many link from <cite>local</cite> to <cite>remotes</cite>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.base.MaterialLink.html#seapy.base.MaterialLink" title="seapy.base.MaterialLink"><tt class="xref py py-obj docutils literal"><span class="pre">base.MaterialLink</span></tt></a></td>
+<td>Linked from component to material.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.ComponentLink.html#seapy.base.ComponentLink" title="seapy.base.ComponentLink"><tt class="xref py py-obj docutils literal"><span class="pre">base.ComponentLink</span></tt></a></td>
+<td>Link from subsystem to component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.base.JunctionLink.html#seapy.base.JunctionLink" title="seapy.base.JunctionLink"><tt class="xref py py-obj docutils literal"><span class="pre">base.JunctionLink</span></tt></a></td>
+<td>Link from coupling to junction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.SubsystemFromLink.html#seapy.base.SubsystemFromLink" title="seapy.base.SubsystemFromLink"><tt class="xref py py-obj docutils literal"><span class="pre">base.SubsystemFromLink</span></tt></a></td>
+<td>Linked from coupling <cite>from</cite> to subsystem <cite>from</cite>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.base.SubsystemToLink.html#seapy.base.SubsystemToLink" title="seapy.base.SubsystemToLink"><tt class="xref py py-obj docutils literal"><span class="pre">base.SubsystemToLink</span></tt></a></td>
+<td>Link from coupling <cite>to</cite> to subsystem <cite>to</cite>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">base.SubsystemLink</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="other">
+<h3>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.base.NameWarning.html#seapy.base.NameWarning" title="seapy.base.NameWarning"><tt class="xref py py-obj docutils literal"><span class="pre">base.NameWarning</span></tt></a></td>
+<td>Duplicate name warning.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.base.MetaBase.html#seapy.base.MetaBase" title="seapy.base.MetaBase"><tt class="xref py py-obj docutils literal"><span class="pre">base.MetaBase</span></tt></a></td>
+<td>Metaclass that prepares <tt class="xref py py-class docutils literal"><span class="pre">Base</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Base (<tt class="docutils literal"><span class="pre">seapy.base</span></tt>)</a><ul>
+<li><a class="reference internal" href="#framework">Framework</a><ul>
+<li><a class="reference internal" href="#id1">Base</a></li>
+<li><a class="reference internal" href="#linkedlist">LinkedList</a></li>
+<li><a class="reference internal" href="#descriptors">Descriptors</a></li>
+<li><a class="reference internal" href="#other">Other</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="generated/seapy.system.Band.html"
+                        title="previous chapter">seapy.system.Band</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/seapy.base.Base.html"
+                        title="next chapter">seapy.base.Base</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/base.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.base.Base.html" title="seapy.base.Base"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.system.Band.html" title="seapy.system.Band"
+             >previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

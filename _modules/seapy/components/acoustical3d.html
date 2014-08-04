@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.acoustical3d &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.components.acoustical3d</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Room 3D</span>
+<span class="sd">-------</span>
+
+<span class="sd">Classes describing a three-dimensional cavity.</span>
+
+<span class="sd">.. autoclass:: seapy.components.acoustical3d.Component3DAcoustical</span>
+
+<span class="sd">Subsystems</span>
+<span class="sd">++++++++++</span>
+
+<span class="sd">.. autoclass:: seapy.components.acoustical3d.SubsystemLong</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.acoustical</span> <span class="kn">import</span> <span class="n">ComponentAcoustical</span>
+<span class="kn">from</span> <span class="nn">..subsystems</span> <span class="kn">import</span> <span class="n">SubsystemAcoustical</span>
+
+
+<span class="k">class</span> <span class="nc">SubsystemLong</span><span class="p">(</span><span class="n">SubsystemAcoustical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subsystem for a fluid in a 3D cavity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average frequency spacing for a fluid in a 3D cavity.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_0^{3D} = \\frac{c_0^^3}{4 \\pi V f^2}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq 8.3.7</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#try:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span><span class="o">**</span><span class="mf">3.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">volume</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+        <span class="c">#except FloatingPointError:</span>
+            <span class="c">#return np.zeros(self.frequency.amount)</span>
+    
+
+    <span class="k">def</span> <span class="nf">impedance_point_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excitation</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Impedance of a 3D cavity when there is a monopole (volume) source in the cavity.</span>
+<span class="sd">        </span>
+<span class="sd">        :param excitation: Excitation.</span>
+<span class="sd">        :type excitation: :class:`seapy.excitations.ExcitationPoint` </span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: Z_0^{U,3D} = \\frac{\\pi \\rho f^2}{c_0} \\left( 1 + \\frac{j}{k_0 r}   \\right)</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, table 10.1, last row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#try:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1.0j</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wavenumber</span> <span class="o">*</span> <span class="n">excitation</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span> 
+        <span class="c">#except FloatingPointError:</span>
+        <span class="c">#return np.zeros(self.frequency.amount)</span>
+
+        
+<div class="viewcode-block" id="Component3DAcoustical"><a class="viewcode-back" href="../../../reference/generated/seapy.components.acoustical3d.Component3DAcoustical.html#seapy.components.acoustical3d.Component3DAcoustical">[docs]</a><span class="k">class</span> <span class="nc">Component3DAcoustical</span><span class="p">(</span><span class="n">ComponentAcoustical</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Component for a fluid in a 3D cavity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SUBSYSTEMS</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Long&#39;</span><span class="p">:</span> <span class="n">SubsystemLong</span><span class="p">}</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

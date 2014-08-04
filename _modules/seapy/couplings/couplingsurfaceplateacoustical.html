@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.couplings.couplingsurfaceplateacoustical &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.couplings.couplingsurfaceplateacoustical</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.coupling</span> <span class="kn">import</span> <span class="n">Coupling</span>
+
+
+<span class="k">def</span> <span class="nf">radiation_efficiency</span><span class="p">(</span><span class="n">coupling</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Radiation efficiency of a plate to a cavity and vice versa.</span>
+
+<span class="sd">    Where:</span>
+<span class="sd">        </span>
+<span class="sd">    * area of plate :math:`S = L_x L_y`</span>
+<span class="sd">    * circumference of plate :math:`U = 2 (L_x + L_y)`</span>
+<span class="sd">    </span>
+<span class="sd">    * :math:`\\alpha  = \\sqrt{\\frac{f}{f_c}}`</span>
+<span class="sd">    </span>
+<span class="sd">    When :math:`f &lt; 0.5 f_c`:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: g_1 = \\frac{4}{\\pi^4} (1 - 2 \\alpha^2) (1 - \\alpha^2)^(-0.5) </span>
+<span class="sd">    </span>
+<span class="sd">    When :math:`f &gt; 0.5 f_c`:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: g_1 = 0</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">    See TA2 Radiation plateapp_ta2</span>
+<span class="sd">    &quot;&quot;&quot;</span>      
+    
+    <span class="c">#component = self.subsystem_from.component</span>
+    
+    
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Cast to complex numbers to prevent errors with sqrt further down.&quot;&quot;&quot;</span>
+    
+    <span class="n">fc</span> <span class="o">=</span> <span class="n">coupling</span><span class="o">.</span><span class="n">critical_frequency</span>
+    <span class="n">lc</span> <span class="o">=</span> <span class="n">coupling</span><span class="o">.</span><span class="n">critical_wavelength</span>
+        
+    <span class="n">Lx</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">length</span>
+    <span class="n">Ly</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">width</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">area</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">Lx</span> <span class="o">+</span> <span class="n">Ly</span><span class="p">)</span>
+    
+    <span class="n">fc_band</span> <span class="o">=</span> <span class="p">(</span><span class="n">fc</span> <span class="o">&gt;</span> <span class="n">coupling</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">fc</span> <span class="o">&lt;</span> <span class="n">coupling</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">upper</span><span class="p">)</span>
+    <span class="n">f_lower</span> <span class="o">=</span> <span class="n">fc</span> <span class="o">&gt;</span> <span class="n">coupling</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">upper</span>
+    <span class="n">f_upper</span> <span class="o">=</span> <span class="n">fc</span> <span class="o">&lt;</span> <span class="n">coupling</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">lower</span>
+    
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f</span><span class="o">/</span><span class="n">fc</span><span class="p">)</span>
+    <span class="n">g1</span> <span class="o">=</span>  <span class="p">(</span> <span class="mf">4.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mf">4.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fc</span><span class="p">)</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mf">4.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span>  <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mf">1.0</span><span class="o">+</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="p">))</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">alpha</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
+    
+    <span class="n">sigma1</span> <span class="o">=</span> <span class="n">lc</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">/</span> <span class="n">S</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">g1</span> <span class="o">+</span> <span class="n">U</span> <span class="o">/</span> <span class="n">lc</span> <span class="o">*</span> <span class="n">g2</span><span class="p">)</span>
+    <span class="n">sigma2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Lx</span><span class="o">/</span><span class="n">lc</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Ly</span><span class="o">/</span><span class="n">lc</span><span class="p">)</span>
+    <span class="n">sigma3</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fc</span><span class="o">/</span><span class="n">f</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
+    
+    <span class="n">sigma1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">sigma1</span><span class="p">)</span>
+    <span class="n">sigma2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">sigma2</span><span class="p">)</span>
+    <span class="n">sigma3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">sigma3</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Replace NaN with zeros&quot;&quot;&quot;</span>
+    
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma1</span> <span class="o">*</span> <span class="n">f_lower</span> <span class="o">+</span> <span class="n">sigma2</span> <span class="o">*</span> <span class="n">fc_band</span>  <span class="o">+</span> <span class="n">sigma3</span> <span class="o">*</span> <span class="n">f_upper</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma3</span> <span class="o">&lt;</span> <span class="n">sigma2</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">sigma</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">sigma</span>
+
+    
+<span class="k">def</span> <span class="nf">critical_frequency</span><span class="p">(</span><span class="n">subsystem_plate</span><span class="p">,</span> <span class="n">subsystem_cavity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Critical frequency.</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: f_c = \\frac{ c_0^2 \\sqrt{3}  } {\\ pi c_L h}</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: f_c = \\frac{f c_0^2}{c_B^2}</span>
+<span class="sd">    </span>
+<span class="sd">    See Craik, table 3.3, page 51.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">subsystem_plate</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span> <span class="o">*</span> <span class="p">(</span><span class="n">subsystem_cavity</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="n">subsystem_plate</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">subsystem_bend</span><span class="o">.</span><span class="n">soundspeed_phase</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span>
+    <span class="c">#return subsystem_cavity.soundspeed_group**2.0 / (1.81818181 * subsystem_plate.component.subsystem_long.soundspeed_group * subsystem_plate.component.height)</span>
+    
+<div class="viewcode-block" id="CouplingSurfacePlateAcoustical"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical">[docs]</a><span class="k">class</span> <span class="nc">CouplingSurfacePlateAcoustical</span><span class="p">(</span><span class="n">Coupling</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model describing the coupling between a plate and a cavity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">impedance_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">impedance</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">impedance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">impedance</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfacePlateAcoustical.critical_frequency"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.critical_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">critical_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Critical frequency.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: f_c = \\frac{ c_0^2  } {1.8 c_L t}</span>
+<span class="sd">        </span>
+<span class="sd">        See BAC, 3.2.2 script.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">critical_frequency</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfacePlateAcoustical.critical_wavelength"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.critical_wavelength">[docs]</a>    <span class="k">def</span> <span class="nf">critical_wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wavelength belonging to critical frequency.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\lambda_c = c_{g} / f_c</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">critical_frequency</span>
+        <span class="k">except</span> <span class="ne">FloatingPointError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfacePlateAcoustical.radiation_efficiency"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.radiation_efficiency">[docs]</a>    <span class="k">def</span> <span class="nf">radiation_efficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Radiation efficiency of a plate for bending waves.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">radiation_efficiency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="CouplingSurfacePlateAcoustical.clf"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html#seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.clf">[docs]</a>    <span class="k">def</span> <span class="nf">clf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coupling loss factor for plate to cavity radiation.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\eta_{plate, cavity} = \\frac{\\rho_0 c_0 \\sigma}{\\omega m^{&#39;&#39;}}</span>
+<span class="sd">        </span>
+<span class="sd">        .. attention::</span>
+<span class="sd">            Which speed of sound???</span>
+<span class="sd">        </span>
+<span class="sd">        See BAC, equation 3.6</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">*</span> \
+                   <span class="bp">self</span><span class="o">.</span><span class="n">radiation_efficiency</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">mass_per_area</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ZeroDivisionError</span><span class="p">,</span> <span class="ne">FloatingPointError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

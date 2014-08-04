@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.materials.materialsolid &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.materials.materialsolid</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">cmath</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<span class="c">#import scipy.constants as physical_constants  # Container of physical constants which might be of use</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.material</span> <span class="kn">import</span> <span class="n">Material</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">Base</span><span class="p">,</span> <span class="n">Spectrum</span><span class="p">,</span> <span class="n">LinkedList</span>
+
+
+<span class="k">class</span> <span class="nc">MaterialSolid</span><span class="p">(</span><span class="n">Material</span><span class="p">):</span>
+<div class="viewcode-block" id="MaterialSolid"><a class="viewcode-back" href="../../../reference/generated/seapy.materials.materialsolid.MaterialSolid.html#seapy.materials.materialsolid.MaterialSolid">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solid material class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s">&#39;A material in solid state.&#39;</span>
+
+    <span class="n">young</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">shear</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">poisson</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="c">#class ModulusDescriptor(object):</span>
+    
+
+<span class="k">def</span> <span class="nf">modulus</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">young</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bulk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">poisson</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+    <span class="sd">&quot;&quot;&quot;Calculate `out` using `given`.</span>
+<span class="sd">    </span>
+<span class="sd">    :param out: Desired elastic modulus.</span>
+<span class="sd">    :param young: Young&#39;s modulus.</span>
+<span class="sd">    :param bulk: Bulk modulus.</span>
+<span class="sd">    :param shear: Shear modulus.</span>
+<span class="sd">    :param poisson: Poisson ration.</span>
+<span class="sd">    </span>
+<span class="sd">    This function determines the desired elastic modulus using the given moduli.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="n">out</span><span class="o">==</span><span class="s">&#39;bulk&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">young</span> <span class="ow">and</span> <span class="n">shear</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">young</span> <span class="o">*</span> <span class="n">shear</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">9.0</span> <span class="o">*</span> <span class="n">shear</span> <span class="o">-</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">young</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">young</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">young</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">-</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span>        
+        <span class="k">elif</span> <span class="n">shear</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">shear</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">poisson</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">-</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">out</span><span class="o">==</span><span class="s">&#39;young&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">shear</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">9.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="n">shear</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">+</span> <span class="n">shear</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">young</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">shear</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">shear</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">poisson</span><span class="p">)</span>  
+    <span class="k">elif</span> <span class="n">out</span><span class="o">==</span><span class="s">&#39;shear&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">young</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="n">young</span> <span class="o">/</span> <span class="p">(</span><span class="mf">9.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">-</span> <span class="n">young</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">young</span> <span class="ow">and</span> <span class="n">poisson</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">young</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">poisson</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">out</span><span class="o">==</span><span class="s">&#39;poisson&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">young</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">-</span> <span class="n">young</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">6.0</span> <span class="o">*</span> <span class="n">bulk</span><span class="p">)</span>                 
+        <span class="k">elif</span> <span class="n">bulk</span> <span class="ow">and</span> <span class="n">shear</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">shear</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">6.0</span> <span class="o">*</span> <span class="n">bulk</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">shear</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">young</span> <span class="ow">and</span> <span class="n">shear</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">young</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">shear</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span>
+        
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot determine {} with the given moduli.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+
+
+
+
+
+
+<span class="c">###class MaterialSolid(Material):</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Solid material class</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+
+    <span class="c">#### Elastic moduli</span>
+    <span class="c">###_young = None</span>
+    <span class="c">###_bulk = None</span>
+    <span class="c">###_shear = None</span>
+    <span class="c">###_poisson = None</span>
+    <span class="c">###_isotropic = True     # Whether the material is isotropic or not.    </span>
+
+    <span class="c">####_tensile_strength_break = None</span>
+    <span class="c">####_tensile_strength_yield = None</span>
+    <span class="c">####_tensile_strength_ultimate = None</span>
+    
+    <span class="c">####_tensile_elongation_break = None</span>
+    <span class="c">####_tensile_elongation_yield = None</span>
+    <span class="c">####_tensile_elongation_ultimate = None</span>
+
+    <span class="c">###def _get_isotropic(self):</span>
+        <span class="c">###&quot;&quot;&quot;</span>
+        <span class="c">###Return whether the solid is isotropic or not.</span>
+        <span class="c">###&quot;&quot;&quot;        </span>
+        <span class="c">####if self._isotropic is not None:</span>
+        <span class="c">###return self._isotropic</span>
+    
+    <span class="c">###def _set_isotropic(self, x):</span>
+        <span class="c">###&quot;&quot;&quot;</span>
+        <span class="c">###Set whether the solid is isotropic or not.</span>
+        
+        <span class="c">###:param x: is a boolean</span>
+        <span class="c">###&quot;&quot;&quot;</span>
+        <span class="c">###if type(x) is bool:   # Perhaps use a try here?</span>
+            <span class="c">###self._isotropic = x</span>
+
+    <span class="c">###isotropic = property(fget=_get_isotropic, fset=_set_isotropic)</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Isotropic material or not.</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    
+    <span class="c">###def elastic_moduli_given(self):</span>
+        <span class="c">###&quot;&quot;&quot;</span>
+        <span class="c">###Returns the amount of elastic module that were specified.</span>
+        <span class="c">###&quot;&quot;&quot;</span>
+        <span class="c">###return (bool(self._young) + bool(self._bulk) + bool(self._shear) + bool(self._poisson))</span>
+
+    
+    <span class="c">###def _del_elastic_moduli(attr):</span>
+        <span class="c">###def del_attr(self):</span>
+            <span class="c">###setattr(self, attr, None)    # Check first whether it can actually be deleted? E.g. when it has not been set at all.</span>
+        <span class="c">###return del_attr</span>
+    
+
+    <span class="c">###def _set_elastic_moduli(attr):</span>
+        <span class="c">###def set_attr(self, x):</span>
+            <span class="c">###if self.elastic_moduli_given() &lt; 2: #and isinstance(x, float):</span>
+                <span class="c">###setattr(self, attr, x)            </span>
+            <span class="c">###else:</span>
+                <span class="c">###warnings.warn(&#39;Two elastic moduli have already been set. Please delete one before adding a new one.&#39;)</span>
+        <span class="c">###return set_attr</span>
+        
+  
+    <span class="c">###def _get_elastic_moduli(attr):</span>
+        <span class="c">###&quot;&quot;&quot;Retrieve the value of the elastic modulus. Check first whether the value is stored. If not, calculate it from two given moduli.&quot;&quot;&quot;</span>
+        <span class="c">###def get_attr(self):</span>
+            <span class="c">###if getattr(self, attr) is not None:</span>
+                <span class="c">###return getattr(self, attr) # then we should return it instead of trying to calculate it.</span>
+            
+            <span class="c">###elif self.isotropic and self.elastic_moduli_given() &gt;= 2:          # But only when isotropic!!!</span>
+                <span class="c">#### Calculate Bulk</span>
+                <span class="c">###if bool(attr ==&#39;_bulk&#39; and self._young and self._shear):</span>
+                    <span class="c">###return (self.young * self.shear) / (9.0 * self.shear - 3.0 * self.young)</span>
+                <span class="c">###elif bool(attr ==&#39;_bulk&#39; and self._young and self._poisson):</span>
+                    <span class="c">###return (self.young) / (3.0 - 6.0 * self.poisson)</span>
+                <span class="c">###elif bool(attr ==&#39;_bulk&#39; and self._shear and self._poisson):</span>
+                    <span class="c">###return 2.0 * self.shear * (1.0 + self.poisson) / (3.0 - 6.0 * self.poisson)</span>
+                <span class="c">#### Calculate Young</span>
+                <span class="c">###elif bool(attr ==&#39;_young&#39; and self._bulk and self._shear):</span>
+                    <span class="c">###return 9.0 * self.bulk * self.shear / (3.0 * self.bulk + self.shear)</span>
+                <span class="c">###elif bool(attr ==&#39;_young&#39; and self._bulk and self._poisson):</span>
+                    <span class="c">###return 3.0 * self.bulk * (1.0 - 2.0 * self.poisson)</span>
+                <span class="c">###elif bool(attr ==&#39;_young&#39; and self._shear and self._poisson):</span>
+                    <span class="c">###return 2.0 * self.shear * (1.0 + self.poisson)                </span>
+                <span class="c">#### Calculate Shear</span>
+                <span class="c">###elif bool(attr ==&#39;_shear&#39; and self._bulk and self._young):</span>
+                    <span class="c">###return 3.0 * self.bulk * self.young / (9 * self.bulk - self.young)</span>
+                <span class="c">###elif bool(attr ==&#39;_shear&#39; and self._bulk and self._poisson):</span>
+                    <span class="c">###return 3.0 * self.bulk * (1.0 - 2.0 * self.poisson) / (2.0 + 2.0 * self.poisson)</span>
+                <span class="c">###elif bool(attr ==&#39;_shear&#39; and self._young and self._poisson):</span>
+                    <span class="c">###return self.young / (2.0 + 2.0 * self.poisson)</span>
+                <span class="c">#### Calculate Poisson</span>
+                <span class="c">###elif bool(attr ==&#39;_poisson&#39; and self._bulk and self._young):</span>
+                    <span class="c">###return ( 3.0 * self.bulk - self.young) / (6.0 * self.bulk)                 </span>
+                <span class="c">###elif bool(attr ==&#39;_poisson&#39; and self._bulk and self._shear):</span>
+                    <span class="c">###return (3.0 * self.bulk - 2.0 * self.shear) / (6.0 * self.bulk + 2.0 * self.shear)</span>
+                <span class="c">###elif bool(attr ==&#39;_poisson&#39; and self._young and self._shear):</span>
+                    <span class="c">###return (self.young) / (2.0*self.shear) - 1.0</span>
+                <span class="c">###else:</span>
+                    <span class="c">###ValueError</span>
+            <span class="c">###else:</span>
+                <span class="c">###warnings.warn(&#39;The modulus was not given for this material and could not be calculated either.&#39;)</span>
+                    
+        <span class="c">###return get_attr</span>
+
+    <span class="c">###young = property(fget=_get_elastic_moduli(&#39;_young&#39;), fset=_set_elastic_moduli(&#39;_young&#39;), fdel=_del_elastic_moduli(&#39;_young&#39;))         # Young&#39;s modulus, or Tensile modulus</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Young&#39;s modulus :math:`E`. </span>
+    <span class="c">###The value can be set or calculated when the material is isotropic and elastic_moduli_given equals two.</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    
+    <span class="c">###bulk = property(fget=_get_elastic_moduli(&#39;_bulk&#39;), fset=_set_elastic_moduli(&#39;_bulk&#39;), fdel=_del_elastic_moduli(&#39;_bulk&#39;))            # Bulk modulus</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Bulk modulus :math:`K`</span>
+    <span class="c">###The value can be set or calculated when the material is isotropic and elastic_moduli_given equals two.</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    
+    <span class="c">###shear = property(fget=_get_elastic_moduli(&#39;_shear&#39;), fset=_set_elastic_moduli(&#39;_shear&#39;), fdel=_del_elastic_moduli(&#39;_shear&#39;))         # Shear modulus</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Shear modulus :math:`G`</span>
+    <span class="c">###The value can be set or calculated when the material is isotropic and elastic_moduli_given equals two.</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    
+    <span class="c">###poisson = property(fget=_get_elastic_moduli(&#39;_poisson&#39;), fset=_set_elastic_moduli(&#39;_poisson&#39;), fdel=_del_elastic_moduli(&#39;_poisson&#39;))   # Poisson modulus</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+    <span class="c">###Poisson ratio :math:`\\nu`</span>
+    <span class="c">###The value can be set or calculated when the material is isotropic and elastic_moduli_given equals two.</span>
+    <span class="c">###&quot;&quot;&quot;</span>
+            
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

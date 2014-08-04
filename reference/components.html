@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Components (seapy.components) &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../index.html" />
+    <link rel="up" title="Reference" href="index.html" />
+    <link rel="next" title="seapy.components.component.Component" href="generated/seapy.components.component.Component.html" />
+    <link rel="prev" title="seapy.materials.materialsolid.MaterialSolid" href="generated/seapy.materials.materialsolid.MaterialSolid.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.components.component.Component.html" title="seapy.components.component.Component"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.materials.materialsolid.MaterialSolid.html" title="seapy.materials.materialsolid.MaterialSolid"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="components-seapy-components">
+<span id="components"></span><h1>Components (<tt class="xref py py-mod docutils literal"><span class="pre">seapy.components</span></tt>)<a class="headerlink" href="#components-seapy-components" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abc">
+<h2>ABC<a class="headerlink" href="#abc" title="Permalink to this headline">¶</a></h2>
+<p>Abstract base classes.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.component.Component.html#seapy.components.component.Component" title="seapy.components.component.Component"><tt class="xref py py-obj docutils literal"><span class="pre">components.component.Component</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Abstract Base Class for components.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.structural.ComponentStructural.html#seapy.components.structural.ComponentStructural" title="seapy.components.structural.ComponentStructural"><tt class="xref py py-obj docutils literal"><span class="pre">components.structural.ComponentStructural</span></tt></a>(...)</td>
+<td>Abstract base class for structural components.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.acoustical.ComponentAcoustical.html#seapy.components.acoustical.ComponentAcoustical" title="seapy.components.acoustical.ComponentAcoustical"><tt class="xref py py-obj docutils literal"><span class="pre">components.acoustical.ComponentAcoustical</span></tt></a>(...)</td>
+<td>Abstract base class for acoustical components.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="structural">
+<h2>Structural<a class="headerlink" href="#structural" title="Permalink to this headline">¶</a></h2>
+<p>Structural components.</p>
+<div class="section" id="beam">
+<h3>Beam<a class="headerlink" href="#beam" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam" title="seapy.components.beam.Component1DBeam"><tt class="xref py py-obj docutils literal"><span class="pre">components.beam.Component1DBeam</span></tt></a>(name,&nbsp;...)</td>
+<td>One-dimensional beam component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong" title="seapy.components.beam.SubsystemLong"><tt class="xref py py-obj docutils literal"><span class="pre">components.beam.SubsystemLong</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Subsystem for longitudinal waves in a 1D system.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend" title="seapy.components.beam.SubsystemBend"><tt class="xref py py-obj docutils literal"><span class="pre">components.beam.SubsystemBend</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Subsystem for bending waves in a 1D system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear" title="seapy.components.beam.SubsystemShear"><tt class="xref py py-obj docutils literal"><span class="pre">components.beam.SubsystemShear</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Subsystem for shear waves in a 1D isotropic system.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="plate">
+<h3>Plate<a class="headerlink" href="#plate" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate" title="seapy.components.plate.Component2DPlate"><tt class="xref py py-obj docutils literal"><span class="pre">components.plate.Component2DPlate</span></tt></a>(name,&nbsp;...)</td>
+<td>Two-dimensional plate component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong" title="seapy.components.plate.SubsystemLong"><tt class="xref py py-obj docutils literal"><span class="pre">components.plate.SubsystemLong</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Subsystem for longitudinal waves in a 2D isotropic component.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend" title="seapy.components.plate.SubsystemBend"><tt class="xref py py-obj docutils literal"><span class="pre">components.plate.SubsystemBend</span></tt></a>(name,&nbsp;system,&nbsp;...)</td>
+<td>Subsystem for bending waves in a 2D isotropic component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear" title="seapy.components.plate.SubsystemShear"><tt class="xref py py-obj docutils literal"><span class="pre">components.plate.SubsystemShear</span></tt></a>(name,&nbsp;...)</td>
+<td>Subsystem for shear waves in a 2D isotopic component.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="solid">
+<h3>Solid<a class="headerlink" href="#solid" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.structural3d.Component3D.html#seapy.components.structural3d.Component3D" title="seapy.components.structural3d.Component3D"><tt class="xref py py-obj docutils literal"><span class="pre">components.structural3d.Component3D</span></tt></a>(name,&nbsp;...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.structural3d.SubsystemLong.html#seapy.components.structural3d.SubsystemLong" title="seapy.components.structural3d.SubsystemLong"><tt class="xref py py-obj docutils literal"><span class="pre">components.structural3d.SubsystemLong</span></tt></a>(name,&nbsp;...)</td>
+<td>Subsystem from longitudinal waves in a 3D isotropic solid.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">components.structural3d.SubsystemBend</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">components.structural3d.SubsystemShear</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="acoustical">
+<h2>Acoustical<a class="headerlink" href="#acoustical" title="Permalink to this headline">¶</a></h2>
+<p>Acoustical components.</p>
+<div class="section" id="room-2d">
+<h3>Room 2D<a class="headerlink" href="#room-2d" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.acoustical2d.Component2DAcoustical.html#seapy.components.acoustical2d.Component2DAcoustical" title="seapy.components.acoustical2d.Component2DAcoustical"><tt class="xref py py-obj docutils literal"><span class="pre">components.acoustical2d.Component2DAcoustical</span></tt></a>(...)</td>
+<td>Component for a fluid in a 2D cavity.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/seapy.components.acoustical2d.SubsystemLong.html#seapy.components.acoustical2d.SubsystemLong" title="seapy.components.acoustical2d.SubsystemLong"><tt class="xref py py-obj docutils literal"><span class="pre">components.acoustical2d.SubsystemLong</span></tt></a>(name,&nbsp;...)</td>
+<td>Subsystem for a fluid in a 2D cavity.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="room-3d">
+<h3>Room 3D<a class="headerlink" href="#room-3d" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/seapy.components.acoustical3d.Component3DAcoustical.html#seapy.components.acoustical3d.Component3DAcoustical" title="seapy.components.acoustical3d.Component3DAcoustical"><tt class="xref py py-obj docutils literal"><span class="pre">components.acoustical3d.Component3DAcoustical</span></tt></a>(...)</td>
+<td>Component for a fluid in a 3D cavity.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">components.3dacoustical3d.SubsystemLong</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a><ul>
+<li><a class="reference internal" href="#abc">ABC</a></li>
+<li><a class="reference internal" href="#structural">Structural</a><ul>
+<li><a class="reference internal" href="#beam">Beam</a></li>
+<li><a class="reference internal" href="#plate">Plate</a></li>
+<li><a class="reference internal" href="#solid">Solid</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#acoustical">Acoustical</a><ul>
+<li><a class="reference internal" href="#room-2d">Room 2D</a></li>
+<li><a class="reference internal" href="#room-3d">Room 3D</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="generated/seapy.materials.materialsolid.MaterialSolid.html"
+                        title="previous chapter">seapy.materials.materialsolid.MaterialSolid</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/seapy.components.component.Component.html"
+                        title="next chapter">seapy.components.component.Component</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/components.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.components.component.Component.html" title="seapy.components.component.Component"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="generated/seapy.materials.materialsolid.MaterialSolid.html" title="seapy.materials.materialsolid.MaterialSolid"
+             >previous</a> |</li>
+        <li><a href="../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

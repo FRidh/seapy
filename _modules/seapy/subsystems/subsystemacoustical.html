@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.subsystems.subsystemacoustical &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.subsystems.subsystemacoustical</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Acoustical subsystem</span>
+<span class="sd">--------------------</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.subsystem</span> <span class="kn">import</span> <span class="n">Subsystem</span>
+
+<div class="viewcode-block" id="SubsystemAcoustical"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical">[docs]</a><span class="k">class</span> <span class="nc">SubsystemAcoustical</span><span class="p">(</span><span class="n">Subsystem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for all acoustical subsystems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.conductance_point_average"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.conductance_point_average">[docs]</a>    <span class="k">def</span> <span class="nf">conductance_point_average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average point conductance of an acoustic component.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{G} = \\frac{1}{\\overline{R}}</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">resistance_point_average</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.resistance_point_average"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.resistance_point_average">[docs]</a>    <span class="k">def</span> <span class="nf">resistance_point_average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average point resistance of an acoustic component.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{R} = \\frac{ \\rho c^2  }{ 4 V \\delta f }</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, page 149, equation 8.5.3</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">volume</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_frequency_spacing</span><span class="p">)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wavenumber.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group speed of a fluid in a duct with rigid walls.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Phase speed of a fluid in a duct with rigid walls.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_0 = c_g = c_{\\phi} = \\sqrt{\\frac{K_0}{\\rho_0}}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq 8.1.9.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">bulk</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span><span class="p">)</span>
+        
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.pressure"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.pressure">[docs]</a>    <span class="k">def</span> <span class="nf">pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mean sound pressure :math:`p`.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: p^2 = \\frac{E \\rho c^2}{V}</span>
+<span class="sd">        </span>
+<span class="sd">        Craik, equation 3.12, page 56.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+        
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemAcoustical.pressure_level"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical.pressure_level">[docs]</a>    <span class="k">def</span> <span class="nf">pressure_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sound pressure level :math:`L_p`.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: L_p = 20 \\log_{10}{\\left( \\frac{p}{p_0} \\right)}</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso:: :attr:`seapy.system.System.reference_pressure`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">20.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">reference_pressure</span><span class="p">)</span>
+    </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

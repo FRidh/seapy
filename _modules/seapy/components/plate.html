@@ -1,0 +1,491 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.plate &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.components.plate</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Plate</span>
+<span class="sd">-----</span>
+
+<span class="sd">.. autoclass:: seapy.components.plate.Component2DPlate</span>
+
+<span class="sd">Subsystems</span>
+<span class="sd">++++++++++</span>
+
+<span class="sd">.. autoclass:: seapy.components.plate.SubsystemLong</span>
+<span class="sd">.. autoclass:: seapy.components.plate.SubsystemBend</span>
+<span class="sd">.. autoclass:: seapy.components.plate.SubsystemShear</span>
+
+<span class="sd">Classes describing a two-dimensional plate.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.structural</span> <span class="kn">import</span> <span class="n">ComponentStructural</span>
+<span class="kn">from</span> <span class="nn">..subsystems</span> <span class="kn">import</span> <span class="n">SubsystemStructural</span>
+
+
+<div class="viewcode-block" id="SubsystemLong"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong">[docs]</a><span class="k">class</span> <span class="nc">SubsystemLong</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subsystem for longitudinal waves in a 2D isotropic component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Group velocity for longitudinal waves in a 2D isotopic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_L^{&#39;} = \\sqrt{\\frac{E}{\\rho \\left( 1 - \\mu^2 \\right)}}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * Young&#39;s modulus :math:`E`</span>
+<span class="sd">        * density :math:`\\rho`</span>
+<span class="sd">        * Poisson&#39;s ratio :math:`\\mu`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq 8.2.5 </span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, table 3.2, third row, page 49.</span>
+<span class="sd">        </span>
+<span class="sd">        Often the density is replaced as a surface density (mass per unit area) and the thickness or height of the plate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">young</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">poisson</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)))</span>
+
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase velocity for longitudinal waves in a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{group} = c_{phase} = c_L</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq 8.2.8</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average frequency spacing for a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\delta f}_S^{2D} = \\frac{{c_L^1}^2}{\\omega A}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * soundspeed of longitudinal waves :math:`c_L`</span>
+<span class="sd">        * angular frequency :math:`\\omega`</span>
+<span class="sd">        * plate area :math:`A`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, equation 8.2.8</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#try:</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+        <span class="c">#except FloatingPointError:</span>
+            <span class="c">#return np.zeros(self.frequency.amount)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">delta1</span><span class="p">,</span> <span class="n">delta2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wavenumber for longitudinal waves in a plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: k_L = \\sqrt{\\left[ \\left( m - \\delta_1 \\right) \\frac{\\pi}{L_1} \\right] + \\left[ \\left( n - \\delta_2 \\right) \\frac{\\pi}{L_2} \\right]}</span>
+<span class="sd">       </span>
+<span class="sd">        See Lyon, equation 8.2.1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span> <span class="p">(</span> <span class="n">m</span> <span class="o">-</span> <span class="n">delta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span> <span class="p">(</span> <span class="n">m</span> <span class="o">-</span> <span class="n">delta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="p">)</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.impedance"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemLong.html#seapy.components.plate.SubsystemLong.impedance">[docs]</a>    <span class="k">def</span> <span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        
+    <span class="c">#@property</span>
+    <span class="c">#def wavenumber(self):</span>
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#Wavenumber of longitudinal waves in a plate.</span>
+        
+        <span class="c">#.. math:: k_L = \\frac{ \\rho \\omega \\left( 1 - \\nu \\right) }{E h}</span>
+        
+        <span class="c">#Langley and Heron, 1990, eq 24.</span>
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#return self.component.material.density * self.omega * (1.0 - self.component.material.poisson) / (self.component.material.young * self.component.height)</span>
+    
+        </div></div>
+<div class="viewcode-block" id="SubsystemBend"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend">[docs]</a><span class="k">class</span> <span class="nc">SubsystemBend</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subsystem for bending waves in a 2D isotropic component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase velocity for bending wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\sqrt{\\omega} \\left( \\frac{B}{\\rho_s}  \\right)^(1/4)</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * Angular frequency :math:`\\omega`</span>
+<span class="sd">        * Bending stiffness :math:`B`</span>
+<span class="sd">        * surface density :math:`\\rho_s`</span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 5.19, page 128.</span>
+<span class="sd">        </span>
+<span class="sd">        Note that this is the same as</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{B,\\phi}^{2D} = \\sqrt{\\omega \\kappa c_L^{&#39;}}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">flexural_rigidity</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">mass_per_area</span><span class="p">)</span> <span class="o">**</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+        <span class="c">#return np.sqrt(self.frequency.angular * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_phase)</span>
+                </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Group velocity for bending wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{B, g}^{2D} = 2 c_{B,\\phi}^{2D}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average frequency spacing for bending waves in a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_B^{2D} = \\frac{2 \\kappa c_L^{&#39;, 2D}}{A}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * radius of gyration :math:`\\kappa`</span>
+<span class="sd">        * soundspeed of longitudinal waves :math:`c_L`</span>
+<span class="sd">        * plate area :math:`A`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">radius_of_gyration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">subsystem_long</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">area</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wavenumber of flexural waves in a plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: k_B = \\sqrt[4]{ \\frac{ \\rho \\omega }{B}} </span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * density of the plate :math:`\\rho`</span>
+<span class="sd">        * angular frequency :math:`\\omega`</span>
+<span class="sd">        * flexural rigidity :math:`\\B`</span>
+<span class="sd">        </span>
+<span class="sd">        See Langley and Heron, 1990, eq 18.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">flexural_rigidity</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.flexural_rigidity"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.flexural_rigidity">[docs]</a>    <span class="k">def</span> <span class="nf">flexural_rigidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flexural rigidity of a plate.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: B = \\frac{E h^3}{12 \\left( 1 - \\nu^2 \\right)}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * Young&#39;s modulus :math:`E`</span>
+<span class="sd">        * plate thickness/height :math:`h`</span>
+<span class="sd">        * Poisson&#39;s ratio :math:`\\nu`</span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 3.2, page 48.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">young</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">height</span><span class="o">**</span><span class="mf">3.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">12.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">poisson</span><span class="o">**</span><span class="mf">2.0</span><span class="p">))</span>
+    
+    <span class="c">#@property</span>
+    <span class="c">#def impedance(self):</span>
+        <span class="c">#&quot;&quot;&quot;Impedance.</span>
+        
+        <span class="c">#:rtype: :class:`numpy.ndarray`</span>
+        
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#raise NotImplementedError</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.impedance_point_force"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemBend.html#seapy.components.plate.SubsystemBend.impedance_point_force">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_point_force</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Point impedance.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: Z_{B}^{F, 2D} = 8 \\rho h \\kappa_B c_L</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * density of the plate :math:`\\rho`</span>
+<span class="sd">        * radius of gyration :math:`kappa_B`</span>
+<span class="sd">        * soundspeed of longitudinal waves :math:`c_L`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, page 201, table 10.1</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">8.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">radius_of_gyration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">subsystem_long</span><span class="o">.</span><span class="n">soundspeed_group</span>
+        
+        
+    
+    </div></div>
+<div class="viewcode-block" id="SubsystemShear"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear">[docs]</a><span class="k">class</span> <span class="nc">SubsystemShear</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subsystem for shear waves in a 2D isotopic component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Phase velocity for shear waves in a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_S = \\sqrt{\\frac{G}{\\rho}}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * shear modulus :math:`G`</span>
+<span class="sd">        * density of the plate :math:`\\rho`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">shear</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group velocity for shear wavees in a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{group} = c_{phase} = 2 C_S</span>
+
+<span class="sd">        See Lyon, above eq. 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Average frequency spacing for shear waves in a 2D isotropic plate.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_S^{2D} = \\frac{c_S^2}{\\omega A}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * soundspeed of shear waves :math:`c_S`</span>
+<span class="sd">        * angular frequency :math:`\\omega`</span>
+<span class="sd">        * area of the plate :math:`A`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#try:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+        <span class="c">#except FloatingPointError:</span>
+            <span class="c">#return np.zeros(self.frequency.amount)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.SubsystemShear.html#seapy.components.plate.SubsystemShear.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wavenumber of shear waves.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: k_S = \\frac{2 \\rho \\omega \\left( 1 + \\nu  \\right) }{E h}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * density :math:`\\rho`</span>
+<span class="sd">        * angular frequency :math:`\\omega`</span>
+<span class="sd">        * Poisson&#39;s ratio :math:`\\nu`</span>
+<span class="sd">        * Young&#39;s modulus :math:`E`</span>
+<span class="sd">        * plate thickness :math:`h`</span>
+<span class="sd">        </span>
+<span class="sd">        Langley and Heron, 1990, eq 25</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">poisson</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">young</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> 
+        
+    </div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+   </div>
+<div class="viewcode-block" id="Component2DPlate"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate">[docs]</a><span class="k">class</span> <span class="nc">Component2DPlate</span><span class="p">(</span><span class="n">ComponentStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Two-dimensional plate component.</span>
+<span class="sd">    </span>
+<span class="sd">    The following subsystems are implemented for this component:</span>
+<span class="sd">    </span>
+<span class="sd">    * :class:`seapy.components.plate.SubsystemLong`</span>
+<span class="sd">    * :class:`seapy.components.plate.SubsystemBend`</span>
+<span class="sd">    * :class:`seapy.components.plate.SubsystemShear`</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SUBSYSTEMS</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Long&#39;</span><span class="p">:</span> <span class="n">SubsystemLong</span><span class="p">,</span>
+                  <span class="s">&#39;Bend&#39;</span><span class="p">:</span> <span class="n">SubsystemBend</span><span class="p">,</span>
+                  <span class="s">&#39;Shear&#39;</span><span class="p">:</span> <span class="n">SubsystemShear</span><span class="p">}</span>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component2DPlate.area"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate.area">[docs]</a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Area of the plate.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: A = l w</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * length :math:`l`</span>
+<span class="sd">        * width :math:`w`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component2DPlate.mass_per_area"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate.mass_per_area">[docs]</a>    <span class="k">def</span> <span class="nf">mass_per_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mass per unit area. Also called the surface density.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: m^{&#39;&#39;} = \\rho h</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * density :math:`\\rho`</span>
+<span class="sd">        * plate thickness/height :math:`h`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component2DPlate.radius_of_gyration"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate.radius_of_gyration">[docs]</a>    <span class="k">def</span> <span class="nf">radius_of_gyration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Radius of gyration :math:`\\kappa` is given by dividing the height of the plate by :math:`\\sqrt{12}`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\kappa = \\frac{h}{\\sqrt{12}}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * plate thickness/height :math:`h`</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.2.5</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">12.0</span><span class="p">)</span>
+        
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component2DPlate.area_moment_of_inertia"><a class="viewcode-back" href="../../../reference/generated/seapy.components.plate.Component2DPlate.html#seapy.components.plate.Component2DPlate.area_moment_of_inertia">[docs]</a>    <span class="k">def</span> <span class="nf">area_moment_of_inertia</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Area moment of inertia.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: J = \\frac{h^3}{12}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * plate thickness/height :math:`h`</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Following equation includes resistance to deflection and is thus part of the bending wave subsystem:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: J = \\frac{h^3}{12 \\left( 1 - \\nu^2 \\right)}</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">**</span><span class="mf">3.0</span> <span class="o">/</span> <span class="mf">12.0</span>
+        <span class="c">#return self.height**3.0 / (12.0 * (1.0 - self.poisson()**2.0))</span>
+ </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

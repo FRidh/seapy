@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.couplings.couplingsurfaceacoustical.tau &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Couplings (seapy.couplings)" href="../couplings.html" />
+    <link rel="next" title="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical" href="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html" />
+    <link rel="prev" title="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical" href="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html" title="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html" title="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../couplings.html" accesskey="U">Couplings (<tt class="docutils literal"><span class="pre">seapy.couplings</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-couplings-couplingsurfaceacoustical-tau">
+<h1>seapy.couplings.couplingsurfaceacoustical.tau<a class="headerlink" href="#seapy-couplings-couplingsurfaceacoustical-tau" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="seapy.couplings.couplingsurfaceacoustical.tau">
+<tt class="descclassname">seapy.couplings.couplingsurfaceacoustical.</tt><tt class="descname">tau</tt><big>(</big><em>f</em>, <em>fc</em>, <em>rho_0</em>, <em>rho_s</em>, <em>c_0</em>, <em>S</em>, <em>U=0.0</em><big>)</big><a class="reference internal" href="../../_modules/seapy/couplings/couplingsurfaceacoustical.html#tau"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.couplings.couplingsurfaceacoustical.tau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Non-resonant transmission coefficient by Leppington et al (1987).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>f</strong> &#8211; Frequency</li>
+<li><strong>fc</strong> &#8211; Critical frequency</li>
+<li><strong>rho_0</strong> &#8211; Density air</li>
+<li><strong>rho_s</strong> &#8211; Density plate</li>
+<li><strong>c_0</strong> &#8211; Speed of sound in air</li>
+<li><strong>S</strong> &#8211; Surface</li>
+<li><strong>U</strong> &#8211; Shape function</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/a194e5e3272cf71f2ba45475ebedf230b3d0f8dd.png" alt="\tau = \left( \frac{\rho_0 c_0}{\pi f \rho_s \left(1-f^2/f_c^2 \right)} \right)^2  \left(  \ln{\left[ \frac{2 \pi f \sqrt{S}}{c_0} \right]}  + 0.160 + U(l_x,l_y) + \frac{1}{4 \mu^6} \left[(2\mu^2-1)(\mu^2+1)^2\ln{\left(\mu^2-1\right)} + (2\mu^2+1)(\mu^2-1)^2 \ln{\left(\mu^2+1\right)} - 4\mu^2 - 8\mu^6 \ln{\mu}  \right] \right)"/></p>
+</div><p>See Craik, equation 4.22, page 101.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The shape function <img class="math" src="../../_images/math/2eaa90dbe2ddcca7a4bad5eec6e01e81ba303d43.png" alt="U(l_x,l_y)"/> is assumed to be zero.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The term B3*(C1 + C2 + C3) (see source) can be ignored except close to the critical frequency. We will nevertheless calculate them, and in case they become <cite>nan</cite> we replace the factor with zero.</p>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html"
+                        title="previous chapter">seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html"
+                        title="next chapter">seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.couplings.couplingsurfaceacoustical.tau.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical.html" title="seapy.couplings.couplingsurfaceplateacoustical.CouplingSurfacePlateAcoustical"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical.html" title="seapy.couplings.couplingsurfaceacoustical.CouplingSurfaceAcoustical"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../couplings.html" >Couplings (<tt class="docutils literal"><span class="pre">seapy.couplings</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

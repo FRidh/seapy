@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.subsystems.subsystem &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.subsystems.subsystem</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ABC</span>
+<span class="sd">---</span>
+
+<span class="sd">.. autoclass:: seapy.subsystems.subsystem.Subsystem</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">Base</span><span class="p">,</span> <span class="n">ComponentLink</span><span class="p">,</span> <span class="n">LinkedList</span><span class="p">,</span> <span class="n">Spectrum</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">cmath</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">WeakSet</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">seapy.excitations</span> <span class="kn">import</span> <span class="n">excitations_map</span>   <span class="c"># Circular dependency!</span>
+
+<div class="viewcode-block" id="Subsystem"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem">[docs]</a><span class="k">class</span> <span class="nc">Subsystem</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract Base Class for subsystems.&quot;&quot;&quot;</span>
+
+    <span class="n">SORT</span> <span class="o">=</span> <span class="s">&#39;Subsystem&#39;</span>
+
+    <span class="n">_DEPENDENCIES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;component&#39;</span><span class="p">]</span>
+
+    <span class="n">component</span> <span class="o">=</span> <span class="n">ComponentLink</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Component this subsystem uses.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">linked_couplings_from</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Set of couplings in which the subsystem is in the From field.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">linked_couplings_to</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set of couplings in which the subsystem is in the To field.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">linked_excitations</span> <span class="o">=</span> <span class="n">LinkedList</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set of excitations this subsystem experiences.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="c">#def __init__(self, name, component, **properties):</span>
+<div class="viewcode-block" id="Subsystem.__init__"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor.</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: Identifier</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param component: Component</span>
+<span class="sd">        :type component: :class:`SeaPy.components.Component`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+        <span class="c">#super().__init__(name, component.system, **properties)</span>
+        
+        <span class="c">#self.component = component</span>
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#Component this subsystem uses.</span>
+        <span class="c">#&quot;&quot;&quot;</span>
+        
+        </div>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Destructor. Destroy linked couplings. Remove references from components&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_couplings_from</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Destructor </span><span class="si">%s</span><span class="s">: Deleting linked coupling </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">coupling</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">removeObject</span><span class="p">(</span><span class="n">coupling</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_couplings_to</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Destructor </span><span class="si">%s</span><span class="s">: Deleting linked coupling </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">coupling</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">removeObject</span><span class="p">(</span><span class="n">coupling</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">excitation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_excitations</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Destructor </span><span class="si">%s</span><span class="s">: Deleting linked excitation </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">excitation</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">removeObject</span><span class="p">(</span><span class="n">excitation</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s">&#39;linked_subsystems&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ReferenceError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c">#self.system.subsystems.remove(self.name)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__del__</span><span class="p">()</span> <span class="c"># Inherit destructor from base class</span>
+
+
+    
+<div class="viewcode-block" id="Subsystem.disable"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">couplings</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable this subsystem. Optionally disable dependent couplings as well.</span>
+<span class="sd">        </span>
+<span class="sd">        :param couplings: Disable couplings</span>
+<span class="sd">        :type couplings: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">False</span>
+        
+        <span class="k">if</span> <span class="n">couplings</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_couplings</span><span class="p">:</span>
+                <span class="n">coupling</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="Subsystem.enable"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">couplings</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable this subsystem. Optionally enable dependent couplings as well.</span>
+<span class="sd">        </span>
+<span class="sd">        :param couplings: Enable couplings</span>
+<span class="sd">        :type couplings: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="k">if</span> <span class="n">couplings</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_couplings</span><span class="p">:</span>
+                <span class="n">coupling</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="Subsystem.addExcitation"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.addExcitation">[docs]</a>    <span class="k">def</span> <span class="nf">addExcitation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add excitation to subsystem.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">excitations_map</span><span class="p">[</span><span class="n">model</span><span class="p">](</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">getObject</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="c">#self.linked_excitations.add(obj)</span>
+        <span class="k">return</span> <span class="n">obj</span>
+    
+</div>
+    <span class="n">modal_energy</span> <span class="o">=</span> <span class="n">Spectrum</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Modal energy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c">#def _set_modal_overlap_factor(self, x):</span>
+        <span class="c">#self._modal_overlap_factor = x</span>
+    
+    <span class="c">#def _get_modal_overlap_factor(self):</span>
+        <span class="c">#if not self._modal_overlap_factor:</span>
+            <span class="c">#return self.component.material.loss_factor</span>
+        <span class="c">#else:</span>
+            <span class="c">#self._modal_overlap_factor</span>
+    
+    <span class="c">#_modal_overlap_factor = None</span>
+    <span class="c">#modal_overlap_factor = property(fget=_get_modal_overlap_factor, fset=_set_modal_overlap_factor)</span>
+    <span class="c">#&quot;&quot;&quot;</span>
+    <span class="c">#Modal overlap factor. Initial value is based on damping loss factor of subsystem.</span>
+    <span class="c">#After solving the system a first time, this value is updated to its results.</span>
+    <span class="c">#This value is iteratively updated.</span>
+    <span class="c">#&quot;&quot;&quot;</span>
+    
+    
+    <span class="nd">@property</span>
+    <span class="nd">@abc.abstractmethod</span>
+<div class="viewcode-block" id="Subsystem.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Phase velocity in a subsystem.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+  </div>
+    <span class="nd">@property</span>
+    <span class="nd">@abc.abstractmethod</span>                    
+<div class="viewcode-block" id="Subsystem.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Group velocity in a subsystem.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+        </div>
+    <span class="nd">@property</span>
+    <span class="nd">@abc.abstractmethod</span>
+<div class="viewcode-block" id="Subsystem.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Average frequency spacing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+    </div>
+    <span class="nd">@property</span>            
+<div class="viewcode-block" id="Subsystem.modal_density"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.modal_density">[docs]</a>    <span class="k">def</span> <span class="nf">modal_density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Modal density.</span>
+<span class="sd">       </span>
+<span class="sd">        .. math:: n(\\omega) = \\frac{1}{2 \\pi \\overline{\\delta f}}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq. 8.1.6</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_frequency_spacing</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FloatingPointError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="c">#@abc.abstractmethod</span>
+<div class="viewcode-block" id="Subsystem.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wave number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.impedance"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.impedance">[docs]</a>    <span class="k">def</span> <span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Impedance :math:`Z`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.resistance"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.resistance">[docs]</a>    <span class="k">def</span> <span class="nf">resistance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resistance :math:`R`, the real part of the impedance :math:`Z`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: R = \\Re{Z}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">impedance</span><span class="p">)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.conductance"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.conductance">[docs]</a>    <span class="k">def</span> <span class="nf">conductance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Conductance :math:`G`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: G = \\frac{1}{R}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">resistance</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.mobility"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.mobility">[docs]</a>    <span class="k">def</span> <span class="nf">mobility</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mobility `Y`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: Y = \\frac{1}{Z}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">impedance</span>
+        <span class="k">except</span> <span class="ne">FloatingPointError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.damping_term"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.damping_term">[docs]</a>    <span class="k">def</span> <span class="nf">damping_term</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\beta_{ii} = \\frac{f \\eta_{loss} }{\\overline{\\delta f}}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above equation 12.1.4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">loss_factor</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_frequency_spacing</span>
+        <span class="k">except</span> <span class="ne">FloatingPointError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.modal_overlap_factor"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.modal_overlap_factor">[docs]</a>    <span class="k">def</span> <span class="nf">modal_overlap_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Modal overlap factor.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: M = \\frac{ \\pi \\beta_{ii} }{2}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above equation 12.1.4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping_term</span> <span class="o">/</span> <span class="mf">2.0</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.power_input"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.power_input">[docs]</a>    <span class="k">def</span> <span class="nf">power_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Total input power due to excitations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+        <span class="c">#print self.linked_excitations</span>
+        <span class="k">for</span> <span class="n">excitation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_excitations</span><span class="p">:</span>
+            <span class="n">power</span> <span class="o">=</span> <span class="n">power</span> <span class="o">+</span> <span class="n">excitation</span><span class="o">.</span><span class="n">power</span>
+        <span class="k">return</span> <span class="n">power</span>    
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.energy"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.energy">[docs]</a>    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Total energy :math:`E` in subsystem.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: E = M(\\omega) n(\\omega)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modal_energy</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">modal_density</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dlf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Damping loss factor of subsystem.</span>
+<span class="sd">        </span>
+<span class="sd">        By default this is the loss factor of the material of the component.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dlf</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dlf</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">loss_factor</span>
+    
+    <span class="n">_dlf</span> <span class="o">=</span> <span class="bp">None</span>
+     
+    <span class="nd">@dlf.setter</span>
+    <span class="k">def</span> <span class="nf">dlf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dlf</span> <span class="o">=</span> <span class="n">x</span>
+    
+    <span class="nd">@dlf.deleter</span>
+<div class="viewcode-block" id="Subsystem.dlf"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.dlf">[docs]</a>    <span class="k">def</span> <span class="nf">dlf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dlf</span> <span class="o">=</span> <span class="bp">None</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Subsystem.tlf"><a class="viewcode-back" href="../../../reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem.tlf">[docs]</a>    <span class="k">def</span> <span class="nf">tlf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Total loss factor.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\eta_i = \\eta_{id} + \\sum_{j=1, j \\neq i}^{n} \\eta_{ij}</span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 3.18, page 60.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">coupling</span><span class="o">.</span><span class="n">clf</span> <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">linked_couplings_from</span> <span class="k">if</span> <span class="n">coupling</span><span class="o">.</span><span class="n">included</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlf</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">included</span>
+        
+        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

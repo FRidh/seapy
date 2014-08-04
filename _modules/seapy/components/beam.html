@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.beam &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.components.beam</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Beam</span>
+<span class="sd">----</span>
+
+<span class="sd">.. autoclass:: seapy.components.beam.Component1DBeam</span>
+
+<span class="sd">Subsystems</span>
+<span class="sd">++++++++++</span>
+
+<span class="sd">.. autoclass:: seapy.components.beam.SubsystemLong</span>
+<span class="sd">.. autoclass:: seapy.components.beam.SubsystemBend</span>
+<span class="sd">.. autoclass:: seapy.components.beam.SubsystemShear</span>
+
+
+<span class="sd">Classes describing a one-dimensional beam.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.structural</span> <span class="kn">import</span> <span class="n">ComponentStructural</span>
+<span class="kn">from</span> <span class="nn">..subsystems</span> <span class="kn">import</span> <span class="n">SubsystemStructural</span>
+
+   
+<div class="viewcode-block" id="SubsystemLong"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong">[docs]</a><span class="k">class</span> <span class="nc">SubsystemLong</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Subsystem for longitudinal waves in a 1D system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.wavenumber"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong.wavenumber">[docs]</a>    <span class="k">def</span> <span class="nf">wavenumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wavenumber in radians per unit length.</span>
+<span class="sd">        </span>
+<span class="sd">        :param N: mode</span>
+<span class="sd">        :param delta: boundary condition dependent constant</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: k = (N + \\delta_{BC} ) \\frac{\\pi}{L}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, equation 8.1.2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">length</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase velocity for longitudinal wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{L,\\phi}^{1D} = \\frac{E}{\\rho}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">young</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Group velocity for longitudinal wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{L,g}^{1D} = c_{L,\\phi}^{1D}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average frequency spacing for longitudinal waves.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_L^{1D} = \\frac{c_{L, \\phi}^{1D}}{2L}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq. 8.1.7</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemLong.impedance_point_force"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemLong.html#seapy.components.beam.SubsystemLong.impedance_point_force">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_point_force</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance for longitudinal waves in a bar when excited at a point by a force.</span>
+<span class="sd">    </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">    </span>
+<span class="sd">        .. math:: Z_{L}^{F, 1D} = 2 \\rho S c_L</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, table 10.1, first row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span>
+    
+   </div></div>
+<div class="viewcode-block" id="SubsystemBend"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend">[docs]</a><span class="k">class</span> <span class="nc">SubsystemBend</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Subsystem for bending waves in a 1D system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase velocity for bending wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{B,\\phi}^{2D} = \\sqrt{\\omega \\kappa c_{L, \\phi}^{1D} }</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.1.10</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">radius_of_gyration</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">subsystem_long</span><span class="o">.</span><span class="n">soundspeed_phase</span><span class="p">)</span>
+                </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Group velocity for bending wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{B,g}^{1D} = 2 c_{B,\\phi}^{1D}</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average frequency spacing for bending waves. Valid when :math:`f &lt;&lt; c_{L,\\phi}  / 4 \\pi \\kappa`.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_B^{1D} = \\frac{c_{B, \\phi}^{1D}}{L}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq. 8.1.10</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.impedance_point_force"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.impedance_point_force">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_point_force</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance for bending waves in a thin beam excited far way from the edges.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: Z_B^{F,1D} = 2 \\rho S c_{L, \\phi}^{1D} (1 + j)</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, table 10.1, second row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1.0j</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.flexural_rigidity"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.flexural_rigidity">[docs]</a>    <span class="k">def</span> <span class="nf">flexural_rigidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flexural rigidity or bending stiffness of a beam.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: B = \\frac{E h^3 b}{12}</span>
+<span class="sd">        </span>
+<span class="sd">        with</span>
+<span class="sd">        </span>
+<span class="sd">        * Young&#39;s modulus :math:`E`</span>
+<span class="sd">        * Beam height :math:`h`</span>
+<span class="sd">        * Beam width :math:`b`: </span>
+<span class="sd">        </span>
+<span class="sd">        See Craik, equation 3.3, page 48.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">young</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">3.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">12.0</span>
+
+    <span class="c">#@property</span>
+    <span class="c">#def impedance_force_point_edge(self):</span>
+        <span class="c">#&quot;&quot;&quot;Impedance for bending waves in a thin beam excited on the side.</span>
+        
+        <span class="c">#:rtype: :class:`numpy.ndarray`</span>
+        
+        <span class="c">#.. math:: Z_B^{F,1D} = \\frac{1}{2} \\rho S c_{L, \\phi}^{1D} (1 + j)</span>
+        
+        <span class="c">#See Hynna, table 1, second equation.</span>
+        
+        <span class="c">#!!!!!!!!!!!!</span>
+        <span class="c">#This is a quarter of the expression above and this is </span>
+        <span class="c">#simply do to different position of excitation as explained by Lyon!</span>
+        <span class="c">#!!!!!!!!!!!</span>
+        
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#return 0.5 * self.component.material.density * self.component.cross_section * self.soundspeed_group * (1.0 + 1.0j)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemBend.impedance_point_moment"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemBend.html#seapy.components.beam.SubsystemBend.impedance_point_moment">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_point_moment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Moment impedance for bending waves excited in the center of the beam.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: W = 2 \\rho S c_B \\frac{(1-j)}{k_B^2}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, table 10.2, second row.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">cross_section</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">1.0j</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavenumber</span><span class="o">**</span><span class="mf">2.0</span>
+        
+    <span class="c">#@property</span>
+    <span class="c">#def impedance_moment_edge(self):</span>
+        <span class="c">#&quot;&quot;&quot;Moment impedance for bending waves excited at the edge of the beam.</span>
+        
+        <span class="c">#:rtype: :class:`numpy.ndarray`</span>
+        
+        <span class="c">#.. math:: W = \\frac{1}{2} \\rho S c_B \\frac{(1-j)}{k_B^2} </span>
+        
+        <span class="c">#See Hynna, table 1.</span>
+        
+        <span class="c">#!!!!!!!!!!!!</span>
+        <span class="c">#This is a quarter of the expression above and this is </span>
+        <span class="c">#simply do to different position of excitation as explained by Lyon!</span>
+        <span class="c">#!!!!!!!!!!!</span>
+        <span class="c">#&quot;&quot;&quot;</span>
+        <span class="c">#return 0.5 * self.component.material.density * self.component.cross_section * self.soundspeed_group * (1.0 - 1.0j) / self.wavenumber**2.0</span>
+    
+    </div></div>
+<div class="viewcode-block" id="SubsystemShear"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear">[docs]</a><span class="k">class</span> <span class="nc">SubsystemShear</span><span class="p">(</span><span class="n">SubsystemStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Subsystem for shear waves in a 1D isotropic system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.soundspeed_phase"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear.soundspeed_phase">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase velocity for shear wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{T,g}^{1D} = \\sqrt{\\frac{G J }{\\rho I_p}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">shear</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">torsional_rigidity</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">area_moment_of_inertia</span><span class="p">))</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.soundspeed_group"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear.soundspeed_group">[docs]</a>    <span class="k">def</span> <span class="nf">soundspeed_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Group velocity for shear wave.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: c_{T,g}^{1D} = c_{T,\\phi}^{1D}</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_phase</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Average frequency spacing for bending waves.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\overline{\\delta f}_T^{1D} = \\frac{c_T}{2L}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, eq. 8.1.8</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">soundspeed_group</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SubsystemShear.impedance"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.SubsystemShear.html#seapy.components.beam.SubsystemShear.impedance">[docs]</a>    <span class="k">def</span> <span class="nf">impedance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        
+ </div></div>
+<div class="viewcode-block" id="Component1DBeam"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam">[docs]</a><span class="k">class</span> <span class="nc">Component1DBeam</span><span class="p">(</span><span class="n">ComponentStructural</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;One-dimensional beam component.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SUBSYSTEMS</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Long&#39;</span><span class="p">:</span> <span class="n">SubsystemLong</span><span class="p">,</span> 
+                   <span class="s">&#39;Bend&#39;</span><span class="p">:</span> <span class="n">SubsystemBend</span><span class="p">,</span> 
+                   <span class="s">&#39;Shear&#39;</span><span class="p">:</span> <span class="n">SubsystemShear</span><span class="p">}</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component1DBeam.mass_per_area"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam.mass_per_area">[docs]</a>    <span class="k">def</span> <span class="nf">mass_per_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mass per unit area.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :func:`float`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="c">#*self.width</span>
+             </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component1DBeam.area_moment_of_inertia"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam.area_moment_of_inertia">[docs]</a>    <span class="k">def</span> <span class="nf">area_moment_of_inertia</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Area moment of inertia.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :func:`float`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_section</span><span class="p">),</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">12.0</span>
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component1DBeam.radius_of_gyration"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam.radius_of_gyration">[docs]</a>    <span class="k">def</span> <span class="nf">radius_of_gyration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Radius of gyration :math:`\\kappa` is given by dividing the height of the beam by 12.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :func:`float`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\kappa = \\frac{h}{12}</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above eq. 8.1.10</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">12.0</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Component1DBeam.torsional_rigidity"><a class="viewcode-back" href="../../../reference/generated/seapy.components.beam.Component1DBeam.html#seapy.components.beam.Component1DBeam.torsional_rigidity">[docs]</a>    <span class="k">def</span> <span class="nf">torsional_rigidity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Torsional rigidity of beam.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

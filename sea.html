@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistical Energy Analysis &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="index.html" />
+    <link rel="next" title="SeaPy implementation" href="implementation.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="SeaPy implementation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SeaPy 0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="statistical-energy-analysis">
+<span id="sea"></span><h1>Statistical Energy Analysis<a class="headerlink" href="#statistical-energy-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<p>This chapter provides some background on Statistical Energy Analysis</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Statistical Energy Analysis, normally abbreviated to SEA, is a method for
+studying the vibroacoustic motion of a structure from an energy perspective. SEA
+is used within vibroacoustics to model the flow of acoustic power through a
+vibrating system. An example is modeling the vibrations in cars due to the
+engine. SEA is generally used in the high-frequency region whereas
+finite-element analysis is used in the low-frequency region.</p>
+<p>First step in performing an SEA is creating the geometry. Then, the relevant
+<a class="reference internal" href="glossary.html#term-components"><em class="xref std std-term">components</em></a> are modeled as <a class="reference internal" href="glossary.html#term-subsystems"><em class="xref std std-term">subsystems</em></a>, where each subsystem
+represents one wave type. The subsystems are then connected through
+<a class="reference internal" href="glossary.html#term-couplings"><em class="xref std std-term">couplings</em></a>. <a class="reference internal" href="glossary.html#term-power"><em class="xref std std-term">Power</em></a> is added into the system through
+<a class="reference internal" href="glossary.html#term-excitation"><em class="xref std std-term">excitation</em></a> of one or more subsystems. <a class="reference internal" href="quantities.html#term-power-dissipation"><em class="xref std std-term">Power dissipation</em></a> in
+subsystems and couplings are modeled using <a class="reference internal" href="glossary.html#term-loss-factors"><em class="xref std std-term">loss factors</em></a>. Finally, a
+single matrix composed of <a class="reference internal" href="glossary.html#term-loss-factors"><em class="xref std std-term">loss factors</em></a>, <a class="reference internal" href="glossary.html#term-modal-densities"><em class="xref std std-term">modal densities</em></a> and input
+powers, is solved resulting in the modal energies of each subsystem, from which
+their velocity or pressure levels can be calculated.</p>
+</div>
+<div class="section" id="example-sea-model">
+<h2>Example SEA model<a class="headerlink" href="#example-sea-model" title="Permalink to this headline">¶</a></h2>
+<p>Consider two components physically attached to each other.</p>
+<img alt="_images/components.png" src="_images/components.png" />
+<p>The figure below shows a block diagram of how the different objects in a simple SEA model based on these two components are related.
+We assume one wave type exists per component, and so there is one subsystem per component.
+Energy is allowed to flow from Subsystem A to Subsystem B via Coupling 1 and vice versa via Coupling 2.</p>
+</div>
+<div class="section" id="sea-consistency-relation">
+<h2>SEA consistency relation<a class="headerlink" href="#sea-consistency-relation" title="Permalink to this headline">¶</a></h2>
+<p>The consistency relation is</p>
+<div class="math">
+<p><img src="_images/math/24812798ce507bbb799013e52e73bf61ccfab532.png" alt="n_i \eta_c^{i,j} = n_j \eta_c^{j,i}"/></p>
+</div></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Statistical Energy Analysis</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#example-sea-model">Example SEA model</a></li>
+<li><a class="reference internal" href="#sea-consistency-relation">SEA consistency relation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="implementation.html"
+                        title="next chapter">SeaPy implementation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/sea.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="implementation.html" title="SeaPy implementation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">SeaPy 0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
