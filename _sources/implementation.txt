@@ -15,12 +15,12 @@ Overview
 
 An SEA model in SeaPy is represented by the descendents of the following abstract objects:
 
-* :class:`seapy.components.Component.Component`
-* :class:`seapy.subsystems.Subsystem.Subsystem`
-* :class:`seapy.connections.Connection.Connection`
-* :class:`seapy.couplings.Coupling.Coupling`
-* :class:`seapy.materials.Material.Material`
-* :class:`seapy.excitations.Excitation.Excitation`
+* :class:`seapy.components.component.Component`
+* :class:`seapy.subsystems.subsystem.Subsystem`
+* :class:`seapy.junctions.junction.Junction`
+* :class:`seapy.couplings.coupling.Coupling`
+* :class:`seapy.materials.material.Material`
+* :class:`seapy.excitations.excitation.Excitation`
 
 as well as the main class representing the model
 
@@ -32,8 +32,8 @@ The following figure gives an overview on how the classes are related.
 
     digraph overview {
       Subsystem -> Component -> System;
-      Coupling -> Connection -> System;
-      Connection -> Component
+      Coupling -> Junction -> System;
+      Junction -> Component
       Coupling -> Subsystem
       Coupling -> Component
       Component -> Material -> System
@@ -41,4 +41,4 @@ The following figure gives an overview on how the classes are related.
     }
     
 Components can have multiple subsystems. Depending on the type of component these are added automatically when creating a component.
-If components are connected to eachother a connection needs to be created. The connection will automatically create all possible couplings between the subsystems.
+If components are connected to eachother a Junction needs to be created. The Junction will automatically create all possible couplings between the subsystems.

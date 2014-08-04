@@ -76,7 +76,7 @@ Room 3D
     :toctree: generated/
     
     components.acoustical3d.Component3DAcoustical
-    components.3dacoustical3d.SubsystemLong
+    components.acoustical3d.SubsystemLong
 
 
 

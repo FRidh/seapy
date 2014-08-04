@@ -66,13 +66,13 @@
 <span class="kn">from</span> <span class="nn">..subsystems</span> <span class="kn">import</span> <span class="n">SubsystemAcoustical</span>
 
 
-<span class="k">class</span> <span class="nc">SubsystemLong</span><span class="p">(</span><span class="n">SubsystemAcoustical</span><span class="p">):</span>
+<div class="viewcode-block" id="SubsystemLong"><a class="viewcode-back" href="../../../reference/generated/seapy.components.acoustical3d.SubsystemLong.html#seapy.components.acoustical3d.SubsystemLong">[docs]</a><span class="k">class</span> <span class="nc">SubsystemLong</span><span class="p">(</span><span class="n">SubsystemAcoustical</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subsystem for a fluid in a 3D cavity.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SubsystemLong.average_frequency_spacing"><a class="viewcode-back" href="../../../reference/generated/seapy.components.acoustical3d.SubsystemLong.html#seapy.components.acoustical3d.SubsystemLong.average_frequency_spacing">[docs]</a>    <span class="k">def</span> <span class="nf">average_frequency_spacing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Average frequency spacing for a fluid in a 3D cavity.</span>
 <span class="sd">        </span>
@@ -85,8 +85,8 @@
         <span class="c">#except FloatingPointError:</span>
             <span class="c">#return np.zeros(self.frequency.amount)</span>
     
-
-    <span class="k">def</span> <span class="nf">impedance_point_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excitation</span><span class="p">):</span>
+</div>
+<div class="viewcode-block" id="SubsystemLong.impedance_point_volume"><a class="viewcode-back" href="../../../reference/generated/seapy.components.acoustical3d.SubsystemLong.html#seapy.components.acoustical3d.SubsystemLong.impedance_point_volume">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_point_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excitation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Impedance of a 3D cavity when there is a monopole (volume) source in the cavity.</span>
 <span class="sd">        </span>
@@ -102,7 +102,7 @@
         <span class="c">#except FloatingPointError:</span>
         <span class="c">#return np.zeros(self.frequency.amount)</span>
 
-        
+        </div></div>
 <div class="viewcode-block" id="Component3DAcoustical"><a class="viewcode-back" href="../../../reference/generated/seapy.components.acoustical3d.Component3DAcoustical.html#seapy.components.acoustical3d.Component3DAcoustical">[docs]</a><span class="k">class</span> <span class="nc">Component3DAcoustical</span><span class="p">(</span><span class="n">ComponentAcoustical</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Component for a fluid in a 3D cavity.</span>

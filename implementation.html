@@ -64,20 +64,31 @@ In this chapter we will have a closer look on how SEA is implemented.</p>
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>An SEA model in SeaPy is represented by the descendents of the following abstract objects:</p>
 <ul class="simple">
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.Component.Component</span></tt></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.subsystems.Subsystem.Subsystem</span></tt></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.connections.Connection.Connection</span></tt></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.couplings.Coupling.Coupling</span></tt></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.materials.Material.Material</span></tt></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">seapy.excitations.Excitation.Excitation</span></tt></li>
+<li><a class="reference internal" href="reference/generated/seapy.components.component.Component.html#seapy.components.component.Component" title="seapy.components.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">seapy.components.component.Component</span></tt></a></li>
+<li><a class="reference internal" href="reference/generated/seapy.subsystems.subsystem.Subsystem.html#seapy.subsystems.subsystem.Subsystem" title="seapy.subsystems.subsystem.Subsystem"><tt class="xref py py-class docutils literal"><span class="pre">seapy.subsystems.subsystem.Subsystem</span></tt></a></li>
+<li><a class="reference internal" href="reference/generated/seapy.junctions.junction.Junction.html#seapy.junctions.junction.Junction" title="seapy.junctions.junction.Junction"><tt class="xref py py-class docutils literal"><span class="pre">seapy.junctions.junction.Junction</span></tt></a></li>
+<li><a class="reference internal" href="reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling" title="seapy.couplings.coupling.Coupling"><tt class="xref py py-class docutils literal"><span class="pre">seapy.couplings.coupling.Coupling</span></tt></a></li>
+<li><a class="reference internal" href="reference/generated/seapy.materials.material.Material.html#seapy.materials.material.Material" title="seapy.materials.material.Material"><tt class="xref py py-class docutils literal"><span class="pre">seapy.materials.material.Material</span></tt></a></li>
+<li><a class="reference internal" href="reference/generated/seapy.excitations.excitation.Excitation.html#seapy.excitations.excitation.Excitation" title="seapy.excitations.excitation.Excitation"><tt class="xref py py-class docutils literal"><span class="pre">seapy.excitations.excitation.Excitation</span></tt></a></li>
 </ul>
 <p>as well as the main class representing the model</p>
 <ul class="simple">
 <li><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System.System</span></tt></li>
 </ul>
 <p>The following figure gives an overview on how the classes are related.</p>
+<p class="graphviz">
+<img src="_images/graphviz-fa37764f110077dd49eed66bcffb567e6b9e8064.png" alt="digraph overview {
+  Subsystem -&gt; Component -&gt; System;
+  Coupling -&gt; Junction -&gt; System;
+  Junction -&gt; Component
+  Coupling -&gt; Subsystem
+  Coupling -&gt; Component
+  Component -&gt; Material -&gt; System
+  Excitation -&gt; Subsystem
+}" />
+</p>
 <p>Components can have multiple subsystems. Depending on the type of component these are added automatically when creating a component.
-If components are connected to eachother a connection needs to be created. The connection will automatically create all possible couplings between the subsystems.</p>
+If components are connected to eachother a Junction needs to be created. The Junction will automatically create all possible couplings between the subsystems.</p>
 </div>
 </div>
 

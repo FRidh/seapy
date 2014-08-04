@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.acoustical3d.SubsystemLong &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Components (seapy.components)" href="../components.html" />
+    <link rel="next" title="Subsystems (seapy.subsystems)" href="../subsystems.html" />
+    <link rel="prev" title="seapy.components.acoustical3d.Component3DAcoustical" href="seapy.components.acoustical3d.Component3DAcoustical.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../subsystems.html" title="Subsystems (seapy.subsystems)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.acoustical3d.Component3DAcoustical.html" title="seapy.components.acoustical3d.Component3DAcoustical"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" accesskey="U">Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-components-acoustical3d-subsystemlong">
+<h1>seapy.components.acoustical3d.SubsystemLong<a class="headerlink" href="#seapy-components-acoustical3d-subsystemlong" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.components.acoustical3d.SubsystemLong">
+<em class="property">class </em><tt class="descclassname">seapy.components.acoustical3d.</tt><tt class="descname">SubsystemLong</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/acoustical3d.html#SubsystemLong"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.acoustical3d.SubsystemLong" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html#seapy.subsystems.subsystemacoustical.SubsystemAcoustical" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical"><tt class="xref py py-class docutils literal"><span class="pre">seapy.subsystems.subsystemacoustical.SubsystemAcoustical</span></tt></a></p>
+<p>Subsystem for a fluid in a 3D cavity.</p>
+<dl class="method">
+<dt id="seapy.components.acoustical3d.SubsystemLong.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="headerlink" href="#seapy.components.acoustical3d.SubsystemLong.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">SeaPy.components.Component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.acoustical3d.SubsystemLong.__init__" title="seapy.components.acoustical3d.SubsystemLong.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">addExcitation</span></tt>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add excitation to subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt>([couplings])</td>
+<td>Disable this subsystem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt>([couplings])</td>
+<td>Enable this subsystem.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.acoustical3d.SubsystemLong.impedance_point_volume" title="seapy.components.acoustical3d.SubsystemLong.impedance_point_volume"><tt class="xref py py-obj docutils literal"><span class="pre">impedance_point_volume</span></tt></a>(excitation)</td>
+<td>Impedance of a 3D cavity when there is a monopole (volume) source in the cavity.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.acoustical3d.SubsystemLong.average_frequency_spacing" title="seapy.components.acoustical3d.SubsystemLong.average_frequency_spacing"><tt class="xref py py-obj docutils literal"><span class="pre">average_frequency_spacing</span></tt></a></td>
+<td>Average frequency spacing for a fluid in a 3D cavity.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">component</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">conductance</span></tt></td>
+<td>Conductance <img class="math" src="../../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">conductance_point_average</span></tt></td>
+<td>Average point conductance of an acoustic component.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">damping_term</span></tt></td>
+<td>The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">dlf</span></tt></td>
+<td>Damping loss factor of subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></td>
+<td>Total energy <img class="math" src="../../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> in subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">impedance</span></tt></td>
+<td>Impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_from</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_to</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">linked_excitations</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">mobility</span></tt></td>
+<td>Mobility <cite>Y</cite></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_density</span></tt></td>
+<td>Modal density.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_energy</span></tt></td>
+<td>Class capable of containing spectral values.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">modal_overlap_factor</span></tt></td>
+<td>Modal overlap factor.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">power_input</span></tt></td>
+<td>Total input power due to excitations.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">pressure</span></tt></td>
+<td>Mean sound pressure <img class="math" src="../../_images/math/3eca8557203e86160952e1c0f735f7417f3285b1.png" alt="p"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">pressure_level</span></tt></td>
+<td>Sound pressure level <img class="math" src="../../_images/math/354f73df2b487ef4ac026de9e35cb4b0ff40d87a.png" alt="L_p"/>.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">resistance</span></tt></td>
+<td>Resistance <img class="math" src="../../_images/math/9d86170e7de539c0ff999de09621ee0c7b6c8ed0.png" alt="R"/>, the real part of the impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/>.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">resistance_point_average</span></tt></td>
+<td>Average point resistance of an acoustic component.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_group</span></tt></td>
+<td>Group speed of a fluid in a duct with rigid walls.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_phase</span></tt></td>
+<td>Phase speed of a fluid in a duct with rigid walls.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">tlf</span></tt></td>
+<td>Total loss factor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">wavenumber</span></tt></td>
+<td>Wavenumber.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="seapy.components.acoustical3d.SubsystemLong.average_frequency_spacing">
+<tt class="descname">average_frequency_spacing</tt><a class="reference internal" href="../../_modules/seapy/components/acoustical3d.html#SubsystemLong.average_frequency_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.acoustical3d.SubsystemLong.average_frequency_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average frequency spacing for a fluid in a 3D cavity.</p>
+<div class="math">
+<p><img src="../../_images/math/59c81849fa905f3a650982e6ea13c408f1ec3470.png" alt="\overline{\delta f}_0^{3D} = \frac{c_0^^3}{4 \pi V f^2}"/></p>
+</div><p>See Lyon, eq 8.3.7</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.components.acoustical3d.SubsystemLong.impedance_point_volume">
+<tt class="descname">impedance_point_volume</tt><big>(</big><em>excitation</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/acoustical3d.html#SubsystemLong.impedance_point_volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.acoustical3d.SubsystemLong.impedance_point_volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impedance of a 3D cavity when there is a monopole (volume) source in the cavity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>excitation</strong> (<tt class="xref py py-class docutils literal"><span class="pre">seapy.excitations.ExcitationPoint</span></tt>) &#8211; Excitation.</td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/e0086153fd091d524f81535e1a0b54266d9cb2c3.png" alt="Z_0^{U,3D} = \frac{\pi \rho f^2}{c_0} \left( 1 + \frac{j}{k_0 r}   \right)"/></p>
+</div><p>See Lyon, table 10.1, last row.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.components.acoustical3d.Component3DAcoustical.html"
+                        title="previous chapter">seapy.components.acoustical3d.Component3DAcoustical</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../subsystems.html"
+                        title="next chapter">Subsystems (<tt class="docutils literal"><span class="pre">seapy.subsystems</span></tt>)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.components.acoustical3d.SubsystemLong.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../subsystems.html" title="Subsystems (seapy.subsystems)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.acoustical3d.Component3DAcoustical.html" title="seapy.components.acoustical3d.Component3DAcoustical"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" >Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

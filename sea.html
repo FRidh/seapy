@@ -84,6 +84,15 @@ their velocity or pressure levels can be calculated.</p>
 <p>The figure below shows a block diagram of how the different objects in a simple SEA model based on these two components are related.
 We assume one wave type exists per component, and so there is one subsystem per component.
 Energy is allowed to flow from Subsystem A to Subsystem B via Coupling 1 and vice versa via Coupling 2.</p>
+<p class="graphviz">
+<img src="_images/graphviz-dd206618b6cce1939892b1d477572dd8f56f72e2.png" alt="digraph sea {
+  &quot;Component A&quot; -&gt; &quot;Subsystem A&quot;;
+  &quot;Component B&quot; -&gt; &quot;Subsystem B&quot;;
+
+  &quot;Subsystem A&quot; -&gt; &quot;Coupling 1&quot; -&gt; &quot;Subsystem B&quot;;
+  &quot;Subsystem B&quot; -&gt; &quot;Coupling 2&quot; -&gt; &quot;Subsystem A&quot;;
+}" />
+</p>
 </div>
 <div class="section" id="sea-consistency-relation">
 <h2>SEA consistency relation<a class="headerlink" href="#sea-consistency-relation" title="Permalink to this headline">¶</a></h2>
