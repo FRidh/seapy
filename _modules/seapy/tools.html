@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.tools &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.tools</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="kn">as</span> <span class="nn">ma</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="kn">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<div class="viewcode-block" id="plot"><a class="viewcode-back" href="../../reference/generated/seapy.tools.plot.html#seapy.tools.plot">[docs]</a><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">visible</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="s">&#39;linear&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot `y` as function of `x` where `y` has quantity `quantity` and `x` is frequency :math:`f`.</span>
+<span class="sd">    </span>
+<span class="sd">    :param x: Array of values for the `x`-axis.</span>
+<span class="sd">    :param y: Array of values for the `y`-axis.</span>
+<span class="sd">    :param quantity: Quantity</span>
+<span class="sd">    :param visible: Array of booleans.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Figure.</span>
+<span class="sd">    :type: :class:`matplotlib.figure.Figure`</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span> <span class="n">visible</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span>  <span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span><span class="o">.</span><span class="n">compressed</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">ATTRIBUTES</span><span class="p">[</span><span class="n">quantity</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Unknown quantity&quot;</span>
+        
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="n">yscale</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">&#39;$f$ in Hz&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span>
+
+    </div>
+<span class="n">ATTRIBUTES</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;pressure_level&#39;</span>              <span class="p">:</span>   <span class="s">&#39;$L_p$ in dB&#39;</span><span class="p">,</span>
+              <span class="s">&#39;velocity_level&#39;</span>              <span class="p">:</span>   <span class="s">&#39;$L_v$ in dB&#39;</span><span class="p">,</span>
+              <span class="s">&#39;power_level&#39;</span>                 <span class="p">:</span>   <span class="s">&#39;$L_P$ in dB&#39;</span><span class="p">,</span>
+              <span class="s">&#39;mass&#39;</span>                        <span class="p">:</span>   <span class="s">&#39;$m$ in kg&#39;</span><span class="p">,</span>
+              <span class="s">&#39;impedance&#39;</span>                   <span class="p">:</span>   <span class="s">&#39;$Z$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;resistance&#39;</span>                  <span class="p">:</span>   <span class="s">&#39;$R$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;resistance_point_average&#39;</span>     <span class="p">:</span>  <span class="s">&#39;$R$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;mobility&#39;</span>                    <span class="p">:</span>   <span class="s">&#39;$Y$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;modal_density&#39;</span>               <span class="p">:</span>   <span class="s">&#39;$n$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;average_frequency_spacing&#39;</span>   <span class="p">:</span>   <span class="s">&#39;$\Delta f$ in Hz&#39;</span><span class="p">,</span>
+              <span class="s">&#39;soundspeed_group&#39;</span>            <span class="p">:</span>   <span class="s">&#39;$c_{g}$ in m/s&#39;</span><span class="p">,</span>
+              <span class="s">&#39;soundspeed_phase&#39;</span>            <span class="p">:</span>   <span class="s">&#39;$c_{\phi}$ in m/s&#39;</span><span class="p">,</span>
+              <span class="s">&#39;clf&#39;</span>                         <span class="p">:</span>   <span class="s">&#39;$\eta$ in ...&#39;</span><span class="p">,</span>
+              <span class="s">&#39;input_power&#39;</span>                 <span class="p">:</span>   <span class="s">&#39;$P$ in W&#39;</span><span class="p">,</span>
+              <span class="s">&#39;loss_factor&#39;</span>                 <span class="p">:</span>   <span class="s">&#39;$\eta$ in $\mathrm{rad}^{-1}$&#39;</span><span class="p">,</span>
+              <span class="s">&#39;wavenumber&#39;</span>                  <span class="p">:</span>   <span class="s">&#39;$k$ in rad/m&#39;</span><span class="p">,</span> 
+              <span class="s">&#39;power&#39;</span>                       <span class="p">:</span>   <span class="s">&#39;$P$ in W&#39;</span><span class="p">,</span>
+              <span class="p">}</span>
+
+
+
+
+<div class="viewcode-block" id="graph"><a class="viewcode-back" href="../../reference/generated/seapy.tools.graph.html#seapy.tools.graph">[docs]</a><span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Draw a graph of types specified in `objects`.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note:: All objects are treated as nodes.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">sort</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">sort</span><span class="o">+</span><span class="s">&#39;s&#39;</span><span class="p">))</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="s">&#39;component&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;subsystem&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">subsystems</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s">&#39;component&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;material&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">materials</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s">&#39;component&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;junction&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">junctions</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s">&#39;subsystem&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;excitation&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">subsystem</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s">&#39;junction&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;coupling&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">junction</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">couplings</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="s">&#39;subsystem&#39;</span> <span class="ow">in</span> <span class="n">objects</span> <span class="ow">and</span> <span class="s">&#39;coupling&#39;</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">couplings</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">couplings</span><span class="p">)</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">G</span>
+        
+    <span class="c">#edges = ((obj.name, getattr(obj, b).name) for obj in getattr(system, b+&#39;s&#39;))</span>
+            <span class="c">#G.add_edges_from(edges)</span>
+        <span class="c">#except AttributeError:</span>
+            <span class="c">#pass</span>
+        
+        <span class="c">#try:</span>
+            <span class="c">#edges = ((obj.name, getattr(obj, b).name) for obj in getattr(system, b+&#39;s&#39;))</span>
+            <span class="c">#G.add_edges_from(edges)</span>
+        <span class="c">#except AttributeError:</span>
+            <span class="c">#pass</span>
+        
+</div>
+<div class="viewcode-block" id="graph_couplings"><a class="viewcode-back" href="../../reference/generated/seapy.tools.graph_couplings.html#seapy.tools.graph_couplings">[docs]</a><span class="k">def</span> <span class="nf">graph_couplings</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Graph with subsystems as nodes and couplings as edges.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+    
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">subsystems</span><span class="p">)</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">((</span><span class="n">obj</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">})</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">system</span><span class="o">.</span><span class="n">couplings</span><span class="p">)</span>
+
+    <span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">G</span>
+    
+    
+    
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

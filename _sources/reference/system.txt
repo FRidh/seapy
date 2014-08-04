@@ -1,4 +1,4 @@
-.. _components:
+.. _system:
 
 
 System (:mod:`seapy.system`)
