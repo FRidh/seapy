@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.subsystems.subsystem.Subsystem &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Subsystems (seapy.subsystems)" href="../subsystems.html" />
+    <link rel="next" title="seapy.subsystems.subsystemstructural.SubsystemStructural" href="seapy.subsystems.subsystemstructural.SubsystemStructural.html" />
+    <link rel="prev" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical" href="seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.subsystems.subsystemstructural.SubsystemStructural.html" title="seapy.subsystems.subsystemstructural.SubsystemStructural"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../subsystems.html" accesskey="U">Subsystems (<tt class="docutils literal"><span class="pre">seapy.subsystems</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-subsystems-subsystem-subsystem">
+<h1>seapy.subsystems.subsystem.Subsystem<a class="headerlink" href="#seapy-subsystems-subsystem-subsystem" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.subsystems.subsystem.Subsystem">
+<em class="property">class </em><tt class="descclassname">seapy.subsystems.subsystem.</tt><tt class="descname">Subsystem</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.base.Base.html#seapy.base.Base" title="seapy.base.Base"><tt class="xref py py-class docutils literal"><span class="pre">seapy.base.Base</span></tt></a></p>
+<p>Abstract Base Class for subsystems.</p>
+<dl class="method">
+<dt id="seapy.subsystems.subsystem.Subsystem.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">SeaPy.components.Component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.__init__" title="seapy.subsystems.subsystem.Subsystem.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.addExcitation" title="seapy.subsystems.subsystem.Subsystem.addExcitation"><tt class="xref py py-obj docutils literal"><span class="pre">addExcitation</span></tt></a>(name,&nbsp;model,&nbsp;**properties)</td>
+<td>Add excitation to subsystem.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">Subsystem.df</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.disable" title="seapy.subsystems.subsystem.Subsystem.disable"><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt></a>([couplings])</td>
+<td>Disable this subsystem.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.enable" title="seapy.subsystems.subsystem.Subsystem.enable"><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt></a>([couplings])</td>
+<td>Enable this subsystem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.average_frequency_spacing" title="seapy.subsystems.subsystem.Subsystem.average_frequency_spacing"><tt class="xref py py-obj docutils literal"><span class="pre">average_frequency_spacing</span></tt></a></td>
+<td>&#8220;</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.component" title="seapy.subsystems.subsystem.Subsystem.component"><tt class="xref py py-obj docutils literal"><span class="pre">component</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.conductance" title="seapy.subsystems.subsystem.Subsystem.conductance"><tt class="xref py py-obj docutils literal"><span class="pre">conductance</span></tt></a></td>
+<td>Conductance <img class="math" src="../../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.damping_term" title="seapy.subsystems.subsystem.Subsystem.damping_term"><tt class="xref py py-obj docutils literal"><span class="pre">damping_term</span></tt></a></td>
+<td>The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.dlf" title="seapy.subsystems.subsystem.Subsystem.dlf"><tt class="xref py py-obj docutils literal"><span class="pre">dlf</span></tt></a></td>
+<td>Damping loss factor of subsystem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.energy" title="seapy.subsystems.subsystem.Subsystem.energy"><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></a></td>
+<td>Total energy <img class="math" src="../../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> in subsystem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.impedance" title="seapy.subsystems.subsystem.Subsystem.impedance"><tt class="xref py py-obj docutils literal"><span class="pre">impedance</span></tt></a></td>
+<td>Impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.linked_couplings_from" title="seapy.subsystems.subsystem.Subsystem.linked_couplings_from"><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_from</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.linked_couplings_to" title="seapy.subsystems.subsystem.Subsystem.linked_couplings_to"><tt class="xref py py-obj docutils literal"><span class="pre">linked_couplings_to</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.linked_excitations" title="seapy.subsystems.subsystem.Subsystem.linked_excitations"><tt class="xref py py-obj docutils literal"><span class="pre">linked_excitations</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.mobility" title="seapy.subsystems.subsystem.Subsystem.mobility"><tt class="xref py py-obj docutils literal"><span class="pre">mobility</span></tt></a></td>
+<td>Mobility <cite>Y</cite></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.modal_density" title="seapy.subsystems.subsystem.Subsystem.modal_density"><tt class="xref py py-obj docutils literal"><span class="pre">modal_density</span></tt></a></td>
+<td>Modal density.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.modal_energy" title="seapy.subsystems.subsystem.Subsystem.modal_energy"><tt class="xref py py-obj docutils literal"><span class="pre">modal_energy</span></tt></a></td>
+<td>Class capable of containing spectral values.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.modal_overlap_factor" title="seapy.subsystems.subsystem.Subsystem.modal_overlap_factor"><tt class="xref py py-obj docutils literal"><span class="pre">modal_overlap_factor</span></tt></a></td>
+<td>Modal overlap factor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.power_input" title="seapy.subsystems.subsystem.Subsystem.power_input"><tt class="xref py py-obj docutils literal"><span class="pre">power_input</span></tt></a></td>
+<td>Total input power due to excitations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.resistance" title="seapy.subsystems.subsystem.Subsystem.resistance"><tt class="xref py py-obj docutils literal"><span class="pre">resistance</span></tt></a></td>
+<td>Resistance <img class="math" src="../../_images/math/9d86170e7de539c0ff999de09621ee0c7b6c8ed0.png" alt="R"/>, the real part of the impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.soundspeed_group" title="seapy.subsystems.subsystem.Subsystem.soundspeed_group"><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_group</span></tt></a></td>
+<td>Group velocity in a subsystem.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.soundspeed_phase" title="seapy.subsystems.subsystem.Subsystem.soundspeed_phase"><tt class="xref py py-obj docutils literal"><span class="pre">soundspeed_phase</span></tt></a></td>
+<td>Phase velocity in a subsystem.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.tlf" title="seapy.subsystems.subsystem.Subsystem.tlf"><tt class="xref py py-obj docutils literal"><span class="pre">tlf</span></tt></a></td>
+<td>Total loss factor.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.subsystems.subsystem.Subsystem.wavenumber" title="seapy.subsystems.subsystem.Subsystem.wavenumber"><tt class="xref py py-obj docutils literal"><span class="pre">wavenumber</span></tt></a></td>
+<td>Wave number.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">SeaPy.components.Component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.subsystems.subsystem.Subsystem.addExcitation">
+<tt class="descname">addExcitation</tt><big>(</big><em>name</em>, <em>model</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.addExcitation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.addExcitation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add excitation to subsystem.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.average_frequency_spacing">
+<tt class="descname">average_frequency_spacing</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.average_frequency_spacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.average_frequency_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8221;
+Average frequency spacing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.component">
+<tt class="descname">component</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Component this subsystem uses.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.conductance">
+<tt class="descname">conductance</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.conductance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.conductance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conductance <img class="math" src="../../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/>.</p>
+<div class="math">
+<p><img src="../../_images/math/7ffafd72e59edb22091103a7a947889763b577ed.png" alt="G = \frac{1}{R}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.damping_term">
+<tt class="descname">damping_term</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.damping_term"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.damping_term" title="Permalink to this definition">¶</a></dt>
+<dd><p>The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.</p>
+<div class="math">
+<p><img src="../../_images/math/c98b7c3bb383ff58c83f089b24a292502790d46e.png" alt="\beta_{ii} = \frac{f \eta_{loss} }{\overline{\delta f}}"/></p>
+</div><p>See Lyon, above equation 12.1.4</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.subsystems.subsystem.Subsystem.disable">
+<tt class="descname">disable</tt><big>(</big><em>couplings=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable this subsystem. Optionally disable dependent couplings as well.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>couplings</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Disable couplings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.dlf">
+<tt class="descname">dlf</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.dlf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.dlf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Damping loss factor of subsystem.</p>
+<p>By default this is the loss factor of the material of the component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.subsystems.subsystem.Subsystem.enable">
+<tt class="descname">enable</tt><big>(</big><em>couplings=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable this subsystem. Optionally enable dependent couplings as well.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>couplings</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Enable couplings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.energy">
+<tt class="descname">energy</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total energy <img class="math" src="../../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> in subsystem.</p>
+<div class="math">
+<p><img src="../../_images/math/d809f095eaa7331216b161c3a811472164b77c6f.png" alt="E = M(\omega) n(\omega)"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.impedance">
+<tt class="descname">impedance</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.impedance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.impedance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.linked_couplings_from">
+<tt class="descname">linked_couplings_from</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c3941b0&gt;</em><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.linked_couplings_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of couplings in which the subsystem is in the From field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.linked_couplings_to">
+<tt class="descname">linked_couplings_to</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c3945e8&gt;</em><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.linked_couplings_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of couplings in which the subsystem is in the To field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.linked_excitations">
+<tt class="descname">linked_excitations</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c394360&gt;</em><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.linked_excitations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of excitations this subsystem experiences.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.mobility">
+<tt class="descname">mobility</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.mobility"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.mobility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mobility <cite>Y</cite></p>
+<div class="math">
+<p><img src="../../_images/math/be6b8ef571472dcf013d6300a2a4d5c5772fdb7a.png" alt="Y = \frac{1}{Z}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.modal_density">
+<tt class="descname">modal_density</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.modal_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.modal_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modal density.</p>
+<div class="math">
+<p><img src="../../_images/math/9323b629bf6a79a02e2de2857933c5679265a010.png" alt="n(\omega) = \frac{1}{2 \pi \overline{\delta f}}"/></p>
+</div><p>See Lyon, eq. 8.1.6</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.modal_energy">
+<tt class="descname">modal_energy</tt><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.modal_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modal energy.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.modal_overlap">
+<tt class="descname">modal_overlap</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.modal_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.modal_overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modal overlap.</p>
+<div class="math">
+<p><img src="../../_images/math/ee64da4c41c4393e93ab27e466ccf7a55746c3da.png" alt="M = \eta_d \omega n"/></p>
+</div><p>with:</p>
+<ul class="simple">
+<li>damping loss factor <img class="math" src="../../_images/math/9172efc523d7488d4c3ed299d0be813de01503b8.png" alt="\eta"/></li>
+<li>angular frequency <img class="math" src="../../_images/math/c7415c6919c2eb17b1ea36f0243079b59825ee89.png" alt="\omega"/></li>
+<li>modal density <img class="math" src="../../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/></li>
+</ul>
+<p>See Craik, equation 2.23, page 41.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.modal_overlap_factor">
+<tt class="descname">modal_overlap_factor</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.modal_overlap_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.modal_overlap_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modal overlap factor.</p>
+<div class="math">
+<p><img src="../../_images/math/7156fae749cb7d285b8e5b3e880dbf4e943f1fe1.png" alt="M = \frac{ \pi \beta_{ii} }{2}"/></p>
+</div><p>See Lyon, above equation 12.1.4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.power_input">
+<tt class="descname">power_input</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.power_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.power_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total input power due to excitations.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.resistance">
+<tt class="descname">resistance</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.resistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.resistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resistance <img class="math" src="../../_images/math/9d86170e7de539c0ff999de09621ee0c7b6c8ed0.png" alt="R"/>, the real part of the impedance <img class="math" src="../../_images/math/c4563e7ecec2336a3934447a6c10ef8519b0b452.png" alt="Z"/>.</p>
+<div class="math">
+<p><img src="../../_images/math/5d755ba81a6cd3cbbaef404cb9ec1c073cc47a48.png" alt="R = \Re{Z}"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.soundspeed_group">
+<tt class="descname">soundspeed_group</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.soundspeed_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.soundspeed_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group velocity in a subsystem.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.soundspeed_phase">
+<tt class="descname">soundspeed_phase</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.soundspeed_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.soundspeed_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Phase velocity in a subsystem.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.tlf">
+<tt class="descname">tlf</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.tlf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.tlf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total loss factor.</p>
+<div class="math">
+<p><img src="../../_images/math/8ed34c8e407abe1512293e35c928575995eb74ab.png" alt="\eta_i = \eta_{id} + \sum_{j=1, j \neq i}^{n} \eta_{ij}"/></p>
+</div><p>See Craik, equation 3.18, page 60.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.subsystems.subsystem.Subsystem.wavenumber">
+<tt class="descname">wavenumber</tt><a class="reference internal" href="../../_modules/seapy/subsystems/subsystem.html#Subsystem.wavenumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.subsystems.subsystem.Subsystem.wavenumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wave number.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html"
+                        title="previous chapter">seapy.subsystems.subsystemacoustical.SubsystemAcoustical</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.subsystems.subsystemstructural.SubsystemStructural.html"
+                        title="next chapter">seapy.subsystems.subsystemstructural.SubsystemStructural</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.subsystems.subsystem.Subsystem.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.subsystems.subsystemstructural.SubsystemStructural.html" title="seapy.subsystems.subsystemstructural.SubsystemStructural"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.subsystems.subsystemacoustical.SubsystemAcoustical.html" title="seapy.subsystems.subsystemacoustical.SubsystemAcoustical"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../subsystems.html" >Subsystems (<tt class="docutils literal"><span class="pre">seapy.subsystems</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

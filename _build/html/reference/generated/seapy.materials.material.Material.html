@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.materials.material.Material &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Materials (seapy.materials)" href="../materials.html" />
+    <link rel="next" title="seapy.materials.materialgas.MaterialGas" href="seapy.materials.materialgas.MaterialGas.html" />
+    <link rel="prev" title="seapy.materials.materialsolid.MaterialSolid" href="seapy.materials.materialsolid.MaterialSolid.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.materials.materialgas.MaterialGas.html" title="seapy.materials.materialgas.MaterialGas"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.materials.materialsolid.MaterialSolid.html" title="seapy.materials.materialsolid.MaterialSolid"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../materials.html" accesskey="U">Materials (<tt class="docutils literal"><span class="pre">seapy.materials</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-materials-material-material">
+<h1>seapy.materials.material.Material<a class="headerlink" href="#seapy-materials-material-material" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.materials.material.Material">
+<em class="property">class </em><tt class="descclassname">seapy.materials.material.</tt><tt class="descname">Material</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/materials/material.html#Material"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.materials.material.Material" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.base.Base.html#seapy.base.Base" title="seapy.base.Base"><tt class="xref py py-class docutils literal"><span class="pre">seapy.base.Base</span></tt></a></p>
+<p>Abstract Material Class</p>
+<dl class="method">
+<dt id="seapy.materials.material.Material.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/materials/material.html#Material.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.materials.material.Material.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt>) &#8211; Name</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; System</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.materials.material.Material.__init__" title="seapy.materials.material.Material.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Material.df</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.materials.material.Material.disable" title="seapy.materials.material.Material.disable"><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt></a>([components])</td>
+<td>Disable this material.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.materials.material.Material.enable" title="seapy.materials.material.Material.enable"><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt></a>([components])</td>
+<td>Enable this material.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.materials.material.Material.bulk" title="seapy.materials.material.Material.bulk"><tt class="xref py py-obj docutils literal"><span class="pre">bulk</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.materials.material.Material.density" title="seapy.materials.material.Material.density"><tt class="xref py py-obj docutils literal"><span class="pre">density</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.materials.material.Material.linked_components" title="seapy.materials.material.Material.linked_components"><tt class="xref py py-obj docutils literal"><span class="pre">linked_components</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.materials.material.Material.loss_factor" title="seapy.materials.material.Material.loss_factor"><tt class="xref py py-obj docutils literal"><span class="pre">loss_factor</span></tt></a></td>
+<td>Class capable of containing spectral values.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.materials.material.Material.pressure" title="seapy.materials.material.Material.pressure"><tt class="xref py py-obj docutils literal"><span class="pre">pressure</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.materials.material.Material.temperature" title="seapy.materials.material.Material.temperature"><tt class="xref py py-obj docutils literal"><span class="pre">temperature</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/materials/material.html#Material.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<tt class="xref py py-func docutils literal"><span class="pre">str()</span></tt>) &#8211; Name</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; System</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.bulk">
+<tt class="descname">bulk</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.materials.material.Material.bulk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bulk modulus</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.density">
+<tt class="descname">density</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.materials.material.Material.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Density <img class="math" src="../../_images/math/f574498915fa9e02eeb5141c24835d077eba3e75.png" alt="\rho"/> of the material.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.materials.material.Material.disable">
+<tt class="descname">disable</tt><big>(</big><em>components=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/materials/material.html#Material.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.materials.material.Material.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable this material. Optionally disable dependent components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>components</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Disable components</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.materials.material.Material.enable">
+<tt class="descname">enable</tt><big>(</big><em>components=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/materials/material.html#Material.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.materials.material.Material.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable this material. Optionally enable dependent components.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>components</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Enable components</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.linked_components">
+<tt class="descname">linked_components</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c753510&gt;</em><a class="headerlink" href="#seapy.materials.material.Material.linked_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Components linked to this subsystem.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.loss_factor">
+<tt class="descname">loss_factor</tt><a class="headerlink" href="#seapy.materials.material.Material.loss_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loss factor <img class="math" src="../../_images/math/9172efc523d7488d4c3ed299d0be813de01503b8.png" alt="\eta"/> of the material.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.pressure">
+<tt class="descname">pressure</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.materials.material.Material.pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pressure <img class="math" src="../../_images/math/3eca8557203e86160952e1c0f735f7417f3285b1.png" alt="p"/></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.materials.material.Material.temperature">
+<tt class="descname">temperature</tt><em class="property"> = 293.0</em><a class="headerlink" href="#seapy.materials.material.Material.temperature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temperature <img class="math" src="../../_images/math/6d42c88506b8da39a2a23653aecbfb7c29728063.png" alt="T"/> in kelvin.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.materials.materialsolid.MaterialSolid.html"
+                        title="previous chapter">seapy.materials.materialsolid.MaterialSolid</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.materials.materialgas.MaterialGas.html"
+                        title="next chapter">seapy.materials.materialgas.MaterialGas</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.materials.material.Material.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.materials.materialgas.MaterialGas.html" title="seapy.materials.materialgas.MaterialGas"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.materials.materialsolid.MaterialSolid.html" title="seapy.materials.materialsolid.MaterialSolid"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../materials.html" >Materials (<tt class="docutils literal"><span class="pre">seapy.materials</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

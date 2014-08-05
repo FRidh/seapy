@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.components.component.Component &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Components (seapy.components)" href="../components.html" />
+    <link rel="next" title="seapy.components.structural.ComponentStructural" href="seapy.components.structural.ComponentStructural.html" />
+    <link rel="prev" title="seapy.components.acoustical3d.SubsystemLong" href="seapy.components.acoustical3d.SubsystemLong.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.structural.ComponentStructural.html" title="seapy.components.structural.ComponentStructural"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.acoustical3d.SubsystemLong.html" title="seapy.components.acoustical3d.SubsystemLong"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" accesskey="U">Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seapy-components-component-component">
+<h1>seapy.components.component.Component<a class="headerlink" href="#seapy-components-component-component" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="seapy.components.component.Component">
+<em class="property">class </em><tt class="descclassname">seapy.components.component.</tt><tt class="descname">Component</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/component.html#Component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="seapy.base.Base.html#seapy.base.Base" title="seapy.base.Base"><tt class="xref py py-class docutils literal"><span class="pre">seapy.base.Base</span></tt></a></p>
+<p>Abstract Base Class for components.</p>
+<dl class="method">
+<dt id="seapy.components.component.Component.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; System</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">seapy.components.component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.component.Component.__init__" title="seapy.components.component.Component.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(name,&nbsp;system,&nbsp;**properties)</td>
+<td>Constructor.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Component.df</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.component.Component.disable" title="seapy.components.component.Component.disable"><tt class="xref py py-obj docutils literal"><span class="pre">disable</span></tt></a>([subsystems])</td>
+<td>Disable this component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.enable" title="seapy.components.component.Component.enable"><tt class="xref py py-obj docutils literal"><span class="pre">enable</span></tt></a>([subsystems])</td>
+<td>Enable this coupling.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt>([attributes])</td>
+<td>Return dataframe.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt>(quantity[,&nbsp;yscale])</td>
+<td>Plot <cite>quantity</cite>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SORT</span></tt></td>
+<td>str(object=&#8217;&#8216;) -&gt; str</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.SUBSYSTEMS" title="seapy.components.component.Component.SUBSYSTEMS"><tt class="xref py py-obj docutils literal"><span class="pre">SUBSYSTEMS</span></tt></a></td>
+<td>dict() -&gt; new empty dictionary</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">classname</span></tt></td>
+<td>Name of class of the object.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">enabled</span></tt></td>
+<td>Switch indicating whether the object is enabled.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">frequency</span></tt></td>
+<td>Frequency.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.height" title="seapy.components.component.Component.height"><tt class="xref py py-obj docutils literal"><span class="pre">height</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">included</span></tt></td>
+<td>Indicates whether the object is included in the analysis.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.length" title="seapy.components.component.Component.length"><tt class="xref py py-obj docutils literal"><span class="pre">length</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.component.Component.linked_junctions" title="seapy.components.component.Component.linked_junctions"><tt class="xref py py-obj docutils literal"><span class="pre">linked_junctions</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.linked_subsystems" title="seapy.components.component.Component.linked_subsystems"><tt class="xref py py-obj docutils literal"><span class="pre">linked_subsystems</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.component.Component.mass" title="seapy.components.component.Component.mass"><tt class="xref py py-obj docutils literal"><span class="pre">mass</span></tt></a></td>
+<td>Mass <img class="math" src="../../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> of the component.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.material" title="seapy.components.component.Component.material"><tt class="xref py py-obj docutils literal"><span class="pre">material</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">name</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#seapy.components.component.Component.volume" title="seapy.components.component.Component.volume"><tt class="xref py py-obj docutils literal"><span class="pre">volume</span></tt></a></td>
+<td>Volume <img class="math" src="../../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> of the component.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#seapy.components.component.Component.width" title="seapy.components.component.Component.width"><tt class="xref py py-obj docutils literal"><span class="pre">width</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="seapy.components.component.Component.SUBSYSTEMS">
+<tt class="descname">SUBSYSTEMS</tt><em class="property"> = {}</em><a class="headerlink" href="#seapy.components.component.Component.SUBSYSTEMS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary with systems that are available for this component.
+By default each of these subsystems is added to the component.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>system</em>, <em>**properties</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.__init__"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<a class="reference external" href="http://docs.python.org/3/library/string.html#module-string" title="(in Python v3.4)"><em>string</em></a>) &#8211; Identifier</li>
+<li><strong>system</strong> (<a class="reference internal" href="seapy.system.System.html#seapy.system.System" title="seapy.system.System"><tt class="xref py py-class docutils literal"><span class="pre">seapy.system.System</span></tt></a>) &#8211; System</li>
+<li><strong>component</strong> (<tt class="xref py py-class docutils literal"><span class="pre">seapy.components.component</span></tt>) &#8211; Component</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.components.component.Component.disable">
+<tt class="descname">disable</tt><big>(</big><em>subsystems=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable this component. Optionally disable components&#8217; subsystems.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subsystems</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Disable subsystems</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="seapy.components.component.Component.enable">
+<tt class="descname">enable</tt><big>(</big><em>subsystems=False</em><big>)</big><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable this coupling. Optionally enable components&#8217; subsystems.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subsystems</strong> (<a class="reference external" href="http://docs.python.org/3/library/functions.html#bool" title="(in Python v3.4)"><em>bool</em></a>) &#8211; Enable subsystems</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.height">
+<tt class="descname">height</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.components.component.Component.height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Height.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.length">
+<tt class="descname">length</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.components.component.Component.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.linked_junctions">
+<tt class="descname">linked_junctions</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c6f0678&gt;</em><a class="headerlink" href="#seapy.components.component.Component.linked_junctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>junctions this component is part of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.linked_subsystems">
+<tt class="descname">linked_subsystems</tt><em class="property"> = &lt;generator object __get__ at 0x7f048c6f0288&gt;</em><a class="headerlink" href="#seapy.components.component.Component.linked_subsystems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subsystems.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.mass">
+<tt class="descname">mass</tt><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.mass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component.mass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mass <img class="math" src="../../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> of the component.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/3/library/functions.html#float" title="(in Python v3.4)"><tt class="xref py py-func docutils literal"><span class="pre">float()</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+<p><img src="../../_images/math/63d8c0095ce426bc2d0521e1ea9ca5ea8b861646.png" alt="m = \rho V"/></p>
+</div></dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.material">
+<tt class="descname">material</tt><em class="property"> = None</em><a class="headerlink" href="#seapy.components.component.Component.material" title="Permalink to this definition">¶</a></dt>
+<dd><p>Material which this component consists of.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.volume">
+<tt class="descname">volume</tt><a class="reference internal" href="../../_modules/seapy/components/component.html#Component.volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#seapy.components.component.Component.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Volume <img class="math" src="../../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> of the component.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="seapy.components.component.Component.width">
+<tt class="descname">width</tt><em class="property"> = 0.0</em><a class="headerlink" href="#seapy.components.component.Component.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Width.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="seapy.components.acoustical3d.SubsystemLong.html"
+                        title="previous chapter">seapy.components.acoustical3d.SubsystemLong</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="seapy.components.structural.ComponentStructural.html"
+                        title="next chapter">seapy.components.structural.ComponentStructural</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/generated/seapy.components.component.Component.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.structural.ComponentStructural.html" title="seapy.components.structural.ComponentStructural"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="seapy.components.acoustical3d.SubsystemLong.html" title="seapy.components.acoustical3d.SubsystemLong"
+             >previous</a> |</li>
+        <li><a href="../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference</a> &raquo;</li>
+          <li><a href="../components.html" >Components (<tt class="docutils literal"><span class="pre">seapy.components</span></tt>)</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>seapy.couplings.coupling &mdash; SeaPy 0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="SeaPy 0.0 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for seapy.couplings.coupling</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Coupling</span>
+<span class="sd">--------</span>
+
+<span class="sd">.. autoclass:: Coupling</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">cmath</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">Base</span><span class="p">,</span> <span class="n">JunctionLink</span><span class="p">,</span> <span class="n">SubsystemFromLink</span><span class="p">,</span> <span class="n">SubsystemToLink</span>
+
+<div class="viewcode-block" id="Coupling"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling">[docs]</a><span class="k">class</span> <span class="nc">Coupling</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for couplings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">SORT</span> <span class="o">=</span> <span class="s">&#39;Coupling&#39;</span>
+
+    <span class="n">_DEPENDENCIES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;subsystem_from&#39;</span><span class="p">,</span> <span class="s">&#39;subsystem_to&#39;</span><span class="p">]</span>
+
+    <span class="n">junction</span> <span class="o">=</span> <span class="n">JunctionLink</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Junction this coupling is part of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">subsystem_from</span> <span class="o">=</span> <span class="n">SubsystemFromLink</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Type of subsystem origin for coupling</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">subsystem_to</span> <span class="o">=</span> <span class="n">SubsystemToLink</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Type of subsystem destination for coupling</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c">#size = None</span>
+    <span class="c">#&quot;&quot;&quot;</span>
+    <span class="c">#Size of the coupling.</span>
+    <span class="c">#&quot;&quot;&quot;</span>
+    
+    <span class="c">#def __init__(self, name, junction, subsystem_from, subsystem_to, **properties):</span>
+<div class="viewcode-block" id="Coupling.__init__"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: Identifier</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param junction: junction</span>
+<span class="sd">        :type junction: :class:`seapy.junctions.junction`</span>
+<span class="sd">        :param subsystem_from: subsystem from</span>
+<span class="sd">        :type subsystem_from: :class:`seapy.subsystems.Subsystem`</span>
+<span class="sd">        :param subsystem_to: subsystem_to</span>
+<span class="sd">        :type subsystem_to: :class:`seapy.subsystems.Subsystem`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">system</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+        <span class="c">#self.junction = junction</span>
+        <span class="c">#self.subsystem_from = subsystem_from</span>
+        <span class="c">#self.subsystem_to = subsystem_to</span>
+    
+</div>
+<div class="viewcode-block" id="Coupling.disable"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subsystems</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable this coupling. Optionally disable dependent subsystems as well.</span>
+<span class="sd">        </span>
+<span class="sd">        :param subsystems: Disable subsystems</span>
+<span class="sd">        :type subsystems: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">False</span>
+        
+        <span class="k">if</span> <span class="n">subsystems</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="Coupling.enable"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subsystems</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable this coupling. Optionally enable dependent subsystems as well.</span>
+<span class="sd">        </span>
+<span class="sd">        :param subsystems: Enable subsystems</span>
+<span class="sd">        :type subsystems: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enabled</span> <span class="o">=</span> <span class="bp">True</span>
+        
+        <span class="k">if</span> <span class="n">subsystems</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+
+</div>
+    <span class="nd">@property</span>
+    <span class="nd">@abc.abstractmethod</span>
+<div class="viewcode-block" id="Coupling.impedance_from"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.impedance_from">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance of :attr:`subsystem_from` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+    </div>
+    <span class="nd">@property</span>
+    <span class="nd">@abc.abstractmethod</span>
+<div class="viewcode-block" id="Coupling.impedance_to"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.impedance_to">[docs]</a>    <span class="k">def</span> <span class="nf">impedance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Impedance of :attr:`subsystem_to` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.reciproce"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.reciproce">[docs]</a>    <span class="k">def</span> <span class="nf">reciproce</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reciproce or inverse coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Reciproce coupling if it exists, else None.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">coupling</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">junction</span><span class="o">.</span><span class="n">linked_couplings</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">coupling</span><span class="o">.</span><span class="n">subsystem_from</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span> <span class="ow">and</span> <span class="n">coupling</span><span class="o">.</span><span class="n">subsystem_to</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">coupling</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.conductivity"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.conductivity">[docs]</a>    <span class="k">def</span> <span class="nf">conductivity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Conductivity of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\omega n_i \\eta_{i,j}</span>
+<span class="sd">        </span>
+<span class="sd">        with:</span>
+<span class="sd">        </span>
+<span class="sd">        * angular frequency :math:`\\omega`</span>
+<span class="sd">        * modal density of subsystem ``i`` :math:`n_i`</span>
+<span class="sd">        * coupling loss factor of this coupling :math:`\\eta_{i,j}`</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">angular</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">modal_density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.clf"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.clf">[docs]</a>    <span class="k">def</span> <span class="nf">clf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Coupling loss factor `\\eta`.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        In case the CLF is not specified for the given coupling it is calculated using the SEA consistency relation.</span>
+<span class="sd">        </span>
+<span class="sd">        \\eta_{12} = \\eta_{21} \\frac{n_2}{n_1}</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">clf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reciproce</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">clf</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Cannot calculate CLF. Reciproce CLF has not been specified.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">clf</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_to</span><span class="o">.</span><span class="n">modal_density</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">modal_density</span>
+            </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.mobility_from"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.mobility_from">[docs]</a>    <span class="k">def</span> <span class="nf">mobility_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mobility of :attr:`subsystem_from` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Mobility :math:`Y`</span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">impedance_from</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.mobility_to"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.mobility_to">[docs]</a>    <span class="k">def</span> <span class="nf">mobility_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mobility of :attr:`subsystem_to` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Mobility :math:`Y`</span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">impedance_to</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.resistance_from"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.resistance_from">[docs]</a>    <span class="k">def</span> <span class="nf">resistance_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resistance of :attr:`subsystem_from` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Impedance :math:`Z`</span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">impedance_from</span><span class="p">)</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.resistance_to"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.resistance_to">[docs]</a>    <span class="k">def</span> <span class="nf">resistance_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Resistance of :attr:`subsystem_to` corrected for the type of coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Impedance :math:`Z`</span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">impedance_to</span><span class="p">)</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Coupling.modal_coupling_factor"><a class="viewcode-back" href="../../../reference/generated/seapy.couplings.coupling.Coupling.html#seapy.couplings.coupling.Coupling.modal_coupling_factor">[docs]</a>    <span class="k">def</span> <span class="nf">modal_coupling_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Modal coupling factor of the coupling.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: :class:`numpy.ndarray`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: \\beta_{ij} = \\frac{ f * \\eta_{ij} } { \\overline{\\delta f_i} }</span>
+<span class="sd">        </span>
+<span class="sd">        See Lyon, above equation 12.1.4</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">center</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsystem_from</span><span class="o">.</span><span class="n">average_frequency_spacing</span>
+        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">SeaPy 0.0 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Frederik Rietdijk.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
