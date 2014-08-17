@@ -15,7 +15,7 @@ class CouplingLineStructural(Coupling):
         if type(self.subsystem_from.impedance) == type(None):
             return self.subsystem_from.impedance
         else:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
             
     @property
     def impedance_to(self):
@@ -26,8 +26,8 @@ class CouplingLineStructural(Coupling):
         if type(self.subsystem_from.impedance) == type(None):
             return self.subsystem_to.impedance
         else:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
             
     @property
     def clf(self):
-        return np.ones(self.frequency.amount) * 0.5
+        return np.ones(len(self.frequency)) * 0.5

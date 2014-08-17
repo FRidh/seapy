@@ -22,7 +22,6 @@ from ..subsystems import SubsystemStructural
 class SubsystemLong(SubsystemStructural):
     pass
 
-
 class SubsystemBend(SubsystemStructural):
     pass
 

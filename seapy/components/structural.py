@@ -12,10 +12,7 @@ from .component import Component
 class ComponentStructural(Component):
     """Abstract base class for structural components.
     """
-    
-    availableSubsystems = ['Long', 'Bend', 'Shear']
-    
-    
+
     @property
     def velocity(self):
         """Velocity of the component :math:`v_{component}`. 

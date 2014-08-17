@@ -9,7 +9,7 @@ Abstract class for all components.
 
 """
 
-from ..base import Base, MaterialLink, LinkedList
+from ..base import Base, MaterialLink, LinkedList, Attribute
 
 import abc
 import math
@@ -40,27 +40,26 @@ class Component(Base):
     """
     Subsystems.
     """
-    
-    
-    length = 0.0
-    """
-    Length.
-    """
-    
-    height = 0.0
-    """
-    Height.
-    """
-    
-    width = 0.0
-    """
-    Width.
-    """
-    
+
     SUBSYSTEMS = {}
     """
     Dictionary with systems that are available for this component.
     By default each of these subsystems is added to the component.
+    """
+     
+    length = Attribute()
+    """
+    Length.
+    """
+    
+    height = Attribute()
+    """
+    Height.
+    """
+    
+    width = Attribute()
+    """
+    Width.
     """
     
     def __init__(self, name, system, **properties):
@@ -98,7 +97,7 @@ class Component(Base):
         :param subsystems: Disable subsystems
         :type subsystems: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if subsystems:
             for subsystem in self.subsystems:
@@ -111,7 +110,7 @@ class Component(Base):
         :param subsystems: Enable subsystems
         :type subsystems: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if subsystems:
             for subsystem in self.subsystems:
@@ -127,8 +126,8 @@ class Component(Base):
         It would be possible to create a weakref 'manually'.
         """
         
-        for name, subsystem in self.SUBSYSTEMS.items():
-            self._add_subsystem(self.name+'_'+name, subsystem)
+        for attribute, subsystem in self.SUBSYSTEMS.items():
+            self._add_subsystem(self.name+'_'+subsystem.__name__, subsystem)
     
     def _add_subsystem(self, name, model, **properties):
         """
@@ -143,17 +142,25 @@ class Component(Base):
         #obj = self.system._add_object(name, model, **properties)
         #obj = model(name, self.system.get_object(self.name), **properties)
         obj = self.system.get_object(obj.name)
-        if obj:
-            """If object is indeed added to the system, then add it to this attribute."""
-            name = obj.__class__.__name__
-            if name == 'SubsystemLong':
-                sort = 'subsystem_long'
-            elif name == 'SubsystemBend':
-                sort = 'subsystem_bend'
-            elif name == 'SubsystemShear':
-                sort = 'subsystem_shear'
-            setattr(self, sort, obj)
-        return 
+        #setattr(self, attribute, obj)
+        return obj
+        #if obj:
+            #"""If object is indeed added to the system, then add it to this attribute."""
+            #name = obj.__class__.__name__
+            #if name == 'SubsystemLong':
+                #sort = 'subsystem_long'
+            #elif name == 'SubsystemBend':
+                #sort = 'subsystem_bend'
+            #elif name == 'SubsystemShear':
+                #sort = 'subsystem_shear'
+            #setattr(self, sort, obj)
+        #return 
+    
+    def _save(self):
+        attrs = super()._save()
+        attrs['material'] = self.material.name
+        return attrs
+            
     
     @property
     def volume(self):

@@ -111,7 +111,7 @@ class CouplingSurfacePlateAcoustical(Coupling):
         try:
             return self.subsystem_to.soundspeed_group / self.critical_frequency
         except FloatingPointError:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
             
     @property
     def radiation_efficiency(self):
@@ -136,4 +136,4 @@ class CouplingSurfacePlateAcoustical(Coupling):
             return self.subsystem_from.component.material.density * self.subsystem_to.soundspeed_group * \
                    self.radiation_efficiency / (self.frequency.angular * self.subsystem_from.component.mass_per_area)
         except (ZeroDivisionError, FloatingPointError):
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))

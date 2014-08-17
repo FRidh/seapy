@@ -60,12 +60,12 @@ class Junction(Base):
         
         .. seealso:: :attr:`seapy.junctions.junction_shapes`
         """
-        return self._shape
+        return self.__dict__['shape']
     
     @shape.setter
     def shape(self, x):
         if x in junction_shapes:
-            self._shape = x
+            self.__dict__['shape'] = x
         else:
             raise ValueError("Invalid shape.")
         
@@ -110,6 +110,12 @@ class Junction(Base):
         
         self.shape = shape  
     
+
+    def _save(self):
+        attrs = super()._save()
+        attrs['shape'] = self.shape
+        return attrs
+
     @property
     def components(self):
         """
@@ -159,7 +165,7 @@ class Junction(Base):
         self._components.add(component)
         return self
         
-    def removeComponent(self, component):
+    def remove_component(self, component):
         """
         Remove component from junction.
         
@@ -243,7 +249,7 @@ class Junction(Base):
         :param couplings: Disable couplings
         :type couplings: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if couplings:
             for coupling in self.couplings:
@@ -256,7 +262,7 @@ class Junction(Base):
         :param couplings: Enable couplings
         :type couplings: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if couplings:
             for coupling in self.couplings:

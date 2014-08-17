@@ -63,6 +63,13 @@ class Coupling(Base):
         #self.subsystem_from = subsystem_from
         #self.subsystem_to = subsystem_to
     
+    
+    def _save(self):
+        attrs = super()._save()
+        attrs['subsystem_from'] = self.subsystem_from.name
+        attrs['subsystem_to'] = self.subsystem_to.name
+        attrs['junction'] = self.junction.name
+        return attrs
 
     def disable(self, subsystems=False):
         """
@@ -71,7 +78,7 @@ class Coupling(Base):
         :param subsystems: Disable subsystems
         :type subsystems: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if subsystems:
             self.subsystem_from.disable()
@@ -84,7 +91,7 @@ class Coupling(Base):
         :param subsystems: Enable subsystems
         :type subsystems: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if subsystems:
             self.subsystem_from.enable()

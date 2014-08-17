@@ -7,11 +7,11 @@ from .materials import materials_map
 
 
 objects_map = {
-    'component' : components_map,
-    'junction': junctions_map,
+    'components' : components_map,
+    'junctions': junctions_map,
     #'subsystem' : subsystems_map,
-    'coupling' : couplings_map,
-    'excitation' : excitations_map,
-    'material' : materials_map,
+    'couplings' : couplings_map,
+    'excitations' : excitations_map,
+    'materials' : materials_map,
     }
     

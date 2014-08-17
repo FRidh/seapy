@@ -37,7 +37,7 @@ class SubsystemLong(SubsystemStructural):
         poisson = self.component.material.poisson
         young = self.component.material.young
         density = self.component.material.density
-        return np.ones(self.frequency.amount) * np.sqrt( young / density * (1.0 - poisson / ((1.0+poisson)*(1.0-2.0*poisson)) ) )
+        return np.ones(len(self.frequency)) * np.sqrt( young / density * (1.0 - poisson / ((1.0+poisson)*(1.0-2.0*poisson)) ) )
 
 
 class Component3D(ComponentStructural):

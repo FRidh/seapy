@@ -33,9 +33,6 @@ class SubsystemLong(SubsystemAcoustical):
         """
         #try:
         return self.soundspeed_phase**3.0 / (4.0 * np.pi * self.component.volume * self.frequency.center**2.0)
-        #except FloatingPointError:
-            #return np.zeros(self.frequency.amount)
-    
 
     def impedance_point_volume(self, excitation):
         """
@@ -51,18 +48,14 @@ class SubsystemLong(SubsystemAcoustical):
         .. note:: This is the specific acoustic impedance i.e. pressure over volume velocity, and not pressure of particle velocity.
         
         """
-        #try:
         return np.pi * self.component.material.density * self.frequency.center**2.0 / self.soundspeed_phase * (1.0 + 1.0j / (self.wavenumber * excitation.radius)) 
-        #except FloatingPointError:
-        #return np.zeros(self.frequency.amount)
-
         
 class Component3DAcoustical(ComponentAcoustical):
     """
     Component for a fluid in a 3D cavity.
     """
 
-    SUBSYSTEMS = {'Long': SubsystemLong}
+    SUBSYSTEMS = {'subsystem_long': SubsystemLong}
     
     
     def mean_free_path(self):

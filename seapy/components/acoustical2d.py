@@ -39,19 +39,4 @@ class Component2DAcoustical(ComponentAcoustical):
     Component for a fluid in a 2D cavity.
     """
 
-    SUBSYSTEMS = {'Long': SubsystemLong}
-
-
-    area = None
-    """Area :math:`A` of cavity.
-    """
-    
-    thickness = None
-    """Thickness or width of cavity.
-    """
-    
-    @property
-    def volume(self):
-        """Volume of cavity.
-        """
-        return self.area * self.thickness
+    SUBSYSTEMS = {'subsystem_long': SubsystemLong}

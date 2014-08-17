@@ -7,7 +7,7 @@ ABC
 """
 
 
-from ..base import Base, ComponentLink, LinkedList, Spectrum
+from ..base import Base, ComponentLink, LinkedList, Attribute
 import abc
 import math
 import cmath
@@ -45,6 +45,9 @@ class Subsystem(Base):
     Set of excitations this subsystem experiences.
     """
 
+    modal_energy = Attribute()
+    """Modal energy.
+    """
 
     #def __init__(self, name, component, **properties):
     def __init__(self, name, system, **properties):
@@ -84,7 +87,11 @@ class Subsystem(Base):
         super().__del__() # Inherit destructor from base class
 
 
-    
+    def _save(self):
+        attrs = super()._save()
+        attrs['component'] = self.component.name
+        return attrs
+
     def disable(self, couplings=False):
         """
         Disable this subsystem. Optionally disable dependent couplings as well.
@@ -92,7 +99,7 @@ class Subsystem(Base):
         :param couplings: Disable couplings
         :type couplings: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if couplings:
             for coupling in self.linked_couplings:
@@ -105,7 +112,7 @@ class Subsystem(Base):
         :param couplings: Enable couplings
         :type couplings: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if couplings:
             for coupling in self.linked_couplings:
@@ -115,16 +122,9 @@ class Subsystem(Base):
         """Add excitation to subsystem.
 
         """
-        obj = excitations_map[model](name, self.system.get_object(self.name), **properties)
-        self.system._objects.append(obj)
-        obj = self.system.get_object(obj.name)
-        #self.linked_excitations.add(obj)
-        return obj
-    
+        properties['subsystem'] = self.name #self.system.get_object(self.name)
+        return self.system._add_object(name, excitations_map[model], **properties)
 
-    modal_energy = Spectrum(dtype='float64')
-    """Modal energy.
-    """
     
     #def _set_modal_overlap_factor(self, x):
         #self._modal_overlap_factor = x
@@ -180,7 +180,7 @@ class Subsystem(Base):
         try:
             return 1.0 / (2.0 * np.pi * self.average_frequency_spacing)
         except FloatingPointError:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
 
     @property
     def modal_overlap(self):
@@ -244,7 +244,7 @@ class Subsystem(Base):
         try:
             return 1.0 / self.impedance
         except FloatingPointError:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
             
     @property
     def damping_term(self):
@@ -258,7 +258,7 @@ class Subsystem(Base):
         try:
             return self.frequency.center * self.component.material.loss_factor / self.average_frequency_spacing
         except FloatingPointError:
-            return np.zeros(self.frequency.amount)
+            return np.zeros(len(self.frequency))
         
     @property
     def modal_overlap_factor(self):
@@ -277,7 +277,7 @@ class Subsystem(Base):
         """
         Total input power due to excitations.
         """
-        power = np.zeros(self.frequency.amount)
+        power = np.zeros(len(self.frequency))
         for excitation in self.linked_excitations:
             power = power + excitation.power
         return power    

@@ -195,7 +195,7 @@ class Path(object):
         if excitation is None:
             power = subsystem.power_input
         elif toolz.isiterable(excitation):
-            power = np.zeros(self._system.frequency.amount)
+            power = np.zeros(len(self._system.frequency))
             for excitation in excitations:
                 excitation = self._system.get_object(excitation)
                 if excitation.subsystem == subsystem:

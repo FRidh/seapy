@@ -8,17 +8,21 @@ This is an abstract base class for acoustical components.
 
 import numpy as np
 from .component import Component
-
+from ..base import Attribute
 
 class ComponentAcoustical(Component):
     """Abstract base class for acoustical components.
     """
     
-    availableSubsystems = ['Long']
-
-
-    volume = None
-
+    #@property
+    #def subsystem_long(self):
+        #"""Subsystem for longitudinal waves.
+        #"""
+        #for obj in self.linked_subsystems:
+            #if isinstance(
+    
+    
+    
 
     @property
     def pressure(self):

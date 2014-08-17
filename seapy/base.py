@@ -18,7 +18,7 @@ LinkedList
 Descriptors
 -----------
 
-.. autoclass:: seapy.base.Spectrum
+.. autoclass:: seapy.base.Attribute
 .. autoclass:: seapy.base.Name
 .. autoclass:: seapy.base.Link
 .. autoclass:: seapy.base.MaterialLink
@@ -27,7 +27,6 @@ Descriptors
 .. autoclass:: seapy.base.SubsystemFromLink
 .. autoclass:: seapy.base.SubsystemToLink
 .. autoclass:: seapy.base.SubsystemLink
-
 
 .. autoclass:: seapy.base.NameWarning
 
@@ -235,6 +234,21 @@ class SubsystemExcitationLink(Link):
         #pass
 
 
+class SubsystemDescriptor(object):
+    """Subsystem descriptor.
+    """
+    
+    def __init__(self, attribute):
+        self.attribute = attribute
+    
+    def __get__(self, instance, cls):
+        sort = instance.SUBSYSTEMS[self.attribute]
+        for obj in instance.linked_subsystems:
+            if isinstance(obj, sort):
+                return obj
+        else:
+            return None
+    
 class LinkedList(object):
     """
     Receiving Many part of One-to-Many link.
@@ -322,7 +336,7 @@ class MetaBase(type):
     This metaclass
     
     * sets :attr:`LinkedList.attribute`
-    * sets :attr:`Spectrum.attribute`
+    * sets :attr:`Attribute.attribute`
     
     """
     
@@ -331,11 +345,16 @@ class MetaBase(type):
         #print(name)
         #print(bases)
         #print(attrs)
+        if 'SUBSYSTEMS' in attrs.keys():
+            for attr, sort in attrs['SUBSYSTEMS'].items():
+                attrs[attr] = SubsystemDescriptor(attr)
+                
         for key, value in attrs.items():
             if isinstance(value, LinkedList):
                 value.attribute = key # Inform LinkedList of attribute name.
-            if isinstance(value, Spectrum):
-                value.attribute = key # Inform Spectrum of attribute name.
+            elif isinstance(value, Attribute):
+                value.attribute = key # Inform Attribute of attribute name.
+                
         return super(MetaBase, cls).__new__(cls, name, bases, attrs)
     
 
@@ -358,54 +377,78 @@ class MetaBase(type):
                 ##value.label = key
         #super(MetaBase, cls).__init__(name, bases, attrs)
     
-class Spectrum(object):
-    """Class capable of containing spectral values.
     
-    Descriptor.
-    
+class Attribute(object):
+    """Descriptor for storing spectral values.
     """
     
     def __init__(self, dtype='float64'):
         self.dtype = dtype
-
+        self.attribute = None
+        """Attribute will be set by Base.__init__"""
+        
     def __get__(self, instance, cls):
         if instance is None:
             return self
         else:
-            value = instance.__dict__[self.attribute]
-            
-            try:
-                length = instance.system.frequency.amount
-                if length != len(value):
-                    if len(value) == 1:
-                        value = np.ones(length) * value
-                    else:
-                        raise AttributeError
-            except AttributeError:
-                pass
-            
-            return value
-            #return instance.__dict__[self.attribute]
-        
+            return instance.__dict__[self.attribute]
+    
     def __set__(self, instance, value):
-        
-        if not isinstance(value, np.ndarray):   # Check whether it is an array.
-            raise TypeError('Expected an ndarray')
-        
-        if not self.dtype == value.dtype:       # Check whether the array is of the right type.
-            value = value.astype(self.dtype)
-        
         try:
-            length = instance.system.frequency.amount
-            if not len(value) == length:    # Check the size of the array.
-                raise TypeError('Expected array of length %i', length)
-        except AttributeError:  # spectrum size is not yet available. Store despite possible length issue.
-            pass
+            instance.__dict__[self.attribute][:] = value
+        except ValueError:
+            raise ValueError("Invalid value.")
         
-        instance.__dict__[self.attribute] = value
+    
+    
+#class Spectrum(object):
+    #"""Class capable of containing spectral values.
+    
+    #Descriptor.
+    
+    #"""
+    
+    #def __init__(self, dtype='float64'):
+        #self.dtype = dtype
+
+    #def __get__(self, instance, cls):
+        #if instance is None:
+            #return self
+        #else:
+            #value = instance.__dict__[self.attribute]
+            
+            #try:
+                #length = instance.system.frequency.amount
+                #if length != len(value):
+                    #if len(value) == 1:
+                        #value = np.ones(length) * value
+                    #else:
+                        #raise AttributeError
+            #except AttributeError:
+                #pass
+            
+            #return value
+            ##return instance.__dict__[self.attribute]
+        
+    #def __set__(self, instance, value):
+        
+        #if not isinstance(value, np.ndarray):   # Check whether it is an array.
+            #raise TypeError('Expected an ndarray')
+        
+        #if not self.dtype == value.dtype:       # Check whether the array is of the right type.
+            #value = value.astype(self.dtype)
+        
+        #try:
+            #length = instance.system.frequency.amount
+            #if not len(value) == length:    # Check the size of the array.
+                #raise TypeError('Expected array of length %i', length)
+        #except AttributeError:  # spectrum size is not yet available. Store despite possible length issue.
+            #pass
+        
+        #instance.__dict__[self.attribute] = value
    
-    def __delete__(self, instance):
-        del instance.__dict__[self.attribute]
+    #def __delete__(self, instance):
+        #del instance.__dict__[self.attribute]
         
     
     
@@ -444,6 +487,8 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         self.name = name
         """Unique identifier of object."""
         
+        self.__dict__['enabled'] = True
+        
         """Every LinkedList contains a WeakSet."""
         for cl in self.__class__.__mro__:
             for key, value in cl.__dict__.items():
@@ -452,8 +497,8 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         
         for cl in self.__class__.__mro__:
             for key, value in cl.__dict__.items():
-                if isinstance(value, Spectrum):
-                    self.__dict__[key] = np.zeros(self.system.frequency.amount)
+                if isinstance(value, Attribute):
+                    self.__dict__[key] = np.zeros(len(self.frequency))
                     
                     
         #for key, value in self.__class__.__dict__.items():
@@ -469,6 +514,7 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
                 #if key in self.__class__.__dict__.keys():
                 #if hasattr(self, key):
                 setattr(self, key, value)
+        
         
         logging.info("Constructor %s: Created object %s of type %s", self.name, self.name, str(type(self)))
         
@@ -523,11 +569,6 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         else:
             return self.enabled and all([getattr(getattr(self, dep), 'included') for dep in self._DEPENDENCIES])
        
-    _enabled = True
-    """
-    Container for storing whether the object is enabled or not.
-    """
-    
     @property
     def enabled(self):
         """
@@ -536,7 +577,12 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         :returns: A boolean indicating whether the object is enabled (`True`) or not (`False`)
         :rtype: :func:`bool`
         """
-        return self._enabled
+        return self.__dict__['enabled']
+    
+    #@enabled.setter
+    #def enabled(self, x):
+        #if isinstance(x, bool):
+            #self.__dict__['enabled'] = x
     
     @property
     def frequency(self):
@@ -548,21 +594,11 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         """
         return self.system.frequency
 
-    #def _get_spectrum(self):
-        #pass
-    
-    #def _set_spectrum(self, x):
-        #pass
-    
-    #def newSpectrum(self, name):
-        #setattr(self, '_' + name, Spectrum(self.frequency))
-        #setattr(self, name, property(fget=_get_spectrum, fset=_set_spectrum))
-    
-    @property
-    def classname(self):
-        """Name of class of the object. This is an alias for ``obj.__class__.__name__``.
-        """
-        return self.__class__.__name__
+    #@property
+    #def classname(self):
+        #"""Name of class of the object. This is an alias for ``obj.__class__.__name__``.
+        #"""
+        #return self.__class__.__name__
     
     
     def plot(self, quantity, yscale='linear'):
@@ -579,12 +615,26 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         data = {attr: getattr(self, attr) for attr in attributes if hasattr(self, attr)}
         df = pd.DataFrame(data, index=self.frequency.center.astype('int')).T
         return df
-        
+
+    def _save(self):
+        attrs = dict()
+        attrs['model'] = self.__class__.__name__
+        attrs['name'] = self.name
+        attrs['enabled'] = self.enabled
+        for cl in self.__class__.__mro__:
+            for k, v in cl.__dict__.items():
+                if isinstance(v, Attribute):
+                    a = self.__dict__[k].tolist()
+                    if len(set(a))==1:
+                        attrs[k] = list(set(a))[0]
+                    else:
+                        attrs[k] = a
+        return attrs
     
     #def info(self, attributes=None, tablefmt='simple'):
         #"""Information about the object."""
         #header = ['Attribute'] + self.frequency.center.astype("int").astype("str").tolist()
-        #data = ([attr] + (getattr(self, attr)*np.ones(self.frequency.amount)).tolist() for attr in attributes)
+        #data = ([attr] + (getattr(self, attr)*np.ones(len(self.frequency))).tolist() for attr in attributes)
         #return tabulate(data, headers=header, tablefmt=tablefmt)
            
         

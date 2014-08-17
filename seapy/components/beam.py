@@ -47,7 +47,7 @@ class SubsystemLong(SubsystemStructural):
         
         .. math:: c_{L,\\phi}^{1D} = \\frac{E}{\\rho}
         """
-        return np.repeat(self.component.material.young / self.component.material.density, self.frequency.amount)
+        return np.repeat(self.component.material.young / self.component.material.density, len(self.frequency))
 
     @property
     def soundspeed_group(self):
@@ -256,9 +256,9 @@ class Component1DBeam(ComponentStructural):
     
     """
     
-    SUBSYSTEMS = {'Long': SubsystemLong, 
-                   'Bend': SubsystemBend, 
-                   'Shear': SubsystemShear}
+    SUBSYSTEMS = {'subsystem_long'  : SubsystemLong, 
+                  'subsystem_bend'  : SubsystemBend, 
+                  'subsystem_shear' : SubsystemShear}
     
     @property
     def mass_per_area(self):

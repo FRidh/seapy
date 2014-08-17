@@ -4,6 +4,7 @@ Point excitation
 
 """
 
+from ..base import Attribute
 import numpy as np
 from .excitation import Excitation
 #from ..subsystems import SubsystemCavity, SubsystemStructural
@@ -13,7 +14,7 @@ class ExcitationPoint(Excitation):
     Point excitation
     """
 
-    radius = None
+    radius = Attribute()
     """
     Radius :math`r` of the source.
     """
@@ -36,42 +37,15 @@ class ExcitationPointForce(ExcitationPoint):
     """
     Point excitation by a force.
     """
-
-    _force = None
-    _velocity = None
-
-    @property
-    def force(self):
-        """Sound force :math:`p`.
-        """
-        if self._force:
-            return self._force
-        elif self._velocity:
-            return self.resistance * self.velocity 
-        else:
-            raise ValueError("Neither force nor velocity is specified.")
-        
-    @force.setter
-    def force(self, x):
-        self._force = x
-        self._velocity = None
     
-    @property
-    def velocity(self):
-        """Structural velocity :math:`u`.
-        """
-        if self._velocity:
-            return self._velocity
-        elif self._force:
-            return self.force / self.resistance
-        else:
-            raise ValueError("Neither force nor velocity is specified.")
-            
-    @velocity.setter
-    def velocity(self, x):
-        self._velocity = x
-        self._force = None
-        
+    
+    force = Attribute()
+    """Force :math:`F`.
+    """
+    velocity = Attribute()
+    """Velocity :math:`v`.
+    """
+
     @property
     def power(self):
         """Input power :math:`P`.
@@ -86,54 +60,31 @@ class ExcitationPointForce(ExcitationPoint):
         * mobility :math:`Y`.
         
         """
-        return self.force**2.0 * self.mobility.real
-    
+        if self.force.any():
+            return self.force**2.0 * self.mobility.real
+        elif self.velocity.any():
+            return self.velocity**2.0 * self.impedance.real
+        else:
+            raise ValueError("Neither force nor velocity is specified.")
+        
     @property
     def impedance(self):
         return self.subsystem.impedance_point_force
     
-    
-    
+
 class ExcitationPointMoment(ExcitationPoint):
     """
     Point excitation of a moment.
     """
     
-    _moment = None
-    _velocity = None
-
-    @property
-    def moment(self):
-        """Sound moment :math:`p`.
-        """
-        if self._moment:
-            return self._moment
-        elif self._velocity:
-            return self.resistance * self.velocity 
-        else:
-            raise ValueError("Neither moment nor angular velocity is specified.")
-        
-    @moment.setter
-    def moment(self, x):
-        self._moment = x
-        self._velocity = None
+    moment = Attribute()
+    """Moment :math:`M`.
+    """
     
-    @property
-    def velocity(self):
-        """Angular velocity :math:`\\omega`.
-        """
-        if self._velocity:
-            return self._velocity
-        elif self._velocity:
-            return self.moment / self.resistance
-        else:
-            raise ValueError("Neither moment nor angular velocity is specified.")
-        
-    @velocity.setter
-    def velocity(self, x):
-        self._velocity = x
-        self._moment = None
-        
+    velocity = Attribute()
+    """Angular velocity :math:`\\omega`.
+    """
+
     @property
     def power(self):
         """Input power :math:`P`.
@@ -148,8 +99,13 @@ class ExcitationPointMoment(ExcitationPoint):
         * mobility :math:`Y`.
     
         """
-        return self.moment**2.0 * self.mobility.real
-    
+        if self.moment.any():
+            return self.moment**2.0 * self.mobility.real
+        elif self.velocity.any():
+            return self.velocity**2.0 * self.impedance.real
+        else:
+            raise ValueError("Neither moment nor velocity is specified.")
+        
     @property
     def impedance(self):
         return self.subsystem.impedance_point_moment
@@ -160,41 +116,14 @@ class ExcitationPointVolume(ExcitationPoint):
     Point excitation by a volume flow.
     """
     
-    _pressure = None
-    _velocity = None
-
-    @property
-    def pressure(self):
-        """Sound pressure :math:`p`.
-        """
-        if self._pressure:
-            return self._pressure
-        elif self._velocity:
-            return self.resistance * self.velocity 
-        else:
-            raise ValueError("Neither pressure nor angular velocity is specified.")
-        
-    @pressure.setter
-    def pressure(self, x):
-        self._pressure = x
-        self._velocity = None
+    pressure = Attribute()
+    """Sound pressure :math:`p`.
+    """
     
-    @property
-    def velocity(self):
-        """Volume velocity :math:`U`.
-        """
-        if self._velocity:
-            return self._velocity
-        elif self._pressure:
-            return self.pressure / self.resistance
-        else:
-            raise ValueError("Neither pressure nor angular velocity is specified.")
-            
-    @velocity.setter
-    def velocity(self, x):
-        self._velocity = x
-        self._pressure = None
-        
+    velocity = Attribute()
+    """Volume velocity :math:`U`.
+    """
+    
     @property
     def power(self):
         """Input power :math:`P`.
@@ -210,13 +139,18 @@ class ExcitationPointVolume(ExcitationPoint):
         * mobility :math:`Y`
         
         """
-        return self.velocity**2.0 * self.impedance.real
-    
+        if self.pressure.any():
+            return self.pressure**2.0 * self.mobility.real
+        elif self.velocity.any():
+            return self.velocity**2.0 * self.impedance.real
+        else:
+            raise ValueError("Neither pressure nor velocity is specified.")
+        
     @property
     def impedance(self):
-        try:
+        #try:
             return self.subsystem.impedance_point_volume(self)
-        except TypeError:
-            return self.subsystem.impedance_point_volume
+        #except TypeError:
+            #return self.subsystem.impedance_point_volume()
             
     

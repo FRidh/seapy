@@ -44,7 +44,7 @@ class SubsystemLong(SubsystemStructural):
         
         Often the density is replaced as a surface density (mass per unit area) and the thickness or height of the plate.
         """
-        return np.ones(self.frequency.amount) * np.sqrt(self.component.material.young / (self.component.material.density * (1.0 - self.component.material.poisson**2.0)))
+        return np.ones(len(self.frequency)) * np.sqrt(self.component.material.young / (self.component.material.density * (1.0 - self.component.material.poisson**2.0)))
 
             
     @property
@@ -78,7 +78,7 @@ class SubsystemLong(SubsystemStructural):
         #try:
         return  self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
         #except FloatingPointError:
-            #return np.zeros(self.frequency.amount)
+            #return np.zeros(len(self.frequency))
 
     @property
     def wavenumber(self, m, n, delta1, delta2):
@@ -260,7 +260,7 @@ class SubsystemShear(SubsystemStructural):
         
         See Lyon, above eq. 8.2.5
         """
-        return np.ones(self.frequency.amount) * np.sqrt(self.component.material.shear / self.component.material.density)
+        return np.ones(len(self.frequency)) * np.sqrt(self.component.material.shear / self.component.material.density)
         
     @property
     def soundspeed_group(self):
@@ -291,7 +291,7 @@ class SubsystemShear(SubsystemStructural):
         #try:
         return self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
         #except FloatingPointError:
-            #return np.zeros(self.frequency.amount)
+            #return np.zeros(len(self.frequency))
     
     @property
     def wavenumber(self):
@@ -329,9 +329,9 @@ class Component2DPlate(ComponentStructural):
     
     """
     
-    SUBSYSTEMS = {'Long': SubsystemLong,
-                  'Bend': SubsystemBend,
-                  'Shear': SubsystemShear}
+    SUBSYSTEMS = {'subsystem_long': SubsystemLong,
+                  'subsystem_bend': SubsystemBend,
+                  'subsystem_shear': SubsystemShear}
     @property
     def area(self):
         """Area of the plate.

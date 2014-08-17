@@ -17,7 +17,7 @@ class Excitation(Base):
     Subsystem that is being excited by this excitation
     """
 
-    def __init__(self, name, subsystem, **properties):
+    def __init__(self, name, system, **properties):
         """Constructor.
         
         :param name: Identifier
@@ -26,10 +26,14 @@ class Excitation(Base):
         :type system: :class:`seapy.system.System`
         
         """
-
-        super().__init__(name, subsystem.system, **properties)
+        super().__init__(name, system, **properties)
         
-        self.subsystem = subsystem
+        #self.subsystem = subsystem
+        
+    def _save(self):
+        attrs = super()._save()
+        attrs['subsystem'] = self.subsystem.name
+        return attrs
         
     def disable(self, subsystem=False):
         """
@@ -38,7 +42,7 @@ class Excitation(Base):
         :param subsystem: Disable subsystem
         :type subsystem: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if subsystem:
             self.subsystem.disable()
@@ -50,7 +54,7 @@ class Excitation(Base):
         :param subsystem: Enable subsystem
         :type subsystem: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if subsystem:
             self.subsystem.enable()

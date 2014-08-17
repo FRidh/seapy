@@ -13,7 +13,7 @@ import numpy as np
 from weakref import WeakSet
 import logging
 
-from ..base import Base, Spectrum, LinkedList
+from ..base import Base, Attribute, LinkedList
 
 class Material(Base):
     """
@@ -24,27 +24,27 @@ class Material(Base):
     
     _DEPENDENCIES = []
 
-    density = 0.0
+    density = Attribute()
     """
     Density :math:`\\rho` of the material.
     """
     
-    temperature = 293.0
+    temperature = Attribute()
     """
     Temperature :math:`T` in kelvin.
     """
       
-    pressure = 0.0
+    pressure = Attribute()
     """
     Pressure :math:`p`
     """
 
-    bulk = 0.0
+    bulk = Attribute()
     """
     Bulk modulus
     """
 
-    loss_factor = Spectrum(dtype='float64')
+    loss_factor = Attribute()
     """
     Loss factor :math:`\\eta` of the material.
     """
@@ -63,9 +63,9 @@ class Material(Base):
         :type system: :class:`seapy.system.System`
         
         """
-
-        #self.loss_factor = np.zeros(0)
         super().__init__(name, system, **properties)
+        self.temperature = 293.0
+        
     
     def disable(self, components=False):
         """
@@ -74,7 +74,7 @@ class Material(Base):
         :param components: Disable components
         :type components: bool
         """
-        self._enabled = False
+        self.__dict__['enabled'] = False
         
         if components:
             for component in self.linked_components:
@@ -87,7 +87,7 @@ class Material(Base):
         :param components: Enable components
         :type components: bool
         """
-        self._enabled = True
+        self.__dict__['enabled'] = True
         
         if components:
             for component in self.linked_components:

@@ -20,13 +20,21 @@ import logging
 from weakref import WeakSet
 import weakref
 
-from .base import Spectrum
+from .base import Attribute
 from seapy.objects_map import objects_map
 
 #from tabulate import tabulate
 #from toolz import count
 import pandas as pd
 from .tools import plot, PathAnalysis
+from .base import Base
+
+from acoustics.signal import Frequencies
+import yaml
+
+_OBJECTS = ['materials', 'components', 'subsystems', 'junctions', 'couplings', 'excitations']
+"""List of object types in order that they should be constructed when loading from a file.
+"""
 
 
 class System(object):
@@ -57,12 +65,7 @@ class System(object):
     reference_energy = 1.0e-12
     """Reference energy :math:`E_{0} = 1 \cdot 10^{-12}`
     """
-    
-    solved = False
-    """
-    Switch indicating whether the system (modal energies) were solved or not.
-    """
-    
+
     @property
     def objects(self):
         """All objects in the system.
@@ -125,31 +128,29 @@ class System(object):
         :rtype: :class:`python.types.GeneratorType`
         """
         yield from (obj for obj in self.objects if obj.SORT=='Excitation')
-
-    #_frequency = None
-    
-    #@property
-    #def frequency(self):
-
-        #return self._frequency
-        
-    #@frequency.setter
-    #def frequency(self, x):
-        
-        #try:
-            #f = isinstance(f, Frequencies)
-        #except AttributeError:
-            #f = False
-        
-        #if isinstance(x, Frequency):
-            #self._frequency = x
-        #elif f:
             
+    @property
+    def frequency(self):
+        """Frequency object.
+        """
+        return self.__dict__['frequency']
     
-    def __init__(self):
+    @frequency.setter
+    def frequency(self, x):
+        if isinstance(x, Frequencies):
+            self.__dict__['frequency'] = Frequency.from_frequencies(x)
+        elif isinstance(x, Frequency):
+            self.__dict__['frequency'] = x
+        else:
+            raise ValueError("Invalid frequency object.")
+            
+        
+    def __init__(self, frequency):
         """Constructor.
         """
-        self.frequency = Frequency(weakref.proxy(self))
+        
+        
+        self.frequency = frequency#Frequency(weakref.proxy(self))
         """Frequency object.
         """    
             
@@ -163,6 +164,11 @@ class System(object):
         .. seealso:: :class:`PathAnalysis`.
         
         """
+
+        self.solved = False
+        """Switch indicating whether the system (modal energies) were solved or not.
+        """
+        
         
     
     def __del__(self):
@@ -240,27 +246,26 @@ class System(object):
         :param properties: Other properties specific to the component.
         
         """
-        obj = self._add_object(name, objects_map['component'][model] , **properties)
+        obj = self._add_object(name, objects_map['components'][model] , **properties)
         obj._add_subsystems()
         return obj
        
     def add_junction(self, name, model, **properties):
         """Add junction to SEA model."""
-        obj = self._add_object(name, objects_map['junction'][model], **properties)
-        #obj._update_couplings()
+        obj = self._add_object(name, objects_map['junctions'][model], **properties)
         return obj
     
     def add_material(self, name, model, **properties):
         """Add material to SEA model."""
-        obj = self._add_object(name, objects_map['material'][model], **properties)
+        obj = self._add_object(name, objects_map['materials'][model], **properties)
         return obj
     
     def add_coupling(self, name, model, **properties):
         """Add material to SEA model."""
-        obj = self._add_object(name, objects_map['coupling'][model], **properties)
+        obj = self._add_object(name, objects_map['couplings'][model], **properties)
         return obj
     
-    def power_balance_matrix(self):
+    def power_balance_matrix(self, subsystems=None):
         """Power balance matrix as function of frequency.
         
         :param subsystems: is a list of subsystems. Reason to give the list as argument instead of using self.subsystems is that that list might change during execution.
@@ -275,10 +280,9 @@ class System(object):
         """
         #logging.info("Creating matrix for centerfrequency {}".format(self.frequency.center[f]))
         
-        subsystems = [subsystem for subsystem in self.subsystems if subsystem.included is True]
+        subsystems = subsystems if subsystems else [subsystem for subsystem in self.subsystems if subsystem.included is True]
         
-        for f in range(self.frequency.amount):
-            
+        for f in range(len(self.frequency)):
             B = np.zeros((len(subsystems), len(subsystems)), dtype=float)
             for j, subsystem_j in enumerate(subsystems): # Row j 
                 for i, subsystem_i in enumerate(subsystems):       # Column i
@@ -286,60 +290,28 @@ class System(object):
                     if i==j:
                         loss_factor = + subsystem_i.tlf[f] # Total loss factor.
                     else:
-                        
                         ####Take the coupling loss factor from subsystem i to subsystem j. Negative
                         x = list(set(subsystem_i.linked_couplings_from).intersection(set(subsystem_j.linked_couplings_to)))
-
-                        ##if not x:
-                        ## Use the relation consistency relationship?
-                        ##pass
-                        ##print 'error. No coupling?'
-                        #print(len(x))
                         if len(x)==1:
-                            #print("We have one!")
-                            #print(len(x))
-                            
                             loss_factor = - x[0].clf[f]
-                            
-                            #coupling = x[0]
-                            ##loss_factor = - coupling.clf[f]
                         del x        
                     B[j,i] = loss_factor * subsystem_i.modal_density[f]
-                    i+=1
-                j+=1
             logging.info('Matrix created.')
-            
-            logging.info(B)
             yield B
 
-    def power_vector(self):
+    def power_vector(self, subsystems=None):
         """Vector of input power normalized with angular frequency.
         
         See Craik, equation 6.21, page 155
         
         Yields power input vectors.
         """
-        subsystems = [subsystem for subsystem in self.subsystems if subsystem.included is True]
+        subsystems = subsystems if subsystems else [subsystem for subsystem in self.subsystems if subsystem.included is True]
         
-        for f in range(self.frequency.amount):
+        for f in range(len(self.frequency)):
             power_input = [subsystem.power_input[f] / self.frequency.angular[f] for subsystem in subsystems]
             yield np.array(power_input)
         
-
-    def clearResults(self):
-        """Clear the results. Reset modal energies. Set :attr:`solved` to False.
-        
-        :rtype: None
-        """
-        logging.info('Clearing results...')
-        
-        for subsystem in self.subsystems:
-            del subsystem.modal_energy
-    
-        self.solved = False
-    
-        logging.info('Cleared results.')
-     
     def solve_system(self):  # Put the actual solving in a separate thread?
         """Solve modal powers.
         
@@ -356,30 +328,29 @@ class System(object):
         
         subsystems = [subsystem for subsystem in self.subsystems if subsystem.included is True]
         
-        for f, (p, B) in enumerate(zip(self.power_vector(), self.power_balance_matrix())):
-            
+        for f, (p, B) in enumerate(zip(self.power_vector(subsystems), self.power_balance_matrix(subsystems))):
             if self.frequency.enabled[f]:
                 #try:
                 modal_energy = np.linalg.solve(B, p)    # Left division results in the modal energies.
                 #except np.linalg.linalg.LinAlgError as e:   # If there is an error solving the matrix, then quit right away.
                     #warnings.warn( repr(e) )
                     #return False
-
                 for i, subsystem in enumerate(subsystems):
                     subsystem.modal_energy[f] = modal_energy[i]                    
-                #del modal_energy, power_input, LF
                 
         self.solved = True  
         logging.info('System solved.')
         return True
     
     def clean(self):
-        """Reset modal energy to zero in all subsystems.
+        """Clear the results. Reset modal energies. Set :attr:`solved` to False.
         """
-        
+        logging.info('Clearing results...')
         for subsystem in self.subsystems:
-            subsystem.modal_energy = np.zeros(self.frequency.amount)
-    
+            subsystem.modal_energy = 0.0
+        self.solved = False
+        logging.info('Cleared results.')
+        
     #def info(self, sort=None, fields=None):
         #"""Print information about objects of type sort. By default all types are returned."""
 
@@ -396,6 +367,69 @@ class System(object):
         df = pd.DataFrame(data, index=self.frequency.center.astype('int')).T
         return df
 
+    @classmethod
+    def load(cls, filename):
+        """Load model from file.
+        """
+        with open(filename, "r") as f:
+            data = yaml.load(f)
+        
+        frequency = Frequency(data['frequency']['center'],
+                              data['frequency']['lower'],
+                              data['frequency']['upper'],
+                              data['frequency']['enabled'])
+        system = cls(frequency)
+        system.solved = data['solved']
+        
+        for sort in _OBJECTS:
+            if sort=='subsystems':
+                for item in data[sort]:
+                    name = item.pop('name')
+                    enabled = item.pop('enabled')
+                    component = system.get_object(item.pop('component'))
+                    models = {kls.__name__: kls for attr, kls in component.SUBSYSTEMS.items()}
+                    model = models[item.pop('model')]
+                    obj = component._add_subsystem(name, model, **item)
+                    obj.__dict__['enabled'] = enabled # Needs to be separate because of the actions the property does.
+            else:
+                for item in data[sort]:
+                    name = item.pop('name')
+                    enabled = item.pop('enabled')
+                    model = objects_map[sort][item.pop('model')]
+                    obj = system._add_object(name, model, **item)
+                    obj.__dict__['enabled'] = enabled # Needs to be separate because of the actions the property does.
+                
+        return system
+    
+    def save(self, filename):
+        """Save model to file.
+        """
+        with open(filename, "w") as f:
+            yaml.dump(self._save(), f, default_flow_style=False)
+    
+    
+    def _save(self):
+        """Dictionary with data that needs to be saved.
+        
+        We need to store:
+        
+        * The list with objects :attr:`objects`. However, because we need to add them in order, it's best to subdivide them in the types, so...
+            1. :attr:`materials`
+            2. :attr:`compoments`
+            3. :attr:`subsystems`
+            4. :attr:`junctions`
+            5. :atrr:`couplings`
+            6. :attr:`excitations`
+        * The attribute :attr:`solved`.
+        * Frequency object. 
+        
+        """
+        data = dict()
+        for sort in _OBJECTS:
+            data[sort] = [obj._save() for obj in getattr(self, sort)]
+        data['solved'] = self.solved
+        data['frequency'] = self.frequency._save()
+        return data
 
     #def info_objects(self):
         #"""Print information about objects.
@@ -445,142 +479,202 @@ class System(object):
         #header = ['Name', 'included', 'Enabled', 'Class', 'Shape', 'Components', 'Couplings', 'Subsystems']
         #data = ((obj.name, obj.included, obj.impedance, obj.__class__.__name__, obj.shape, count(obj.components), count(obj.linked_couplings), count(obj.subsystems)) for obj in self.excitations)
         #return tabulate(data, headers=header, tablefmt=tablefmt)
-    
-    
-    
-class Band(object):
-    """Frequency band class."""
-    
-    def __init__(self, lower=0.0, center=0.0,  upper=0.0, enabled=False):
-        
-        self.lower = lower
-        self.center = center
-        self.upper = upper
-        self.enabled = enabled
-    
-    @property
-    def bandwidth(self):
-        return self.upper - self.lower
-    
-    @property
-    def angular(self):
-        return 2.0 * np.pi * self.center
-   
-   
-   
-   
-#class SpectrumDescriptorFrequency(object):
-    #"""
-    #"""
-    
-    #def __get__(self):
-        #pass
-    
-    #def __set__(self):
-        #pass
-   
-class Frequency(object):
-    """New-style spectrum class."""
-    
-    def __init__(self, system):
-        self._system = system
-        self._bands = list()
-    
-    
-    #@classmethod
-    #def from_frequencies(cls, system, f):
-        #"""Create object from :class:`acoustics.signal.Frequencies`.""" 
-        #obj = cls(system)
-        #obj.center = f.center
-        #obj.lower = f.lower
-        #obj.upper = f.upper
-        
-        #return obj
-    
-    def _spectrum(name):
-        """Property to access the frequency bands as/using arrays."""
 
-        @property
-        def prop(self):
-            return np.array([getattr(band, name) for band in self._bands])
-        
-        @prop.setter
-        def prop(self, x):
-            if len(x) == len(self._bands):
-                """
-                When the given array has the same amount of items as there are 
-                frequency bands, we will fit them one on one.
-                """
-                for new, band in zip(x, self._bands):
-                    setattr(band, name, new)
-            else:
-                """
-                If not, we will delete the old frequency bands, and create new ones."""
-                self._bands = list()
-                for i in x:
-                    band = Band()
-                    setattr(band, name, i)
-                    self._bands.append(band) # Use self.addBand() instead!!
-        return prop
+
+class Frequency(object):
+    """Frequency.
+    """
     
-    lower = _spectrum('lower')
-    center = _spectrum('center')
-    upper = _spectrum('upper')
-    enabled = _spectrum('enabled')
-    
-    @property
-    def bandwidth(self):
-        return np.array([band.bandwidth for band in self._bands])
+    def __init__(self, center, lower, upper, enabled=True):
+                
+        self.__dict__['center'] = np.array(center)
+        self.__dict__['lower'] = np.array(lower)
+        self.__dict__['upper'] = np.array(upper)
+        self.__dict__['enabled'] = np.ones_like(self.center, dtype='bool')
+        self.enabled = enabled
         
+    def __len__(self):
+        return len(self.center)
+    
+    def __str__(self):
+        return str(self.center)
+    
+    def __repr__(self):
+        return "Frequency({})".format(str(self.center))
+    
+    def _save(self):
+        attrs = dict()
+        attrs['center'] = self.center.tolist()
+        attrs['lower'] = self.lower.tolist()
+        attrs['upper'] = self.upper.tolist()
+        attrs['enabled'] = self.enabled.tolist()
+        return attrs
+    
     @property
     def angular(self):
-        return np.array([band.angular for band in self._bands])
+        """Angular center frequencies."""
+        return 2.0 * np.pi * self.center
     
     @property
-    def amount(self):
-        return len(self._bands)
+    def center(self):
+        """Center frequencies.
+        """
+        return self.__dict__['center']
     
     @property
-    def spectra(self):
-        """Generator to obtain all spectra in use in the SEA model."""
-        for obj in self._system.objects:
-            for cls in obj.__class__.__mro__:
-                for key, value in cls.__dict__.items():
-                    if isinstance(value, Spectrum):
-                        yield (obj, key)
+    def lower(self):
+        """Lower band frequencies.
+        """
+        return self.__dict__['lower']
     
-    def appendBand(self, **kwargs):
+    @property
+    def upper(self):
+        """Upper band frequencies.
         """
-        Append frequency band.
-        """
-        self.addBand(len(self._bands), **kwargs)
+        return self.__dict__['upper']
     
-    def addBand(self, pos, **kwargs):
+    @property
+    def enabled(self):
+        """Whether bands are enabled or not.
         """
-        Add frequency band.
-        
-        
-        Inform all spectra of the change!!
+        return self.__dict__['enabled']
+    
+    @enabled.setter
+    def enabled(self, x):
+        self.__dict__['enabled'][:] = x
+    
+    @classmethod
+    def from_frequencies(cls, obj):
+        """From :class:`seapy.Frequencies`.
         """
+        return cls(center=obj.center,
+                   lower=obj.lower,
+                   upper=obj.upper)
         
-        self._bands.insert(pos, Band(**kwargs))  # Create a new frequency band
+    
+    
+    
+##class Band(object):
+    ##"""Frequency band class."""
+    
+    ##def __init__(self, lower=0.0, center=0.0,  upper=0.0, enabled=False):
         
-        default = 0.0 # default value of array cells
+        ##self.lower = lower
+        ##self.center = center
+        ##self.upper = upper
+        ##self.enabled = enabled
+    
+    ##@property
+    ##def bandwidth(self):
+        ##return self.upper - self.lower
+    
+    ##@property
+    ##def angular(self):
+        ##return 2.0 * np.pi * self.center
+   
+
+###class Frequency(object):
+    ###"""New-style spectrum class."""
+    
+    ###def __init__(self, system):
+        ###self._system = system
+        ###self._bands = list()
+    
+    
+    ####@classmethod
+    ####def from_frequencies(cls, system, f):
+        ####"""Create object from :class:`acoustics.signal.Frequencies`.""" 
+        ####obj = cls(system)
+        ####obj.center = f.center
+        ####obj.lower = f.lower
+        ####obj.upper = f.upper
         
-        for obj, attr in self.spectra():    # Add a band to all spectra
-            setattr(obj, attr, np.insert(getattr(obj, attr), pos, default))
+        ####return obj
+    
+    ###def _spectrum(name):
+        ###"""Property to access the frequency bands as/using arrays."""
+
+        ###@property
+        ###def prop(self):
+            ###return np.array([getattr(band, name) for band in self._bands])
+        
+        ###@prop.setter
+        ###def prop(self, x):
+            ###if len(x) == len(self._bands):
+                ###"""
+                ###When the given array has the same amount of items as there are 
+                ###frequency bands, we will fit them one on one.
+                ###"""
+                ###for new, band in zip(x, self._bands):
+                    ###setattr(band, name, new)
+            ###else:
+                ###"""
+                ###If not, we will delete the old frequency bands, and create new ones."""
+                ###self._bands = list()
+                ###for i in x:
+                    ###band = Band()
+                    ###setattr(band, name, i)
+                    ###self._bands.append(band) # Use self.addBand() instead!!
+        ###return prop
+    
+    ###lower = _spectrum('lower')
+    ###center = _spectrum('center')
+    ###upper = _spectrum('upper')
+    ###enabled = _spectrum('enabled')
+    
+    ###@property
+    ###def bandwidth(self):
+        ###return np.array([band.bandwidth for band in self._bands])
+        
+    ###@property
+    ###def angular(self):
+        ###return np.array([band.angular for band in self._bands])
+    
+    ###@property
+    ###def amount(self):
+        ###return len(self._bands)
+    
+    ###@property
+    ###def spectra(self):
+        ###"""Generator to obtain all spectra in use in the SEA model."""
+        ###for obj in self._system.objects:
+            ###for cls in obj.__class__.__mro__:
+                ###for key, value in cls.__dict__.items():
+                    ###if isinstance(value, Spectrum):
+                        ###yield (obj, key)
+    
+    ###def appendBand(self, **kwargs):
+        ###"""
+        ###Append frequency band.
+        ###"""
+        ###self.addBand(len(self._bands), **kwargs)
+    
+    ###def addBand(self, pos, **kwargs):
+        ###"""
+        ###Add frequency band.
+        
+        
+        ###Inform all spectra of the change!!
+        ###"""
+        
+        ###self._bands.insert(pos, Band(**kwargs))  # Create a new frequency band
+        
+        ###default = 0.0 # default value of array cells
+        
+        ###for obj, attr in self.spectra():    # Add a band to all spectra
+            ###setattr(obj, attr, np.insert(getattr(obj, attr), pos, default))
             
     
-    def removeBand(self, pos):
-        """
-        Remove frequency band.
+    ###def removeBand(self, pos):
+        ###"""
+        ###Remove frequency band.
         
-        Inform all spectra of the change!!
-        """
-        self._bands.pop(pos) # Remove the frequency band
+        ###Inform all spectra of the change!!
+        ###"""
+        ###self._bands.pop(pos) # Remove the frequency band
         
-        for obj, attr in self.iterspectra():     # Remove a band from all spectra
-            setattr(obj, attr, np.delete(getattr(obj, attr), pos))
+        ###for obj, attr in self.iterspectra():     # Remove a band from all spectra
+            ###setattr(obj, attr, np.delete(getattr(obj, attr), pos))
             
             
         
@@ -607,103 +701,3 @@ class Frequency(object):
     #@property
     #def enabled(self):
         #return np.array([band.enabled for band in self._bands])
-    
-
-    
-#class Frequency(object):
-    #"""
-    #Abstract base class for handling different frequency settings.
-    #"""
-    
-    #def __init__(self, system):
-        #self._system = system
-    
-    #def _set_band(self, x, sort):
-        #for i in ['_lower', '_center', '_upper']:
-            #if len(getattr(self, i)) != len(x):
-                #setattr(self, i, np.zeros(len(x)))
-        #if len(getattr(self, '_enabled')) != len(x):        
-                #setattr(self, '_enabled', np.zeros(len(x), dtype=bool))
-        #setattr(self, sort, np.array(x))
-    
-
-    
-    #def _get_center(self):
-        #return self._center
-    
-    #def _set_center(self, x):
-        #self._set_band(x, '_center')
-    
-    #_center = np.array([0.0])
-    #center = property(fget=_get_center, fset=_set_center)
-    #"""
-    #Center frequencies of frequency bands.
-    #"""
-    
-    
-    #def _get_upper(self):
-        #return self._upper
-    
-    #def _set_upper(self, x):
-        #self._set_band(x, '_upper')
-    
-    #_upper = np.array([0.0])
-    #upper = property(fget=_get_upper, fset=_set_upper)
-    #"""
-    #Upper limit frequencies of frequency bands.
-    #"""
-    
-    #def _set_lower(self, x):
-        #self._set_band(x, '_lower')
-    
-    #def _get_lower(self):
-        #return self._lower
-    
-    #_lower = np.array([0.0])
-    #lower = property(fget=_get_lower, fset=_set_lower)
-    #"""
-    #Lower limit frequencies of frequency bands.
-    #"""
-    
-    #def _set_enabled(self, x):
-        #self._set_band(x, '_enabled')
-    
-    #def _get_enabled(self):
-        #return self._enabled
-    
-    #_enabled = np.array([False]) 
-    #enabled = property(fget=_get_upper, fset=_set_upper)
-    #"""
-    #Enabled frequency bands.
-    
-    #Modal powers will not be solved for disabled frequency bands.
-    #"""
-    
-    #@property
-    #def bandwidth(self):
-        #"""Bandwidth of frequency bands,
-        
-        #:rtype: :class:`numpy.ndarray`
-        #"""
-        #return self.upper - self.lower
-
-    #@property
-    #def angular(self):
-        #"""Angular frequency
-        
-        #:rtype: :class:`numpy.ndarray`
-        #"""
-        #return self.center * 2.0 * np.pi 
-    
-    
-    
-    #@property
-    #def amount(self):
-        #"""Amount of frequency bands
-        
-        #:rtype: :func:`int`
-        #"""
-        #try:
-            #return len(self.center)
-        #except TypeError:
-            #return 0

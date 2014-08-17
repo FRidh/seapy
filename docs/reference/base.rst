@@ -30,7 +30,7 @@ Descriptors
 .. autosummary::
     :toctree: generated/
     
-    base.Spectrum
+    base.Attribute
     base.Name
     base.Link
     base.MaterialLink
