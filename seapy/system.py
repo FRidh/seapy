@@ -312,7 +312,7 @@ class System(object):
             power_input = [subsystem.power_input[f] / self.frequency.angular[f] for subsystem in subsystems]
             yield np.array(power_input)
         
-    def solve_system(self):  # Put the actual solving in a separate thread?
+    def solve(self):  # Put the actual solving in a separate thread?
         """Solve modal powers.
         
         :rtype: :func:`bool`

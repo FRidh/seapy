@@ -16,7 +16,7 @@ Finally, a single matrix composed of loss factors, modal densities and input pow
 
 This module provides several classes and functions to perform an SEA. First, an object of the main class System() has to be created.
 Then, components, subsystems, couplings and excitations can be added to the System() instance.
-Finally, when all properties have been set, the modal energies can be solved by executing the solve_system() method of the System() instance.
+Finally, when all properties have been set, the modal energies can be solved by executing the solve() method of the System() instance.
 
 
 
