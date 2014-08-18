@@ -4,8 +4,7 @@ from .coupling import Coupling
 class CouplingLineStructural(Coupling):
     """Line coupling betweeen two structural subsystems.
     """
-    
-
+ 
     @property
     def impedance_from(self):
         """
@@ -30,4 +29,4 @@ class CouplingLineStructural(Coupling):
             
     @property
     def clf(self):
-        return np.ones(len(self.frequency)) * 0.5
+        raise NotImplementedError

@@ -307,10 +307,6 @@ class Name(object):
     In case the name is taken an integer is added to it.
     
     """
-    
-    #def __init__(self):
-        #pass
-    
     def __get__(self, instance, owner):
         try:
             return instance.__dict__['name']
@@ -398,60 +394,8 @@ class Attribute(object):
             instance.__dict__[self.attribute][:] = value
         except ValueError:
             raise ValueError("Invalid value.")
-        
-    
-    
-#class Spectrum(object):
-    #"""Class capable of containing spectral values.
-    
-    #Descriptor.
-    
-    #"""
-    
-    #def __init__(self, dtype='float64'):
-        #self.dtype = dtype
 
-    #def __get__(self, instance, cls):
-        #if instance is None:
-            #return self
-        #else:
-            #value = instance.__dict__[self.attribute]
-            
-            #try:
-                #length = instance.system.frequency.amount
-                #if length != len(value):
-                    #if len(value) == 1:
-                        #value = np.ones(length) * value
-                    #else:
-                        #raise AttributeError
-            #except AttributeError:
-                #pass
-            
-            #return value
-            ##return instance.__dict__[self.attribute]
-        
-    #def __set__(self, instance, value):
-        
-        #if not isinstance(value, np.ndarray):   # Check whether it is an array.
-            #raise TypeError('Expected an ndarray')
-        
-        #if not self.dtype == value.dtype:       # Check whether the array is of the right type.
-            #value = value.astype(self.dtype)
-        
-        #try:
-            #length = instance.system.frequency.amount
-            #if not len(value) == length:    # Check the size of the array.
-                #raise TypeError('Expected array of length %i', length)
-        #except AttributeError:  # spectrum size is not yet available. Store despite possible length issue.
-            #pass
-        
-        #instance.__dict__[self.attribute] = value
-   
-    #def __delete__(self, instance):
-        #del instance.__dict__[self.attribute]
-        
-    
-    
+
 class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
     
     """

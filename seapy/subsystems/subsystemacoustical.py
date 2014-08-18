@@ -52,8 +52,7 @@ class SubsystemAcoustical(Subsystem):
         
         See Lyon, above eq 8.1.9.
         """
-        return np.ones(len(self.frequency)) * np.sqrt(self.component.material.bulk / self.component.material.density)
-        
+        return np.sqrt(self.component.material.bulk / self.component.material.density)
         
     @property
     def pressure(self):
@@ -67,7 +66,6 @@ class SubsystemAcoustical(Subsystem):
         """
         return np.sqrt(self.energy*self.component.material.density*self.soundspeed_group**2.0 / self.component.volume)
         
-    
     @property
     def pressure_level(self):
         """

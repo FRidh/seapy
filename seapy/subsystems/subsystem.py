@@ -48,25 +48,13 @@ class Subsystem(Base):
     modal_energy = Attribute()
     """Modal energy.
     """
-
-    #def __init__(self, name, component, **properties):
-    def __init__(self, name, system, **properties):
-        """Constructor.
-        
-        :param name: Identifier
-        :type name: string
-        :param component: Component
-        :type component: :class:`SeaPy.components.Component`
-        
-        """
-        super().__init__(name, system, **properties)
-        #super().__init__(name, component.system, **properties)
-        
-        #self.component = component
-        #"""
-        #Component this subsystem uses.
-        #"""
-        
+    
+    loss_factor = Attribute()
+    """Internal loss factor.
+    
+    .. seealso :: :attr:`dlf`
+    
+    """
         
     def __del__(self):
         """Destructor. Destroy linked couplings. Remove references from components"""
@@ -122,7 +110,7 @@ class Subsystem(Base):
         """Add excitation to subsystem.
 
         """
-        properties['subsystem'] = self.name #self.system.get_object(self.name)
+        properties['subsystem'] = self.name
         return self.system._add_object(name, excitations_map[model], **properties)
 
     
@@ -310,23 +298,16 @@ class Subsystem(Base):
     def dlf(self):
         """Damping loss factor of subsystem.
         
+        If :attr:`loss_factor` has non-zero values, then those values are used. 
+        Else, :attr:`component.material.loss_factor` is used.
+        
         By default this is the loss factor of the material of the component.
         
         """
-        if self._dlf:
-            return self._dlf
+        if self.loss_factor.any():
+            return self.loss_factor
         else:
             return self.component.material.loss_factor
-    
-    _dlf = None
-     
-    @dlf.setter
-    def dlf(self, x):
-        self._dlf = x
-    
-    @dlf.deleter
-    def dlf(self):
-        self._dlf = None
     
     @property
     def tlf(self):

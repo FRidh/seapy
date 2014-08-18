@@ -44,7 +44,7 @@ class SubsystemLong(SubsystemStructural):
         
         Often the density is replaced as a surface density (mass per unit area) and the thickness or height of the plate.
         """
-        return np.ones(len(self.frequency)) * np.sqrt(self.component.material.young / (self.component.material.density * (1.0 - self.component.material.poisson**2.0)))
+        return np.sqrt(self.component.material.young / (self.component.material.density * (1.0 - self.component.material.poisson**2.0)))
 
             
     @property
@@ -75,10 +75,7 @@ class SubsystemLong(SubsystemStructural):
         
         See Lyon, equation 8.2.8
         """
-        #try:
         return  self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
-        #except FloatingPointError:
-            #return np.zeros(len(self.frequency))
 
     @property
     def wavenumber(self, m, n, delta1, delta2):
@@ -91,7 +88,6 @@ class SubsystemLong(SubsystemStructural):
         See Lyon, equation 8.2.1.
         """
         return np.sqrt( ( ( m - delta1) * np.pi / self.component.length) + ( ( m - delta2) * np.pi / self.component.width) )
-    
     
     @property
     def impedance(self):
@@ -238,9 +234,7 @@ class SubsystemBend(SubsystemStructural):
         """
         return 8.0 * self.component.material.density * self.component.height * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_group
         
-        
-    
-    
+
 class SubsystemShear(SubsystemStructural):
     """
     Subsystem for shear waves in a 2D isotopic component.
@@ -260,7 +254,7 @@ class SubsystemShear(SubsystemStructural):
         
         See Lyon, above eq. 8.2.5
         """
-        return np.ones(len(self.frequency)) * np.sqrt(self.component.material.shear / self.component.material.density)
+        return np.sqrt(self.component.material.shear / self.component.material.density)
         
     @property
     def soundspeed_group(self):
@@ -288,10 +282,7 @@ class SubsystemShear(SubsystemStructural):
         
         See Lyon, eq 8.2.5
         """
-        #try:
         return self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
-        #except FloatingPointError:
-            #return np.zeros(len(self.frequency))
     
     @property
     def wavenumber(self):

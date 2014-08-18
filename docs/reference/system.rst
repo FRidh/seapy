@@ -15,5 +15,5 @@ System
     :toctree: generated/
     
     system.System
-    system.Freqency
-    system.Band
+    system.Frequency
+    
