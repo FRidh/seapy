@@ -32,6 +32,7 @@ Descriptors
     
     base.Attribute
     base.Name
+    base.SubsystemDescriptor
     base.Link
     base.MaterialLink
     base.ComponentLink
@@ -48,3 +49,4 @@ Other
     
     base.NameWarning
     base.MetaBase
+
