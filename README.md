@@ -19,7 +19,6 @@ Then, components, subsystems, couplings and excitations can be added to the Syst
 Finally, when all properties have been set, the modal energies can be solved by executing the solve() method of the System() instance.
 
 
-
 # Prerequisites
 
 Required are:
@@ -29,6 +28,7 @@ Required are:
 - matplotlib
 - pandas
 - toolz
+- networkx
 
 
 # Installing
@@ -41,7 +41,11 @@ Via conda:
 
     conda install -c ...
     
-Or clone this repository:
+# Developing
+
+    git clone https://github.com/FRidh/seapy.git
+    cd seapy
+    python setup.py develop
 
 
 ## Documentation

@@ -100,5 +100,6 @@ setup(
           'matplotlib',
           'pandas',
           'toolz',
+          'networkx'
           ],
       )
