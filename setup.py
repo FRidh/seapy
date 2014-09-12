@@ -91,7 +91,7 @@ setup(
       author='Frederik Rietdijk',
       author_email='fridh@fridh.nl',
       license='LICENSE.txt',
-      packages=find_packages(),
+      packages=find_packages(exclude=["tests"]),
       url='https://github.com/FRidh/seapy',
       #scripts=['bin/beams.py'],
       zip_safe=False,
