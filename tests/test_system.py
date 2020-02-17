@@ -55,7 +55,7 @@ class TestNewObject:
         Add component.
         """
         steel = system.add_material('steel', 'MaterialSolid', young=1.0e7, poisson=0.30, loss_factor=np.ones(len(system.frequency.center))*0.2)
-        beam1 = system.add_component('beam1', 'Component1DBeam', material='steel', volume=10.0, length=2.0, cross_section=0.30)
+        beam1 = system.add_component('beam1', 'Component1DBeam', material='steel', length=2.0, cross_section=0.30)
         
         assert(len(list(system.objects))==5) # 1 material + 1 component + 3 subsystems = 5
         assert(len(list(system.materials))==1)
@@ -66,7 +66,7 @@ class TestNewObject:
         #assert(list(steel.linked_components)[0] == beam1)
         #assert(isinstance(list(steel.linked_components)[0], weakref.ProxyTypes))
         
-        system1.removeObject('beam1')
+        system.remove_object('beam1')
 
     
     def test_add_junction(self, system):
@@ -81,7 +81,7 @@ class TestNewObject:
         Add junction.
         """
         steel = system.add_material('steel', 'MaterialSolid', young=1.0e7, poisson=0.30, loss_factor=np.ones(len(system.frequency.center))*0.2)
-        beam1 = system.add_component('beam1', 'Component1DBeam', material='steel', volume=10.0, length=2.0, cross_section=0.30)
+        beam1 = system.add_component('beam1', 'Component1DBeam', material='steel', length=2.0, cross_section=0.30)
         
         subsystem1 = beam1.subsystem_long
         ex1 = subsystem1.add_excitation('ex1', 'ExcitationPointForce')

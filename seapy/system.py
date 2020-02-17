@@ -217,7 +217,7 @@ class System(object):
         :returns: Proxy to `object`.
         
         """
-        obj = obj._get_real_object(name)
+        obj = self._get_real_object(name)
         for obj in self._objects:
             if name == obj.name:
                 self._objects.remove(obj)

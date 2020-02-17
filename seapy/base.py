@@ -341,6 +341,8 @@ class MetaBase(type):
         #print(name)
         #print(bases)
         #print(attrs)
+
+        # Component-specific. Should be moved if possible.
         if 'SUBSYSTEMS' in attrs.keys():
             for attr, sort in attrs['SUBSYSTEMS'].items():
                 attrs[attr] = SubsystemDescriptor(attr)
@@ -455,9 +457,13 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
 
         if properties:
             for key, value in properties.items():
+                logging.debug("Setting the attribute %s to %s on %s", key, value, self)
                 #if key in self.__class__.__dict__.keys():
                 #if hasattr(self, key):
-                setattr(self, key, value)
+                try:
+                    setattr(self, key, value)
+                except AttributeError as exc:
+                    raise AttributeError(f"Setting the attribute {key} to {value} on {self}. {key} is however not a valid attribute for {type(self)}") from exc
         
         
         logging.info("Constructor %s: Created object %s of type %s", self.name, self.name, str(type(self)))
