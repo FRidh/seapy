@@ -8,6 +8,7 @@
 , pytestCheckHook
 , acoustics
 , black
+, pylint
 }:
 
 let
@@ -35,6 +36,7 @@ in buildPythonPackage rec {
     pytestCheckHook
     acoustics_
     black
+    pylint
   ];
 
   passthru.allInputs = propagatedBuildInputs ++ checkInputs;
@@ -42,6 +44,9 @@ in buildPythonPackage rec {
   dontUseSetuptoolsCheck = true;
 
   preCheck = ''
+    echo "Checking formatting with black..."
     black --check seapy tests setup.py docs/conf.py
+    echo "Static analysis with pylint..."
+    pylint -E seapy
   '';
 }
