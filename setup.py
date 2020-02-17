@@ -1,5 +1,5 @@
 import sys, re, os, warnings
-from setuptools import setup, find_packages, Command
+from setuptools import setup, find_packages
 
 CLASSIFIERS = [
         'Development Status :: 2 - Pre-Alpha',
@@ -100,6 +100,7 @@ setup(
           'matplotlib',
           'pandas',
           'toolz',
-          'networkx'
+          'networkx',
+          'pyyaml',
           ],
       )
