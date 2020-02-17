@@ -52,8 +52,8 @@ class CouplingPointStructural(Coupling):
     def clf(self):
         """Coupling loss factor."""
         # return self.tau() * self.subsystem_from.c_group() / (self.subsystem_from.omega * self.subsystem_from.component.length() * (2-self.tau()) )
-        return np.real(subsystem_to.mobility()) / (
-            2.0 * np.pi * self.frequency.angular * subsystem_from.component.mass
+        return np.real(self.subsystem_to.mobility()) / (
+            2.0 * np.pi * self.frequency.angular * self.subsystem_from.component.mass
             + np.abs(self.subsystem_from.mobility() + self.subsystem_to.mobility())
             ** 2.0
         )

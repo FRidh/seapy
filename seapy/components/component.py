@@ -98,7 +98,7 @@ class Component(Base):
         self.__dict__["enabled"] = False
 
         if subsystems:
-            for subsystem in self.subsystems:
+            for subsystem in self.linked_subsystems:
                 subsystem.disable()
 
     def enable(self, subsystems=False):
@@ -111,7 +111,7 @@ class Component(Base):
         self.__dict__["enabled"] = True
 
         if subsystems:
-            for subsystem in self.subsystems:
+            for subsystem in self.linked_subsystems:
                 subsystem.enable()
 
     def _add_subsystems(self):

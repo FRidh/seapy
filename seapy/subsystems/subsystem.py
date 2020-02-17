@@ -10,7 +10,7 @@ ABC
 from ..base import Base, ComponentLink, LinkedList, Attribute
 import abc
 import math
-import cmath
+import itertools
 import numpy as np
 
 from weakref import WeakSet
@@ -96,7 +96,7 @@ class Subsystem(Base):
         self.__dict__["enabled"] = False
 
         if couplings:
-            for coupling in self.linked_couplings:
+            for coupling in itertools.chain(self.linked_couplings_from, self.linked_couplings_to):
                 coupling.disable()
 
     def enable(self, couplings=False):
@@ -109,7 +109,7 @@ class Subsystem(Base):
         self.__dict__["enabled"] = True
 
         if couplings:
-            for coupling in self.linked_couplings:
+            for coupling in itertools.chain(self.linked_couplings_from, self.linked_couplings_to):
                 coupling.enable()
 
     def add_excitation(self, name, model, **properties):
@@ -297,7 +297,7 @@ class Subsystem(Base):
         * energy reference :math:`E_{0}`, see :attr:`seapy.system.reference_energy`.
         
         """
-        return 10.0 * np.log10(self.energy / self._system.reference_energy)
+        return 10.0 * np.log10(self.energy / self.system.reference_energy)
 
     @property
     def dlf(self):

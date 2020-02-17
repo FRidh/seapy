@@ -22,7 +22,7 @@ def total_loss_factor(frequency, reverberation_time):
     See Craik, equation 1.19, page 9.
 
     """
-    return 2.2 / (f * T)
+    return 2.2 / (frequency * reverberation_time)
 
 
 def total_loss_factor_masonry(frequency):
@@ -38,4 +38,4 @@ def total_loss_factor_masonry(frequency):
     See Craik, equation 1.21, page 9.
     
     """
-    return 1.0 / np.sqrt(f) + 0.015
+    return 1.0 / np.sqrt(frequency) + 0.015

@@ -16,6 +16,8 @@ Classes describing a one-dimensional beam.
 """
 
 import numpy as np
+
+from ..base import Attribute
 from .structural import ComponentStructural
 from ..subsystems import SubsystemStructural
 
@@ -298,6 +300,8 @@ class Component1DBeam(ComponentStructural):
         "subsystem_bend": SubsystemBend,
         "subsystem_shear": SubsystemShear,
     }
+
+    cross_section = Attribute()
 
     @property
     def mass_per_area(self):

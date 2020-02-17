@@ -45,7 +45,7 @@ class SubsystemLong(SubsystemAcoustical):
         return (
             2.0
             * self.component.material.density
-            * self.soundspeed
+            * self.soundspeed_phase
             / self.component.cross_section
         )
 

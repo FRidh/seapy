@@ -68,6 +68,13 @@ class Excitation(Base):
         pass
 
     @property
+    @abc.abstractmethod
+    def mobility(self):
+        """Impedance :math:`Z`.
+        """
+        pass
+
+    @property
     def resistance(self):
         """The resistance :math:`R` is the real part of the impedance :math:`Z`.
         """

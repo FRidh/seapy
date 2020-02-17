@@ -108,7 +108,7 @@ import pandas as pd
 # setattr(instance, self.one, None)
 
 
-class Link(object):
+class Link(object, metaclass=abc.ABCMeta):
     """One-to-Many link from `local` to `remotes`.
     
     Descriptor.
@@ -123,6 +123,11 @@ class Link(object):
     """
     Name of the attribute where this link refers to.
     """
+
+    @property
+    @abc.abstractmethod
+    def reference(self):
+        pass
 
     def __get__(self, instance, owner):
         try:
@@ -423,6 +428,11 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
     Abstract Base Class for all components, junctions, 
     materials, subsystems, couplings and excitation.
     """
+
+    @property
+    @abc.abstractmethod
+    def SORT(self):
+        pass
 
     def __init__(self, name, system, **properties):
         """Constructor.

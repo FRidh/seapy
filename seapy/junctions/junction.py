@@ -272,7 +272,7 @@ class Junction(Base):
         self.__dict__["enabled"] = False
 
         if couplings:
-            for coupling in self.couplings:
+            for coupling in self.linked_couplings:
                 coupling.disable()
 
     def enable(self, couplings=False):
@@ -285,7 +285,7 @@ class Junction(Base):
         self.__dict__["enabled"] = True
 
         if couplings:
-            for coupling in self.couplings:
+            for coupling in self.linked_couplings:
                 coupling.enable()
 
     def add_coupling_manual(
@@ -379,9 +379,9 @@ class Junction(Base):
         
         :rtype: :class:`numpy.ndarray`
         """
-        imp = np.zeros(len(self.omega))
+        impedance = np.zeros(len(self.frequency))
         for subsystem in self.subsystems:
-            imp = imp + subsystem.impedance
+            impedance += subsystem.impedance
         return impedance
 
     # def info(self):
