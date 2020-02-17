@@ -7,6 +7,7 @@
 , pyyaml
 , pytestCheckHook
 , acoustics
+, black
 }:
 
 let
@@ -33,9 +34,14 @@ in buildPythonPackage rec {
   checkInputs = [
     pytestCheckHook
     acoustics_
+    black
   ];
 
   passthru.allInputs = propagatedBuildInputs ++ checkInputs;
 
   dontUseSetuptoolsCheck = true;
+
+  preCheck = ''
+    black --check seapy tests setup.py docs/conf.py
+  '';
 }

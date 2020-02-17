@@ -7,7 +7,9 @@ Point excitation
 from ..base import Attribute
 import numpy as np
 from .excitation import Excitation
-#from ..subsystems import SubsystemCavity, SubsystemStructural
+
+# from ..subsystems import SubsystemCavity, SubsystemStructural
+
 
 class ExcitationPoint(Excitation):
     """
@@ -18,7 +20,7 @@ class ExcitationPoint(Excitation):
     """
     Radius :math`r` of the source.
     """
-    
+
     @property
     def mobility(self):
         """The driving-point mobility or admittance :math:`Y`.
@@ -27,18 +29,17 @@ class ExcitationPoint(Excitation):
         
         """
         return 1.0 / self.impedance
-    
+
     @property
     def resistance(self):
         return self.impedance.real
-    
+
 
 class ExcitationPointForce(ExcitationPoint):
     """
     Point excitation by a force.
     """
-    
-    
+
     force = Attribute()
     """Force :math:`F`.
     """
@@ -61,26 +62,26 @@ class ExcitationPointForce(ExcitationPoint):
         
         """
         if self.force.any():
-            return self.force**2.0 * self.mobility.real
+            return self.force ** 2.0 * self.mobility.real
         elif self.velocity.any():
-            return self.velocity**2.0 * self.impedance.real
+            return self.velocity ** 2.0 * self.impedance.real
         else:
             raise ValueError("Neither force nor velocity is specified.")
-        
+
     @property
     def impedance(self):
         return self.subsystem.impedance_point_force
-    
+
 
 class ExcitationPointMoment(ExcitationPoint):
     """
     Point excitation of a moment.
     """
-    
+
     moment = Attribute()
     """Moment :math:`M`.
     """
-    
+
     velocity = Attribute()
     """Angular velocity :math:`\\omega`.
     """
@@ -100,30 +101,30 @@ class ExcitationPointMoment(ExcitationPoint):
     
         """
         if self.moment.any():
-            return self.moment**2.0 * self.mobility.real
+            return self.moment ** 2.0 * self.mobility.real
         elif self.velocity.any():
-            return self.velocity**2.0 * self.impedance.real
+            return self.velocity ** 2.0 * self.impedance.real
         else:
             raise ValueError("Neither moment nor velocity is specified.")
-        
+
     @property
     def impedance(self):
         return self.subsystem.impedance_point_moment
-    
-  
+
+
 class ExcitationPointVolume(ExcitationPoint):
     """
     Point excitation by a volume flow.
     """
-    
+
     pressure = Attribute()
     """Sound pressure :math:`p`.
     """
-    
+
     velocity = Attribute()
     """Volume velocity :math:`U`.
     """
-    
+
     @property
     def power(self):
         """Input power :math:`P`.
@@ -140,17 +141,16 @@ class ExcitationPointVolume(ExcitationPoint):
         
         """
         if self.pressure.any():
-            return self.pressure**2.0 * self.mobility.real
+            return self.pressure ** 2.0 * self.mobility.real
         elif self.velocity.any():
-            return self.velocity**2.0 * self.impedance.real
+            return self.velocity ** 2.0 * self.impedance.real
         else:
             raise ValueError("Neither pressure nor velocity is specified.")
-        
+
     @property
     def impedance(self):
-        #try:
-            return self.subsystem.impedance_point_volume(self)
-        #except TypeError:
-            #return self.subsystem.impedance_point_volume()
-            
-    
+        # try:
+        return self.subsystem.impedance_point_volume(self)
+
+    # except TypeError:
+    # return self.subsystem.impedance_point_volume()

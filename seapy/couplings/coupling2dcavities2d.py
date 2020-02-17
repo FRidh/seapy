@@ -1,6 +1,7 @@
 import numpy as np
 from .coupling import Coupling
-    
+
+
 class Coupling2DCavities2D(Coupling):
     """
     Coupling for cavity2D to cavity transmission.
@@ -19,17 +20,16 @@ class Coupling2DCavities2D(Coupling):
         """
         Choses the right impedance of subsystem_from.
         Applies boundary conditions correction as well.
-        """     
+        """
         return self.subsystem_to.impedance
-    
+
     @property
     def tau(self):
         """
         Transmission coefficient.
         """
         raise NotImplementedError
-    
-    
+
     @property
     def clf(self):
         """

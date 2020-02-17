@@ -14,36 +14,37 @@ import numpy as np
 
 from ..base import Base, JunctionLink, SubsystemFromLink, SubsystemToLink
 
+
 class Coupling(Base):
     """
     Abstract base class for couplings.
     """
-    
-    SORT = 'Coupling'
 
-    _DEPENDENCIES = ['subsystem_from', 'subsystem_to']
+    SORT = "Coupling"
+
+    _DEPENDENCIES = ["subsystem_from", "subsystem_to"]
 
     junction = JunctionLink()
     """
     Junction this coupling is part of.
     """
-    
+
     subsystem_from = SubsystemFromLink()
     """
     Type of subsystem origin for coupling
     """
-    
+
     subsystem_to = SubsystemToLink()
     """
     Type of subsystem destination for coupling
     """
-    
-    #size = None
-    #"""
-    #Size of the coupling.
-    #"""
-    
-    #def __init__(self, name, junction, subsystem_from, subsystem_to, **properties):
+
+    # size = None
+    # """
+    # Size of the coupling.
+    # """
+
+    # def __init__(self, name, junction, subsystem_from, subsystem_to, **properties):
     def __init__(self, name, system, **properties):
         """
         Constructor.
@@ -59,16 +60,15 @@ class Coupling(Base):
         
         """
         super().__init__(name, system, **properties)
-        #self.junction = junction
-        #self.subsystem_from = subsystem_from
-        #self.subsystem_to = subsystem_to
-    
-    
+        # self.junction = junction
+        # self.subsystem_from = subsystem_from
+        # self.subsystem_to = subsystem_to
+
     def _save(self):
         attrs = super()._save()
-        attrs['subsystem_from'] = self.subsystem_from.name
-        attrs['subsystem_to'] = self.subsystem_to.name
-        attrs['junction'] = self.junction.name
+        attrs["subsystem_from"] = self.subsystem_from.name
+        attrs["subsystem_to"] = self.subsystem_to.name
+        attrs["junction"] = self.junction.name
         return attrs
 
     def disable(self, subsystems=False):
@@ -78,12 +78,12 @@ class Coupling(Base):
         :param subsystems: Disable subsystems
         :type subsystems: bool
         """
-        self.__dict__['enabled'] = False
-        
+        self.__dict__["enabled"] = False
+
         if subsystems:
             self.subsystem_from.disable()
             self.subsystem_to.disable()
-    
+
     def enable(self, subsystems=False):
         """
         Enable this coupling. Optionally enable dependent subsystems as well.
@@ -91,12 +91,11 @@ class Coupling(Base):
         :param subsystems: Enable subsystems
         :type subsystems: bool
         """
-        self.__dict__['enabled'] = True
-        
+        self.__dict__["enabled"] = True
+
         if subsystems:
             self.subsystem_from.enable()
             self.subsystem_to.enable()
-
 
     @property
     @abc.abstractmethod
@@ -106,7 +105,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return
-    
+
     @property
     @abc.abstractmethod
     def impedance_to(self):
@@ -115,8 +114,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return
-    
-    
+
     @property
     def reciproce(self):
         """Reciproce or inverse coupling.
@@ -125,9 +123,12 @@ class Coupling(Base):
         
         """
         for coupling in self.junction.linked_couplings:
-            if coupling.subsystem_from == self.subsystem_to and coupling.subsystem_to == self.subsystem_from:
+            if (
+                coupling.subsystem_from == self.subsystem_to
+                and coupling.subsystem_to == self.subsystem_from
+            ):
                 return coupling
-    
+
     @property
     def conductivity(self):
         """Conductivity of coupling.
@@ -142,7 +143,7 @@ class Coupling(Base):
         
         """
         return self.frequency.angular * self.subsystem_from.modal_density * self.clf
-    
+
     @property
     def clf(self):
         """Coupling loss factor `\\eta`.
@@ -157,10 +158,16 @@ class Coupling(Base):
         try:
             clf = self.reciproce.__class__.clf
         except AttributeError:
-            raise ValueError("Cannot calculate CLF. Reciproce CLF has not been specified.")
+            raise ValueError(
+                "Cannot calculate CLF. Reciproce CLF has not been specified."
+            )
         else:
-            return clf * self.subsystem_to.modal_density / self.subsystem_from.modal_density
-        
+            return (
+                clf
+                * self.subsystem_to.modal_density
+                / self.subsystem_from.modal_density
+            )
+
     @property
     def clf_level(self):
         """Coupling loss factor level.
@@ -170,9 +177,8 @@ class Coupling(Base):
         See Craik, equation 4.3, page 89.
         
         """
-        return 10.0*np.log10(self.clf / self.system.ref)
-    
-        
+        return 10.0 * np.log10(self.clf / self.system.ref)
+
     @property
     def mobility_from(self):
         """Mobility of :attr:`subsystem_from` corrected for the type of coupling.
@@ -181,7 +187,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return 1.0 / self.impedance_from
-        
+
     @property
     def mobility_to(self):
         """Mobility of :attr:`subsystem_to` corrected for the type of coupling.
@@ -190,7 +196,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return 1.0 / self.impedance_to
-    
+
     @property
     def resistance_from(self):
         """Resistance of :attr:`subsystem_from` corrected for the type of coupling.
@@ -199,7 +205,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return np.real(self.impedance_from)
-    
+
     @property
     def resistance_to(self):
         """Resistance of :attr:`subsystem_to` corrected for the type of coupling.
@@ -208,7 +214,7 @@ class Coupling(Base):
         :rtype: :class:`numpy.ndarray`
         """
         return np.real(self.impedance_to)
-    
+
     @property
     def power(self):
         """Amount of power flowing from subsystem 1 to subsystem 2.
@@ -221,7 +227,7 @@ class Coupling(Base):
     
         """
         return self.subsystem_from.energy * self.frequency.angular * self.clf
-    
+
     @property
     def power_net(self):
         """Net amount of power from subsystem 1 to subsystem 2.
@@ -231,11 +237,12 @@ class Coupling(Base):
         See Craik, equation 4.2, page 89.
         
         """
-        return self.frequency.angular * (self.subsystem_from.energy * self.clf - self.subsystem_to.energy - self.reciproce.clf)
-        
-        
-    
-    
+        return self.frequency.angular * (
+            self.subsystem_from.energy * self.clf
+            - self.subsystem_to.energy
+            - self.reciproce.clf
+        )
+
     @property
     def modal_coupling_factor(self):
         """Modal coupling factor of the coupling.
@@ -246,5 +253,8 @@ class Coupling(Base):
         
         See Lyon, above equation 12.1.4
         """
-        return self.frequency.center * self.clf / self.subsystem_from.average_frequency_spacing
-        
+        return (
+            self.frequency.center
+            * self.clf
+            / self.subsystem_from.average_frequency_spacing
+        )

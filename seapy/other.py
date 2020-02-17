@@ -22,9 +22,9 @@ def total_loss_factor(frequency, reverberation_time):
     See Craik, equation 1.19, page 9.
 
     """
-    return 2.2 / (f*T)
-    
-    
+    return 2.2 / (f * T)
+
+
 def total_loss_factor_masonry(frequency):
     """
     A good estimate total loss factor for masonry type structures.

@@ -16,11 +16,12 @@ import numpy as np
 from .acoustical import ComponentAcoustical
 from ..subsystems import SubsystemAcoustical
 
+
 class SubsystemLong(SubsystemAcoustical):
     """
     Subsystem for a 1D cavity (duct).
     """
-    
+
     @property
     def average_frequency_spacing(self):
         """
@@ -31,8 +32,7 @@ class SubsystemLong(SubsystemAcoustical):
         See Lyon, eq. 8.1.9
         """
         return self.soundspeed_group / (2.0 * self.component.length)
-    
-   
+
     @property
     def impedance(self):
         """
@@ -42,12 +42,17 @@ class SubsystemLong(SubsystemAcoustical):
         
         See Lyon, table 10.1, third row.
         """
-        return 2.0 * self.component.material.density * self.soundspeed / self.component.cross_section
-       
-       
+        return (
+            2.0
+            * self.component.material.density
+            * self.soundspeed
+            / self.component.cross_section
+        )
+
+
 class Component1DAcoustical(ComponentAcoustical):
     """
     Component for a fluid in a 1D cavity.
     """
 
-    SUBSYSTEMS = {'Long': SubsystemLong}
+    SUBSYSTEMS = {"Long": SubsystemLong}

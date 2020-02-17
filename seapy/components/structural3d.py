@@ -22,7 +22,7 @@ class SubsystemLong(SubsystemStructural):
     Subsystem from longitudinal waves in a 3D isotropic solid.
     
     """
-    
+
     @property
     def soundspeed_group(self):
         """Group velocity for longitudinal waves in a 3D solid.
@@ -37,7 +37,11 @@ class SubsystemLong(SubsystemStructural):
         poisson = self.component.material.poisson
         young = self.component.material.young
         density = self.component.material.density
-        return np.sqrt( young / density * (1.0 - poisson / ((1.0+poisson)*(1.0-2.0*poisson)) ) )
+        return np.sqrt(
+            young
+            / density
+            * (1.0 - poisson / ((1.0 + poisson) * (1.0 - 2.0 * poisson)))
+        )
 
 
 class Component3D(ComponentStructural):

@@ -10,19 +10,17 @@ import numpy as np
 from .component import Component
 from ..base import Attribute
 
+
 class ComponentAcoustical(Component):
     """Abstract base class for acoustical components.
     """
-    
-    #@property
-    #def subsystem_long(self):
-        #"""Subsystem for longitudinal waves.
-        #"""
-        #for obj in self.linked_subsystems:
-            #if isinstance(
-    
-    
-    
+
+    # @property
+    # def subsystem_long(self):
+    # """Subsystem for longitudinal waves.
+    # """
+    # for obj in self.linked_subsystems:
+    # if isinstance(
 
     @property
     def pressure(self):
@@ -33,7 +31,7 @@ class ComponentAcoustical(Component):
         This is the sum of all subsystems velocities.       
         """
         return sum(subsystem.pressure for subsystem in self.linked_subsystems)
-    
+
     @property
     def pressure_level(self):
         """

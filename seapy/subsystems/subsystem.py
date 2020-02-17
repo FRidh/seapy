@@ -16,30 +16,31 @@ import numpy as np
 from weakref import WeakSet
 import logging
 
-from seapy.excitations import excitations_map   # Circular dependency!
+from seapy.excitations import excitations_map  # Circular dependency!
+
 
 class Subsystem(Base):
     """Abstract Base Class for subsystems."""
 
-    SORT = 'Subsystem'
+    SORT = "Subsystem"
 
-    _DEPENDENCIES = ['component']
+    _DEPENDENCIES = ["component"]
 
     component = ComponentLink()
     """
     Component this subsystem uses.
     """
-    
+
     linked_couplings_from = LinkedList()
     """ 
     Set of couplings in which the subsystem is in the From field.
     """
-    
+
     linked_couplings_to = LinkedList()
     """
     Set of couplings in which the subsystem is in the To field.
     """
-    
+
     linked_excitations = LinkedList()
     """
     Set of excitations this subsystem experiences.
@@ -48,36 +49,41 @@ class Subsystem(Base):
     modal_energy = Attribute()
     """Modal energy.
     """
-    
+
     loss_factor = Attribute()
     """Internal loss factor.
     
     .. seealso :: :attr:`dlf`
     
     """
-        
+
     def __del__(self):
         """Destructor. Destroy linked couplings. Remove references from components"""
         for coupling in self.linked_couplings_from:
-            logging.info("Destructor %s: Deleting linked coupling %s", self.name, coupling)
+            logging.info(
+                "Destructor %s: Deleting linked coupling %s", self.name, coupling
+            )
             self.system.remove_object(coupling)
         for coupling in self.linked_couplings_to:
-            logging.info("Destructor %s: Deleting linked coupling %s", self.name, coupling)
+            logging.info(
+                "Destructor %s: Deleting linked coupling %s", self.name, coupling
+            )
             self.system.remove_object(coupling)
         for excitation in self.linked_excitations:
-            logging.info("Destructor %s: Deleting linked excitation %s", self.name, excitation)
+            logging.info(
+                "Destructor %s: Deleting linked excitation %s", self.name, excitation
+            )
             self.system.remove_object(excitation)
         try:
-            self.component.__dict__['linked_subsystems'].remove(self.name)
+            self.component.__dict__["linked_subsystems"].remove(self.name)
         except ReferenceError:
             pass
-        #self.system.subsystems.remove(self.name)
-        super().__del__() # Inherit destructor from base class
-
+        # self.system.subsystems.remove(self.name)
+        super().__del__()  # Inherit destructor from base class
 
     def _save(self):
         attrs = super()._save()
-        attrs['component'] = self.component.name
+        attrs["component"] = self.component.name
         return attrs
 
     def disable(self, couplings=False):
@@ -87,12 +93,12 @@ class Subsystem(Base):
         :param couplings: Disable couplings
         :type couplings: bool
         """
-        self.__dict__['enabled'] = False
-        
+        self.__dict__["enabled"] = False
+
         if couplings:
             for coupling in self.linked_couplings:
                 coupling.disable()
-    
+
     def enable(self, couplings=False):
         """
         Enable this subsystem. Optionally enable dependent couplings as well.
@@ -100,38 +106,36 @@ class Subsystem(Base):
         :param couplings: Enable couplings
         :type couplings: bool
         """
-        self.__dict__['enabled'] = True
-        
+        self.__dict__["enabled"] = True
+
         if couplings:
             for coupling in self.linked_couplings:
                 coupling.enable()
-    
+
     def add_excitation(self, name, model, **properties):
         """Add excitation to subsystem.
 
         """
-        properties['subsystem'] = self.name
+        properties["subsystem"] = self.name
         return self.system._add_object(name, excitations_map[model], **properties)
 
-    
-    #def _set_modal_overlap_factor(self, x):
-        #self._modal_overlap_factor = x
-    
-    #def _get_modal_overlap_factor(self):
-        #if not self._modal_overlap_factor:
-            #return self.component.material.loss_factor
-        #else:
-            #self._modal_overlap_factor
-    
-    #_modal_overlap_factor = None
-    #modal_overlap_factor = property(fget=_get_modal_overlap_factor, fset=_set_modal_overlap_factor)
-    #"""
-    #Modal overlap factor. Initial value is based on damping loss factor of subsystem.
-    #After solving the system a first time, this value is updated to its results.
-    #This value is iteratively updated.
-    #"""
-    
-    
+    # def _set_modal_overlap_factor(self, x):
+    # self._modal_overlap_factor = x
+
+    # def _get_modal_overlap_factor(self):
+    # if not self._modal_overlap_factor:
+    # return self.component.material.loss_factor
+    # else:
+    # self._modal_overlap_factor
+
+    # _modal_overlap_factor = None
+    # modal_overlap_factor = property(fget=_get_modal_overlap_factor, fset=_set_modal_overlap_factor)
+    # """
+    # Modal overlap factor. Initial value is based on damping loss factor of subsystem.
+    # After solving the system a first time, this value is updated to its results.
+    # This value is iteratively updated.
+    # """
+
     @property
     @abc.abstractmethod
     def soundspeed_phase(self):
@@ -139,15 +143,15 @@ class Subsystem(Base):
         Phase velocity in a subsystem.
         """
         return
-  
+
     @property
-    @abc.abstractmethod                    
+    @abc.abstractmethod
     def soundspeed_group(self):
         """
         Group velocity in a subsystem.
         """
         return
-        
+
     @property
     @abc.abstractmethod
     def average_frequency_spacing(self):
@@ -155,8 +159,8 @@ class Subsystem(Base):
         Average frequency spacing.
         """
         return
-    
-    @property            
+
+    @property
     def modal_density(self):
         """
         Modal density.
@@ -189,21 +193,20 @@ class Subsystem(Base):
         return self.dlf * self.frequency.angular * self.modal_density
 
     @property
-    #@abc.abstractmethod
+    # @abc.abstractmethod
     def wavenumber(self):
         """
         Wave number.
         """
         raise NotImplementedError
-    
+
     @property
     def impedance(self):
         """
         Impedance :math:`Z`
         """
         raise NotImplementedError
-        
-    
+
     @property
     def resistance(self):
         """
@@ -212,7 +215,7 @@ class Subsystem(Base):
         .. math:: R = \\Re{Z}
         """
         return np.real(self.impedance)
-    
+
     @property
     def conductance(self):
         """
@@ -221,7 +224,7 @@ class Subsystem(Base):
         .. math:: G = \\frac{1}{R}
         """
         return 1.0 / self.resistance
-    
+
     @property
     def mobility(self):
         """
@@ -233,7 +236,7 @@ class Subsystem(Base):
             return 1.0 / self.impedance
         except FloatingPointError:
             return np.zeros(len(self.frequency))
-            
+
     @property
     def damping_term(self):
         """
@@ -244,10 +247,14 @@ class Subsystem(Base):
         See Lyon, above equation 12.1.4
         """
         try:
-            return self.frequency.center * self.component.material.loss_factor / self.average_frequency_spacing
+            return (
+                self.frequency.center
+                * self.component.material.loss_factor
+                / self.average_frequency_spacing
+            )
         except FloatingPointError:
             return np.zeros(len(self.frequency))
-        
+
     @property
     def modal_overlap_factor(self):
         """
@@ -258,8 +265,7 @@ class Subsystem(Base):
         See Lyon, above equation 12.1.4
         """
         return np.pi * self.damping_term / 2.0
-    
-    
+
     @property
     def power_input(self):
         """
@@ -268,7 +274,7 @@ class Subsystem(Base):
         power = np.zeros(len(self.frequency))
         for excitation in self.linked_excitations:
             power = power + excitation.power
-        return power    
+        return power
 
     @property
     def energy(self):
@@ -292,7 +298,6 @@ class Subsystem(Base):
         
         """
         return 10.0 * np.log10(self.energy / self._system.reference_energy)
-        
 
     @property
     def dlf(self):
@@ -308,7 +313,7 @@ class Subsystem(Base):
             return self.loss_factor
         else:
             return self.component.material.loss_factor
-    
+
     @property
     def tlf(self):
         """Total loss factor.
@@ -318,6 +323,14 @@ class Subsystem(Base):
         See Craik, equation 3.18, page 60.
         
         """
-        return np.sum((coupling.clf for coupling in self.linked_couplings_from if coupling.included), axis=0) + self.dlf * self.included
-        
-        
+        return (
+            np.sum(
+                (
+                    coupling.clf
+                    for coupling in self.linked_couplings_from
+                    if coupling.included
+                ),
+                axis=0,
+            )
+            + self.dlf * self.included
+        )

@@ -5,12 +5,13 @@ import math
 import cmath
 import numpy as np
 
+
 class Excitation(Base):
     """Abstract Base Class for excitations."""
-    
-    SORT = 'Excitation'
 
-    _DEPENDENCIES = ['subsystem']
+    SORT = "Excitation"
+
+    _DEPENDENCIES = ["subsystem"]
 
     subsystem = SubsystemExcitationLink()
     """
@@ -27,14 +28,14 @@ class Excitation(Base):
         
         """
         super().__init__(name, system, **properties)
-        
-        #self.subsystem = subsystem
-        
+
+        # self.subsystem = subsystem
+
     def _save(self):
         attrs = super()._save()
-        attrs['subsystem'] = self.subsystem.name
+        attrs["subsystem"] = self.subsystem.name
         return attrs
-        
+
     def disable(self, subsystem=False):
         """
         Disable this excitation. Optionally disable excitations' subsystem.
@@ -42,11 +43,11 @@ class Excitation(Base):
         :param subsystem: Disable subsystem
         :type subsystem: bool
         """
-        self.__dict__['enabled'] = False
-        
+        self.__dict__["enabled"] = False
+
         if subsystem:
             self.subsystem.disable()
-    
+
     def enable(self, subsystem=False):
         """
         Enable this excitation. Optionally enable excitations' subsystem.
@@ -54,11 +55,10 @@ class Excitation(Base):
         :param subsystem: Enable subsystem
         :type subsystem: bool
         """
-        self.__dict__['enabled'] = True
-        
+        self.__dict__["enabled"] = True
+
         if subsystem:
             self.subsystem.enable()
-    
 
     @property
     @abc.abstractmethod

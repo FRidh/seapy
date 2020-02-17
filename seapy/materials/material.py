@@ -15,25 +15,26 @@ import logging
 
 from ..base import Base, Attribute, LinkedList
 
+
 class Material(Base):
     """
     Abstract Material Class
     """
-    
-    SORT = 'Material'
-    
+
+    SORT = "Material"
+
     _DEPENDENCIES = []
 
     density = Attribute()
     """
     Density :math:`\\rho` of the material.
     """
-    
+
     temperature = Attribute()
     """
     Temperature :math:`T` in kelvin.
     """
-      
+
     pressure = Attribute()
     """
     Pressure :math:`p`
@@ -48,12 +49,12 @@ class Material(Base):
     """
     Loss factor :math:`\\eta` of the material.
     """
-    
+
     linked_components = LinkedList()
     """
     Components linked to this subsystem.
     """
-    
+
     def __init__(self, name, system, **properties):
         """Constructor.
         
@@ -65,8 +66,7 @@ class Material(Base):
         """
         super().__init__(name, system, **properties)
         self.temperature = 293.0
-        
-    
+
     def disable(self, components=False):
         """
         Disable this material. Optionally disable dependent components.
@@ -74,12 +74,12 @@ class Material(Base):
         :param components: Disable components
         :type components: bool
         """
-        self.__dict__['enabled'] = False
-        
+        self.__dict__["enabled"] = False
+
         if components:
             for component in self.linked_components:
                 component.disable()
-                
+
     def enable(self, components=False):
         """
         Enable this material. Optionally enable dependent components.
@@ -87,22 +87,17 @@ class Material(Base):
         :param components: Enable components
         :type components: bool
         """
-        self.__dict__['enabled'] = True
-        
+        self.__dict__["enabled"] = True
+
         if components:
             for component in self.linked_components:
                 component.enable()
-    
-       
+
     def __del__(self):
         """Destructor."""
         for component in self.linked_components:
             logging.info("Deleting linked component %s", component)
             self.system.remove_object(component)
-            #del self.system._objects[component]
-        #self.system.materials.remove(self.name)
+            # del self.system._objects[component]
+        # self.system.materials.remove(self.name)
         super().__del__()
-
-        
-        
-        

@@ -22,12 +22,13 @@ from ..subsystems import SubsystemStructural
 class SubsystemLong(SubsystemStructural):
     pass
 
+
 class SubsystemBend(SubsystemStructural):
     pass
 
+
 class SubsystemShear(SubsystemStructural):
     pass
-
 
 
 class ComponentPipe(ComponentStructural):
@@ -35,10 +36,8 @@ class ComponentPipe(ComponentStructural):
     One-dimensional beam component.
     """
 
-    SUBSYSTEMS = {'Long': SubsystemLong, 
-                   'Bend': SubsystemBend, 
-                   'Shear': SubsystemShear}
-    
+    SUBSYSTEMS = {"Long": SubsystemLong, "Bend": SubsystemBend, "Shear": SubsystemShear}
+
     @property
     def radius_of_gyration(self):
         """

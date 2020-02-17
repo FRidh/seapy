@@ -9,6 +9,7 @@ This is an abstract base class for structural components.
 import numpy as np
 from .component import Component
 
+
 class ComponentStructural(Component):
     """Abstract base class for structural components.
     """
@@ -22,7 +23,7 @@ class ComponentStructural(Component):
         This is the sum of all subsystems velocities.       
         """
         return sum(subsystem.velocity for subsystem in self.linked_subsystems)
-    
+
     @property
     def velocity_level(self):
         """
@@ -37,5 +38,4 @@ class ComponentStructural(Component):
         .. seealso:: :attr:`seapy.system.System.reference_velocity`
         
         """
-        return 20.0 * np.log10(self.velocity / self.system.reference_velocity ) 
-
+        return 20.0 * np.log10(self.velocity / self.system.reference_velocity)

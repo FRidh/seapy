@@ -23,7 +23,7 @@ class SubsystemLong(SubsystemStructural):
     """
     Subsystem for longitudinal waves in a 2D isotropic component.
     """
-    
+
     @property
     def soundspeed_group(self):
         """Group velocity for longitudinal waves in a 2D isotopic plate.
@@ -44,9 +44,14 @@ class SubsystemLong(SubsystemStructural):
         
         Often the density is replaced as a surface density (mass per unit area) and the thickness or height of the plate.
         """
-        return np.sqrt(self.component.material.young / (self.component.material.density * (1.0 - self.component.material.poisson**2.0)))
+        return np.sqrt(
+            self.component.material.young
+            / (
+                self.component.material.density
+                * (1.0 - self.component.material.poisson ** 2.0)
+            )
+        )
 
-            
     @property
     def soundspeed_phase(self):
         """Phase velocity for longitudinal waves in a 2D isotropic plate.
@@ -58,7 +63,7 @@ class SubsystemLong(SubsystemStructural):
         See Lyon, above eq 8.2.8
         """
         return self.soundspeed_group
-    
+
     @property
     def average_frequency_spacing(self):
         """Average frequency spacing for a 2D isotropic plate.
@@ -75,7 +80,9 @@ class SubsystemLong(SubsystemStructural):
         
         See Lyon, equation 8.2.8
         """
-        return  self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
+        return self.soundspeed_group ** 2.0 / (
+            self.frequency.angular * self.component.area
+        )
 
     @property
     def wavenumber(self, m, n, delta1, delta2):
@@ -87,8 +94,11 @@ class SubsystemLong(SubsystemStructural):
        
         See Lyon, equation 8.2.1.
         """
-        return np.sqrt( ( ( m - delta1) * np.pi / self.component.length) + ( ( m - delta2) * np.pi / self.component.width) )
-    
+        return np.sqrt(
+            ((m - delta1) * np.pi / self.component.length)
+            + ((m - delta2) * np.pi / self.component.width)
+        )
+
     @property
     def impedance(self):
         """Impedance
@@ -97,19 +107,19 @@ class SubsystemLong(SubsystemStructural):
         
         """
         raise NotImplementedError
-        
-    #@property
-    #def wavenumber(self):
-        #"""
-        #Wavenumber of longitudinal waves in a plate.
-        
-        #.. math:: k_L = \\frac{ \\rho \\omega \\left( 1 - \\nu \\right) }{E h}
-        
-        #Langley and Heron, 1990, eq 24.
-        #"""
-        #return self.component.material.density * self.omega * (1.0 - self.component.material.poisson) / (self.component.material.young * self.component.height)
-    
-        
+
+    # @property
+    # def wavenumber(self):
+    # """
+    # Wavenumber of longitudinal waves in a plate.
+
+    # .. math:: k_L = \\frac{ \\rho \\omega \\left( 1 - \\nu \\right) }{E h}
+
+    # Langley and Heron, 1990, eq 24.
+    # """
+    # return self.component.material.density * self.omega * (1.0 - self.component.material.poisson) / (self.component.material.young * self.component.height)
+
+
 class SubsystemBend(SubsystemStructural):
     """
     Subsystem for bending waves in a 2D isotropic component.
@@ -137,9 +147,13 @@ class SubsystemBend(SubsystemStructural):
         
         See Lyon, above eq. 8.2.5
         """
-        return (self.frequency.angular**2.0 * self.flexural_rigidity / self.component.mass_per_area) **(0.25)
-        #return np.sqrt(self.frequency.angular * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_phase)
-                
+        return (
+            self.frequency.angular ** 2.0
+            * self.flexural_rigidity
+            / self.component.mass_per_area
+        ) ** (0.25)
+        # return np.sqrt(self.frequency.angular * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_phase)
+
     @property
     def soundspeed_group(self):
         """Group velocity for bending wave.
@@ -151,7 +165,7 @@ class SubsystemBend(SubsystemStructural):
         See Lyon, above eq. 8.2.5
         """
         return 2.0 * self.soundspeed_phase
-    
+
     @property
     def average_frequency_spacing(self):
         """Average frequency spacing for bending waves in a 2D isotropic plate.
@@ -168,8 +182,13 @@ class SubsystemBend(SubsystemStructural):
         
         See Lyon, eq 8.2.5
         """
-        return 2.0 * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_group / self.component.area
-    
+        return (
+            2.0
+            * self.component.radius_of_gyration
+            * self.component.subsystem_long.soundspeed_group
+            / self.component.area
+        )
+
     @property
     def wavenumber(self):
         """Wavenumber of flexural waves in a plate.
@@ -186,8 +205,13 @@ class SubsystemBend(SubsystemStructural):
         
         See Langley and Heron, 1990, eq 18.
         """
-        return np.power(self.component.material.density * self.frequency.angular / self.flexural_rigidity, 0.25)
-    
+        return np.power(
+            self.component.material.density
+            * self.frequency.angular
+            / self.flexural_rigidity,
+            0.25,
+        )
+
     @property
     def flexural_rigidity(self):
         """Flexural rigidity of a plate.
@@ -205,18 +229,21 @@ class SubsystemBend(SubsystemStructural):
         See Craik, equation 3.2, page 48.
         
         """
-        return self.component.material.young * self.component.height**3.0 / (12.0 * (1.0 - self.component.material.poisson**2.0))
-    
-    #@property
-    #def impedance(self):
-        #"""Impedance.
-        
-        #:rtype: :class:`numpy.ndarray`
-        
-        #"""
-        #raise NotImplementedError
-    
-    
+        return (
+            self.component.material.young
+            * self.component.height ** 3.0
+            / (12.0 * (1.0 - self.component.material.poisson ** 2.0))
+        )
+
+    # @property
+    # def impedance(self):
+    # """Impedance.
+
+    #:rtype: :class:`numpy.ndarray`
+
+    # """
+    # raise NotImplementedError
+
     @property
     def impedance_point_force(self):
         """Point impedance.
@@ -232,14 +259,20 @@ class SubsystemBend(SubsystemStructural):
         See Lyon, page 201, table 10.1
         
         """
-        return 8.0 * self.component.material.density * self.component.height * self.component.radius_of_gyration * self.component.subsystem_long.soundspeed_group
-        
+        return (
+            8.0
+            * self.component.material.density
+            * self.component.height
+            * self.component.radius_of_gyration
+            * self.component.subsystem_long.soundspeed_group
+        )
+
 
 class SubsystemShear(SubsystemStructural):
     """
     Subsystem for shear waves in a 2D isotopic component.
     """
-    
+
     @property
     def soundspeed_phase(self):
         """
@@ -255,7 +288,7 @@ class SubsystemShear(SubsystemStructural):
         See Lyon, above eq. 8.2.5
         """
         return np.sqrt(self.component.material.shear / self.component.material.density)
-        
+
     @property
     def soundspeed_group(self):
         """
@@ -282,8 +315,10 @@ class SubsystemShear(SubsystemStructural):
         
         See Lyon, eq 8.2.5
         """
-        return self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
-    
+        return self.soundspeed_group ** 2.0 / (
+            self.frequency.angular * self.component.area
+        )
+
     @property
     def wavenumber(self):
         """
@@ -301,13 +336,18 @@ class SubsystemShear(SubsystemStructural):
         
         Langley and Heron, 1990, eq 25
         """
-        return self.component.material.density * self.frequency.angular * (1.0 + self.component.material.poisson) / (self.component.material.young * self.component.height) 
-        
-    
+        return (
+            self.component.material.density
+            * self.frequency.angular
+            * (1.0 + self.component.material.poisson)
+            / (self.component.material.young * self.component.height)
+        )
+
     @property
     def impedance(self):
         raise NotImplementedError
-   
+
+
 class Component2DPlate(ComponentStructural):
     """
     Two-dimensional plate component.
@@ -319,10 +359,13 @@ class Component2DPlate(ComponentStructural):
     * :class:`seapy.components.plate.SubsystemShear`
     
     """
-    
-    SUBSYSTEMS = {'subsystem_long': SubsystemLong,
-                  'subsystem_bend': SubsystemBend,
-                  'subsystem_shear': SubsystemShear}
+
+    SUBSYSTEMS = {
+        "subsystem_long": SubsystemLong,
+        "subsystem_bend": SubsystemBend,
+        "subsystem_shear": SubsystemShear,
+    }
+
     @property
     def area(self):
         """Area of the plate.
@@ -336,7 +379,7 @@ class Component2DPlate(ComponentStructural):
         
         """
         return self.length * self.width
-    
+
     @property
     def mass_per_area(self):
         """
@@ -351,7 +394,7 @@ class Component2DPlate(ComponentStructural):
         
         """
         return self.material.density * self.height
-    
+
     @property
     def radius_of_gyration(self):
         """
@@ -366,8 +409,7 @@ class Component2DPlate(ComponentStructural):
         See Lyon, above eq. 8.2.5
         """
         return self.height / np.sqrt(12.0)
-        
-        
+
     @property
     def area_moment_of_inertia(self):
         """
@@ -385,6 +427,5 @@ class Component2DPlate(ComponentStructural):
         .. math:: J = \\frac{h^3}{12 \\left( 1 - \\nu^2 \\right)}
         
         """
-        return self.height**3.0 / 12.0
-        #return self.height**3.0 / (12.0 * (1.0 - self.poisson()**2.0))
- 
+        return self.height ** 3.0 / 12.0
+        # return self.height**3.0 / (12.0 * (1.0 - self.poisson()**2.0))

@@ -6,12 +6,12 @@ Structural subsystem
 import numpy as np
 from .subsystem import Subsystem
 
+
 class SubsystemStructural(Subsystem):
     """
     Abstract base class for all structural subsystems.
     """
-    
-    
+
     @property
     def conductance_point_average(self):
         """
@@ -23,14 +23,14 @@ class SubsystemStructural(Subsystem):
         
         """
         return 0.25 * self.component.mass * self.average_frequency_spacing
-    
+
     @property
     def resistance_point_average(self):
         """
         Average point resistance.
         """
         return 1.0 / self.conductance_point_average
-    
+
     @property
     def velocity(self):
         """
@@ -42,7 +42,7 @@ class SubsystemStructural(Subsystem):
         
         """
         return np.sqrt(self.energy / self.component.mass)
-            
+
     @property
     def velocity_level(self):
         """
@@ -57,5 +57,4 @@ class SubsystemStructural(Subsystem):
         .. seealso:: :attr:`seapy.system.System.reference_velocity`
         
         """
-        return 20.0 * np.log10(self.velocity / self.system.reference_velocity ) 
-
+        return 20.0 * np.log10(self.velocity / self.system.reference_velocity)

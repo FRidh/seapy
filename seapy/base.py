@@ -45,67 +45,67 @@ from weakref import WeakSet
 
 from .tools import plot
 
-#from tabulate import tabulate
+# from tabulate import tabulate
 import pandas as pd
 
 
-#class Link(object):
-    #"""
-    #One-to-Many link from `local` to `remotes`.
-    
-    #Descriptor.
-    #"""
-    
-    #one = ''
-    #"""
-    #Name of the attribute this instance is assigned to.
-    #"""
-        
-    #many = ''
-    #"""
-    #Name of the attribute where this link refers to.
-    #"""
-        
-    #def __get__(self, instance, owner):
-        #try:
-            #return instance.system.get_object( instance.__dict__[self.one] )
-        #except KeyError:
-            #return None
-        
-    #def __set__(self, instance, value):
-        
-        #"""Log that we are changing the link."""
-        #logging.info("Setting {} of {} to {}".format(self.one, instance.name, value))
-        
-        #"""Get the name of the new object that we link to."""
-        #name = value if isinstance(value, str) else value.name
-        #del value
-        
-        #"""Get the object that we link to."""
-        #obj = instance.system.get_object(name)
+# class Link(object):
+# """
+# One-to-Many link from `local` to `remotes`.
 
-            
-        #try:
-            #if getattr(instance, self.one) is not None:
-                #logging.info("Changing %s of %s from %s to %s. Removing old reference.", one, instance.name, getattr(instance, self.one).name, name)
-                #for item in getattr(getattr(instance, one), self.many):
-                    #if item.name == instance.name:
-                        #getattr(getattr(instance, one), self.many).remove(item)
-        #except AttributeError:  # When self.one has not yet been set.
-            #pass
-        
-        #"""We save the  name of the object that is assigned, not the object itself."""
-        #instance.__dict__[self.one] = name
+# Descriptor.
+# """
 
-        #"""Add name of object in LinkedList of object."""
-        #try:
-            #l = obj.__dict__[self.many]
-        #except KeyError: # In case the list doesn't exist yet...
-            #l = obj.__dict__[self.many] = list()
-        #l.append(instance.name)
-            
-    #def __delete__(self, instance):
-        #setattr(instance, self.one, None)
+# one = ''
+# """
+# Name of the attribute this instance is assigned to.
+# """
+
+# many = ''
+# """
+# Name of the attribute where this link refers to.
+# """
+
+# def __get__(self, instance, owner):
+# try:
+# return instance.system.get_object( instance.__dict__[self.one] )
+# except KeyError:
+# return None
+
+# def __set__(self, instance, value):
+
+# """Log that we are changing the link."""
+# logging.info("Setting {} of {} to {}".format(self.one, instance.name, value))
+
+# """Get the name of the new object that we link to."""
+# name = value if isinstance(value, str) else value.name
+# del value
+
+# """Get the object that we link to."""
+# obj = instance.system.get_object(name)
+
+
+# try:
+# if getattr(instance, self.one) is not None:
+# logging.info("Changing %s of %s from %s to %s. Removing old reference.", one, instance.name, getattr(instance, self.one).name, name)
+# for item in getattr(getattr(instance, one), self.many):
+# if item.name == instance.name:
+# getattr(getattr(instance, one), self.many).remove(item)
+# except AttributeError:  # When self.one has not yet been set.
+# pass
+
+# """We save the  name of the object that is assigned, not the object itself."""
+# instance.__dict__[self.one] = name
+
+# """Add name of object in LinkedList of object."""
+# try:
+# l = obj.__dict__[self.many]
+# except KeyError: # In case the list doesn't exist yet...
+# l = obj.__dict__[self.many] = list()
+# l.append(instance.name)
+
+# def __delete__(self, instance):
+# setattr(instance, self.one, None)
 
 
 class Link(object):
@@ -113,56 +113,62 @@ class Link(object):
     
     Descriptor.
     """
-    
-    attribute = ''
+
+    attribute = ""
     """
     Name of the attribute this instance is assigned to.
     """
-        
-    remote = ''
+
+    remote = ""
     """
     Name of the attribute where this link refers to.
     """
-        
+
     def __get__(self, instance, owner):
         try:
-            obj = instance.system.get_object( instance.__dict__[self.attribute] )
+            obj = instance.system.get_object(instance.__dict__[self.attribute])
         except KeyError:
-            instance.__dict__[self.attribute] = None # Clean attribute. Replace by proxy?
+            instance.__dict__[
+                self.attribute
+            ] = None  # Clean attribute. Replace by proxy?
             obj = None
         except AttributeError:
             return None
         return obj
-        
+
     def __set__(self, instance, obj):
-        
+
         """Get name and Proxy to object."""
         name = obj if isinstance(obj, str) else obj.name
         obj = instance.system.get_object(name)
-        
+
         """Log that we are changing the link."""
-        logging.info("Setting {} of {} to {}".format(self.attribute, instance.name, name))
-        
-        #try:
-            #if getattr(instance, self.attribute) is not None:
-                #logging.info("Changing %s of %s from %s to %s. Removing old reference.", one, instance.name, getattr(instance, self.attribute).name, name)
-                #for item in getattr(getattr(instance, attribute), self.reference):
-                    #if item.name == instance.name:
-                        #getattr(getattr(instance, attribute), self.reference).remove(item)
-        #except AttributeError:  # When self.attribute has not yet been set.
-            #pass
-        
+        logging.info(
+            "Setting {} of {} to {}".format(self.attribute, instance.name, name)
+        )
+
+        # try:
+        # if getattr(instance, self.attribute) is not None:
+        # logging.info("Changing %s of %s from %s to %s. Removing old reference.", one, instance.name, getattr(instance, self.attribute).name, name)
+        # for item in getattr(getattr(instance, attribute), self.reference):
+        # if item.name == instance.name:
+        # getattr(getattr(instance, attribute), self.reference).remove(item)
+        # except AttributeError:  # When self.attribute has not yet been set.
+        # pass
+
         """We save the  name of the object that is assigned, not the object itself."""
         instance.__dict__[self.attribute] = name
 
         """Add name of object in LinkedList of object."""
-        #try:
-            #l = obj.__dict__[self.reference]
-        #except KeyError: # In case the list doesn't exist yet...
-            #l = obj.__dict__[self.reference] = list()
-        items = obj.__dict__[self.reference]#getattr(obj, self.reference)#obj.__dict__[self.reference]
+        # try:
+        # l = obj.__dict__[self.reference]
+        # except KeyError: # In case the list doesn't exist yet...
+        # l = obj.__dict__[self.reference] = list()
+        items = obj.__dict__[
+            self.reference
+        ]  # getattr(obj, self.reference)#obj.__dict__[self.reference]
         items.add(instance)
-            
+
     def __delete__(self, instance):
         setattr(instance, self.attribute, None)
 
@@ -174,9 +180,11 @@ class MaterialLink(Link):
     .. seealso:: :attr:`seapy.components.component.Component.material`
     
     """
-    attribute = 'material'
-    reference = 'linked_components'
-    
+
+    attribute = "material"
+    reference = "linked_components"
+
+
 class ComponentLink(Link):
     """
     Link from subsystem to component.
@@ -184,8 +192,10 @@ class ComponentLink(Link):
     .. seealso:: :attr:`seapy.subsystems.subsystem.Subsystem.component`
     
     """
+
     attribute = "compattributent"
     reference = "linked_subsystems"
+
 
 class JunctionLink(Link):
     """
@@ -194,8 +204,10 @@ class JunctionLink(Link):
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.junction`
     
     """
+
     attribute = "junction"
     reference = "linked_couplings"
+
 
 class SubsystemFromLink(Link):
     """
@@ -204,9 +216,11 @@ class SubsystemFromLink(Link):
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.subsystem_from`
     
     """
+
     attribute = "subsystem_from"
     reference = "linked_couplings_from"
-    
+
+
 class SubsystemToLink(Link):
     """
     Link from coupling `to` to subsystem `to`.
@@ -214,33 +228,36 @@ class SubsystemToLink(Link):
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.subsystem_to`
     
     """
+
     attribute = "subsystem_to"
     reference = "linked_couplings_to"
-    
+
+
 class SubsystemExcitationLink(Link):
     """
     Link from excitation to subsystem.
     """
+
     attribute = "subsystem"
     reference = "linked_excitations"
 
 
-#class Linked(object):
-    
-    #attribute = ''
-    
-    #def __get__(self, instance, owner):
-        
-        #pass
+# class Linked(object):
+
+# attribute = ''
+
+# def __get__(self, instance, owner):
+
+# pass
 
 
 class SubsystemDescriptor(object):
     """Subsystem descriptor.
     """
-    
+
     def __init__(self, attribute):
         self.attribute = attribute
-    
+
     def __get__(self, instance, cls):
         sort = instance.SUBSYSTEMS[self.attribute]
         for obj in instance.linked_subsystems:
@@ -248,56 +265,58 @@ class SubsystemDescriptor(object):
                 return obj
         else:
             return None
-    
+
+
 class LinkedList(object):
     """
     Receiving Many part of One-to-Many link.
     """
-    
-    attribute = ''
+
+    attribute = ""
     """
     Name of attribute of owner of this object.
     """
 
-        
     def __get__(self, instance, owner):
-        #try:
+        # try:
         items = instance.__dict__[self.attribute]
-        #except KeyError:
-            #instance.__dict__[self.attribute] = WeakSet()
-            #items = instance.__dict__[self.attribute]
+        # except KeyError:
+        # instance.__dict__[self.attribute] = WeakSet()
+        # items = instance.__dict__[self.attribute]
         yield from items
-        
-        #print (l)
+
+        # print (l)
         ##yield from (instance.system.get_object(item) for item in l if item in (obj.name for obj in instance.system.objects))
         ##print( l)
-        #for item in l:
-            ##print (instance.system)
-            #try:
-                #obj = instance.system.get_object(item)
-            #except ReferenceError:
-                #obj = instance.system.get_object(next(l))
-            #yield obj
-                
-        ##yield from (instance.system.get_object(item) for item in l)
-        #items = [instance.system.get_object(item) for item in l]
-        #yield from items
+        # for item in l:
+        ##print (instance.system)
+        # try:
+        # obj = instance.system.get_object(item)
+        # except ReferenceError:
+        # obj = instance.system.get_object(next(l))
+        # yield obj
 
-    #def __set__(self, instance, value):
-        #if instance.__dict__[attribute] is None:
-            #instance[attribute] = value
-        #else:
-            #raise ValueError("Does not allows to be set again.")
-     
+        ##yield from (instance.system.get_object(item) for item in l)
+        # items = [instance.system.get_object(item) for item in l]
+        # yield from items
+
+    # def __set__(self, instance, value):
+    # if instance.__dict__[attribute] is None:
+    # instance[attribute] = value
+    # else:
+    # raise ValueError("Does not allows to be set again.")
+
     def __set__(self, instance, value):
         raise ValueError("Cannot set this attribute.")
-        
+
 
 class NameWarning(Warning):
     """
     Duplicate name warning.
     """
+
     pass
+
 
 class Name(object):
     """
@@ -307,25 +326,26 @@ class Name(object):
     In case the name is taken an integer is added to it.
     
     """
+
     def __get__(self, instance, owner):
         try:
-            return instance.__dict__['name']
+            return instance.__dict__["name"]
         except (KeyError, AttributeError) as e:
             return None
-        
+
     def __set__(self, instance, value):
         if instance.name is None:
             """Set unique name."""
             names = (obj.name for obj in instance.system.objects)
             if value in names:
-                msg = 'Name {} is not unique.'.format(str(value))
+                msg = "Name {} is not unique.".format(str(value))
                 warnings.warn(msg, NameWarning)
-                value += '1'
-            instance.__dict__['name'] = value
+                value += "1"
+            instance.__dict__["name"] = value
         else:
             raise ValueError("Cannot change name.")
-        
-        
+
+
 class MetaBase(type):
     """Metaclass that prepares :class:`Base`.
     
@@ -335,62 +355,61 @@ class MetaBase(type):
     * sets :attr:`Attribute.attribute`
     
     """
-    
+
     def __new__(cls, name, bases, attrs):
 
-        #print(name)
-        #print(bases)
-        #print(attrs)
+        # print(name)
+        # print(bases)
+        # print(attrs)
 
         # Component-specific. Should be moved if possible.
-        if 'SUBSYSTEMS' in attrs.keys():
-            for attr, sort in attrs['SUBSYSTEMS'].items():
+        if "SUBSYSTEMS" in attrs.keys():
+            for attr, sort in attrs["SUBSYSTEMS"].items():
                 attrs[attr] = SubsystemDescriptor(attr)
-                
+
         for key, value in attrs.items():
             if isinstance(value, LinkedList):
-                value.attribute = key # Inform LinkedList of attribute name.
+                value.attribute = key  # Inform LinkedList of attribute name.
             elif isinstance(value, Attribute):
-                value.attribute = key # Inform Attribute of attribute name.
-                
-        return super(MetaBase, cls).__new__(cls, name, bases, attrs)
-    
+                value.attribute = key  # Inform Attribute of attribute name.
 
-    #def __init__(cls, name, bases, attrs):
-        ## find all descriptors, auto-set their labels
-        ##print( cls)
-        ##for key, value in attrs.items():
-            ##print(key, value)
-            ##if isinstance(value, LinkedList):
-                ##pass
-                
-                ###key = list()
-                ##print (key, value)
-                ##attrs[key] = WeakSet()
-                ##cls.__dict__[key] = WeakSet()
-                ###setattr(cls, key, WeakSet())
-                ##print(getattr(cls, key))
-                
-                ##print(key)
-                ##value.label = key
-        #super(MetaBase, cls).__init__(name, bases, attrs)
-    
-    
+        return super(MetaBase, cls).__new__(cls, name, bases, attrs)
+
+    # def __init__(cls, name, bases, attrs):
+    ## find all descriptors, auto-set their labels
+    ##print( cls)
+    ##for key, value in attrs.items():
+    ##print(key, value)
+    ##if isinstance(value, LinkedList):
+    ##pass
+
+    ###key = list()
+    ##print (key, value)
+    ##attrs[key] = WeakSet()
+    ##cls.__dict__[key] = WeakSet()
+    ###setattr(cls, key, WeakSet())
+    ##print(getattr(cls, key))
+
+    ##print(key)
+    ##value.label = key
+    # super(MetaBase, cls).__init__(name, bases, attrs)
+
+
 class Attribute(object):
     """Descriptor for storing spectral values.
     """
-    
-    def __init__(self, dtype='float64'):
+
+    def __init__(self, dtype="float64"):
         self.dtype = dtype
         self.attribute = None
         """Attribute will be set by Base.__init__"""
-        
+
     def __get__(self, instance, cls):
         if instance is None:
             return self
         else:
             return instance.__dict__[self.attribute]
-    
+
     def __set__(self, instance, value):
         try:
             instance.__dict__[self.attribute][:] = value
@@ -398,8 +417,8 @@ class Attribute(object):
             raise ValueError("Invalid value.")
 
 
-class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
-    
+class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
+
     """
     Abstract Base Class for all components, junctions, 
     materials, subsystems, couplings and excitation.
@@ -416,66 +435,71 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         :type properties: dict
         """
 
-        #print (self.__class__)
-        #for key, value in self.__class__.__dict__.items():
-            #print(key, value)
-        
-        #for key, value in self.__dict__.items():
-            #print( key, value)
-            #if isinstance(v, LinkedList):
-                #value.label = key
-                
+        # print (self.__class__)
+        # for key, value in self.__class__.__dict__.items():
+        # print(key, value)
+
+        # for key, value in self.__dict__.items():
+        # print( key, value)
+        # if isinstance(v, LinkedList):
+        # value.label = key
+
         super().__init__()
-        
+
         self.system = system
         """Reference to System this object belongs to."""
-        
+
         self.name = name
         """Unique identifier of object."""
-        
-        self.__dict__['enabled'] = True
-        
+
+        self.__dict__["enabled"] = True
+
         """Every LinkedList contains a WeakSet."""
         for cl in self.__class__.__mro__:
             for key, value in cl.__dict__.items():
                 if isinstance(value, LinkedList):
                     self.__dict__[key] = WeakSet()
-        
+
         for cl in self.__class__.__mro__:
             for key, value in cl.__dict__.items():
                 if isinstance(value, Attribute):
                     self.__dict__[key] = np.zeros(len(self.frequency))
-                    
-                    
-        #for key, value in self.__class__.__dict__.items():
-            ##if isinstance(value, LinkedList):
-                #print(key, value)
-    
-        #for key, value in self.__dict__.items():
-            ##if isinstance(value, LinkedList):
-                #print(key, value)
+
+        # for key, value in self.__class__.__dict__.items():
+        ##if isinstance(value, LinkedList):
+        # print(key, value)
+
+        # for key, value in self.__dict__.items():
+        ##if isinstance(value, LinkedList):
+        # print(key, value)
 
         if properties:
             for key, value in properties.items():
                 logging.debug("Setting the attribute %s to %s on %s", key, value, self)
-                #if key in self.__class__.__dict__.keys():
-                #if hasattr(self, key):
+                # if key in self.__class__.__dict__.keys():
+                # if hasattr(self, key):
                 try:
                     setattr(self, key, value)
                 except AttributeError as exc:
-                    raise AttributeError(f"Setting the attribute {key} to {value} on {self}. {key} is however not a valid attribute for {type(self)}") from exc
-        
-        
-        logging.info("Constructor %s: Created object %s of type %s", self.name, self.name, str(type(self)))
-        
+                    raise AttributeError(
+                        f"Setting the attribute {key} to {value} on {self}. {key} is however not a valid attribute for {type(self)}"
+                    ) from exc
+
+        logging.info(
+            "Constructor %s: Created object %s of type %s",
+            self.name,
+            self.name,
+            str(type(self)),
+        )
+
     def __del__(self):
         """Destructor.
         """
         pass
-    
+
     def __str__(self):
         return "{}({})".format(self.SORT, self.name)
-    
+
     name = Name()
     """
     Name of object.
@@ -486,24 +510,24 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
     
     
     """
-    
+
     @abc.abstractmethod
     def disable(self):
         """
         Disable this object.
         """
-    
+
     @abc.abstractmethod
     def enable(self):
         """
         Enable this object.
         """
-    
+
     _DEPENDENCIES = []
     """
     Dependencies of object on other objects.
     """
-    
+
     @property
     def included(self, extended=False):
         """
@@ -515,10 +539,15 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         :rtype: bool or list
         """
         if extended:
-            return [(dep, getattr(getattr(self, dep), 'included')) for dep in self._DEPENDENCIES] + [('enabled', self.enabled)]
+            return [
+                (dep, getattr(getattr(self, dep), "included"))
+                for dep in self._DEPENDENCIES
+            ] + [("enabled", self.enabled)]
         else:
-            return self.enabled and all([getattr(getattr(self, dep), 'included') for dep in self._DEPENDENCIES])
-       
+            return self.enabled and all(
+                [getattr(getattr(self, dep), "included") for dep in self._DEPENDENCIES]
+            )
+
     @property
     def enabled(self):
         """
@@ -527,13 +556,13 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         :returns: A boolean indicating whether the object is enabled (`True`) or not (`False`)
         :rtype: :func:`bool`
         """
-        return self.__dict__['enabled']
-    
-    #@enabled.setter
-    #def enabled(self, x):
-        #if isinstance(x, bool):
-            #self.__dict__['enabled'] = x
-    
+        return self.__dict__["enabled"]
+
+    # @enabled.setter
+    # def enabled(self, x):
+    # if isinstance(x, bool):
+    # self.__dict__['enabled'] = x
+
     @property
     def frequency(self):
         """
@@ -544,60 +573,49 @@ class Base(object, metaclass=MetaBase):#, metaclass=abc.ABCMeta):
         """
         return self.system.frequency
 
-    #@property
-    #def classname(self):
-        #"""Name of class of the object. This is an alias for ``obj.__class__.__name__``.
-        #"""
-        #return self.__class__.__name__
-    
-    
-    def plot(self, quantity, yscale='linear'):
+    # @property
+    # def classname(self):
+    # """Name of class of the object. This is an alias for ``obj.__class__.__name__``.
+    # """
+    # return self.__class__.__name__
+
+    def plot(self, quantity, yscale="linear"):
         """Plot `quantity`.
         
         :seealso: :func:`seapy.tools.plot`
         
         """
-        return plot(self.frequency.center, [getattr(self, quantity)], quantity, self.frequency.enabled, yscale=yscale)
-        
-    
+        return plot(
+            self.frequency.center,
+            [getattr(self, quantity)],
+            quantity,
+            self.frequency.enabled,
+            yscale=yscale,
+        )
+
     def info(self, attributes=None):
         """Return dataframe."""
         data = {attr: getattr(self, attr) for attr in attributes if hasattr(self, attr)}
-        df = pd.DataFrame(data, index=self.frequency.center.astype('int')).T
+        df = pd.DataFrame(data, index=self.frequency.center.astype("int")).T
         return df
 
     def _save(self):
         attrs = dict()
-        attrs['model'] = self.__class__.__name__
-        attrs['name'] = self.name
-        attrs['enabled'] = self.enabled
+        attrs["model"] = self.__class__.__name__
+        attrs["name"] = self.name
+        attrs["enabled"] = self.enabled
         for cl in self.__class__.__mro__:
             for k, v in cl.__dict__.items():
                 if isinstance(v, Attribute):
                     a = self.__dict__[k].tolist()
-                    if len(set(a))==1:
+                    if len(set(a)) == 1:
                         attrs[k] = list(set(a))[0]
                     else:
                         attrs[k] = a
         return attrs
-    
-    #def info(self, attributes=None, tablefmt='simple'):
-        #"""Information about the object."""
-        #header = ['Attribute'] + self.frequency.center.astype("int").astype("str").tolist()
-        #data = ([attr] + (getattr(self, attr)*np.ones(len(self.frequency))).tolist() for attr in attributes)
-        #return tabulate(data, headers=header, tablefmt=tablefmt)
-           
-        
-                
-                
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-
+    # def info(self, attributes=None, tablefmt='simple'):
+    # """Information about the object."""
+    # header = ['Attribute'] + self.frequency.center.astype("int").astype("str").tolist()
+    # data = ([attr] + (getattr(self, attr)*np.ones(len(self.frequency))).tolist() for attr in attributes)
+    # return tabulate(data, headers=header, tablefmt=tablefmt)

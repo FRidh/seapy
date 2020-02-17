@@ -16,6 +16,7 @@ import numpy as np
 from .acoustical import ComponentAcoustical
 from ..subsystems import SubsystemAcoustical
 
+
 class SubsystemLong(SubsystemAcoustical):
     """
     Subsystem for a fluid in a 2D cavity.
@@ -31,12 +32,14 @@ class SubsystemLong(SubsystemAcoustical):
         
         See Lyon, eq 8.2.12
         """
-        return self.soundspeed_group**2.0 / (self.frequency.angular * self.component.area)
-    
+        return self.soundspeed_group ** 2.0 / (
+            self.frequency.angular * self.component.area
+        )
+
 
 class Component2DAcoustical(ComponentAcoustical):
     """
     Component for a fluid in a 2D cavity.
     """
 
-    SUBSYSTEMS = {'subsystem_long': SubsystemLong}
+    SUBSYSTEMS = {"subsystem_long": SubsystemLong}
