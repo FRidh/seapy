@@ -1,0 +1,8 @@
+
+sudo: false
+
+language: nix
+nix: 2.3.1
+
+script:
+  - nix-build -A pkg release.nix
