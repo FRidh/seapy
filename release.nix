@@ -6,10 +6,12 @@ let
   };
   pkgs = import nixpkgs {};
 
-  pkg = pkgs.python3.pkgs.callPackage ./default.nix { };
+  python = pkgs.python3;
 
-  devInputs = [ pkgs.python3.pkgs.notebook ];
-  env = pkgs.python3.withPackages(_: pkg.allInputs ++ devInputs);
+  pkg = python.pkgs.callPackage ./default.nix { };
+
+  devInputs = [ python.pkgs.notebook ];
+  env = python.withPackages(_: pkg.allInputs ++ devInputs);
 
 in { 
   inherit pkg env;
