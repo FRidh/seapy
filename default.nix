@@ -9,6 +9,7 @@
 , acoustics
 , black
 , pylint
+, sphinx
 }:
 
 let
@@ -22,6 +23,8 @@ in buildPythonPackage rec {
   version = "dev";
 
   src = fetchGit ./.;
+
+  nativeBuildInputs = [ sphinx ];
 
   propagatedBuildInputs = [ 
     numpy
@@ -38,6 +41,14 @@ in buildPythonPackage rec {
     black
     pylint
   ];
+
+  postBuild = ''
+    make -C docs html
+    mkdir -p $doc
+    mv -T docs/_build/html $doc
+  '';
+
+  outputs = [ "out" "doc" ];
 
   passthru.allInputs = propagatedBuildInputs ++ checkInputs;
 
