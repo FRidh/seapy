@@ -43,6 +43,8 @@ import logging
 import warnings
 from weakref import WeakSet
 
+from typing import Any, Dict, List, Union
+
 from .tools import plot
 
 # from tabulate import tabulate
@@ -539,16 +541,19 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
     """
 
     @property
-    def included(self, extended=False):
+    def included(self, extended: bool = False) -> Union[List, bool]:
         """
         Indicates whether the object is included in the analysis.
+
+        An object is included in the analysis if it is enabled, and when all it's
+        dependencies are available.
         
         :param extended: Whether to show a list of dependencies with outcomes.
         :type extended: bool
         
         :rtype: bool or list
         """
-        if extended:
+        if extended:  # Should be a different property so return type is consistent
             return [
                 (dep, getattr(getattr(self, dep), "included"))
                 for dep in self._DEPENDENCIES
@@ -559,9 +564,11 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
             )
 
     @property
-    def enabled(self):
+    def enabled(self) -> bool:
         """
         Switch indicating whether the object is enabled.
+
+        An object can be enabled or disabled. This affects :attr:`included`.
         
         :returns: A boolean indicating whether the object is enabled (`True`) or not (`False`)
         :rtype: :func:`bool`
@@ -603,13 +610,13 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
             yscale=yscale,
         )
 
-    def info(self, attributes=None):
+    def info(self, attributes: List[str] = None) -> pd.DataFrame:
         """Return dataframe."""
         data = {attr: getattr(self, attr) for attr in attributes if hasattr(self, attr)}
         df = pd.DataFrame(data, index=self.frequency.center.astype("int")).T
         return df
 
-    def _save(self):
+    def _save(self) -> Dict[str, Any]:
         attrs = dict()
         attrs["model"] = self.__class__.__name__
         attrs["name"] = self.name
