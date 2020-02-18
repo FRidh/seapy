@@ -68,7 +68,7 @@ class TestNewObject:
             loss_factor=np.ones(len(system.frequency.center)) * 0.2,
         )
         beam1 = system.add_component(
-            "beam1", "Component1DBeam", material="steel", length=2.0, cross_section=0.30
+            "beam1", "Component1DBeam", material="steel", length=2.0, width=0.5, height=0.6,
         )
 
         assert (
@@ -103,7 +103,7 @@ class TestNewObject:
             loss_factor=np.ones(len(system.frequency.center)) * 0.2,
         )
         beam1 = system.add_component(
-            "beam1", "Component1DBeam", material="steel", length=2.0, cross_section=0.30
+            "beam1", "Component1DBeam", material="steel", length=2.0, width=0.5, height=0.6,
         )
 
         subsystem1 = beam1.subsystem_long

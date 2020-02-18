@@ -292,6 +292,7 @@ class Component1DBeam(ComponentStructural):
     * :class:`seapy.components.beam.SubsystemBend`
     * :class:`seapy.components.beam.SubsystemShear`
     
+    This beam has a rectangular cross-section.
     
     """
 
@@ -301,7 +302,25 @@ class Component1DBeam(ComponentStructural):
         "subsystem_shear": SubsystemShear,
     }
 
-    cross_section = Attribute()
+    length = Attribute()
+    """Length of the beam."""
+
+    width = Attribute()
+    """Width of the beam."""
+
+    height = Attribute()
+    """Height or thickness"""
+
+    @property
+    def cross_section(self) -> float:
+        """Cross-sectional area.
+
+        .. math::
+
+            A = \\pi r^2
+
+        """
+        return self.length * self.width
 
     @property
     def mass_per_area(self):

@@ -47,6 +47,9 @@ class Component(Base):
     By default each of these subsystems is added to the component.
     """
 
+    # TODO: Move these length, height, width attributes to subclasses.
+    # Make volume an abstract property.
+
     length = Attribute()
     """
     Length.

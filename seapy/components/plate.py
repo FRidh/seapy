@@ -15,6 +15,7 @@ Classes describing a two-dimensional plate.
 """
 
 import numpy as np
+from ..base import Attribute
 from .structural import ComponentStructural
 from ..subsystems import SubsystemStructural
 
@@ -365,6 +366,12 @@ class Component2DPlate(ComponentStructural):
         "subsystem_bend": SubsystemBend,
         "subsystem_shear": SubsystemShear,
     }
+
+    length = Attribute()
+
+    width = Attribute()
+
+    height = Attribute()
 
     @property
     def area(self):
