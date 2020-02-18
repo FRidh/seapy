@@ -96,7 +96,9 @@ class Subsystem(Base):
         self.__dict__["enabled"] = False
 
         if couplings:
-            for coupling in itertools.chain(self.linked_couplings_from, self.linked_couplings_to):
+            for coupling in itertools.chain(
+                self.linked_couplings_from, self.linked_couplings_to
+            ):
                 coupling.disable()
 
     def enable(self, couplings=False):
@@ -109,7 +111,9 @@ class Subsystem(Base):
         self.__dict__["enabled"] = True
 
         if couplings:
-            for coupling in itertools.chain(self.linked_couplings_from, self.linked_couplings_to):
+            for coupling in itertools.chain(
+                self.linked_couplings_from, self.linked_couplings_to
+            ):
                 coupling.enable()
 
     def add_excitation(self, name, model, **properties):

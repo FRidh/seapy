@@ -269,7 +269,7 @@ class PathAnalysis(object):
                         coupling.subsystem_from.name,
                         coupling.name,
                         coupling.subsystem_to.name,
-                    )
+                    ),
                 )
 
             # edges = ((obj.subsystem_from.name, obj.subsystem_to.name) for obj in system.couplings)
