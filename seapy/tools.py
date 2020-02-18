@@ -264,7 +264,8 @@ class PathAnalysis(object):
 
         if "subsystems" in objects and "couplings" in objects:
             for coupling in system.couplings:
-                G.add_path(
+                nx.classes.function.add_path(
+                    G,
                     (
                         coupling.subsystem_from.name,
                         coupling.name,

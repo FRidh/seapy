@@ -107,7 +107,7 @@ setup(
         "matplotlib",
         "pandas",
         "toolz",
-        "networkx",
+        "networkx >= 2.0",
         "pyyaml",
     ],
 )
