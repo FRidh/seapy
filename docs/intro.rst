@@ -6,7 +6,7 @@ Introduction
 .. toctree::
    :maxdepth: 2
    
-.. include:: ../README.txt  
+.. include:: ../README.md
 
 ========
 Python
