@@ -582,6 +582,11 @@ class Frequency(object):
         return self.__dict__["upper"]
 
     @property
+    def bandwidth(self):
+        """Bandwidth."""
+        return self.upper - self.lower
+
+    @property
     def enabled(self):
         """Whether bands are enabled or not.
         """
