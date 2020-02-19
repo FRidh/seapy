@@ -4,7 +4,7 @@ Components
 
 .. toctree::
     :maxdepth: 2
-    
+
 
 Module with all components that are available.
 

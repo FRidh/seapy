@@ -50,7 +50,6 @@ from .tools import plot
 # from tabulate import tabulate
 import pandas as pd
 
-
 # class Link(object):
 # """
 # One-to-Many link from `local` to `remotes`.
@@ -112,7 +111,7 @@ import pandas as pd
 
 class Link(object, metaclass=abc.ABCMeta):
     """One-to-Many link from `local` to `remotes`.
-    
+
     Descriptor.
     """
 
@@ -183,9 +182,9 @@ class Link(object, metaclass=abc.ABCMeta):
 class MaterialLink(Link):
     """
     Linked from component to material.
-    
+
     .. seealso:: :attr:`seapy.components.component.Component.material`
-    
+
     """
 
     attribute = "material"
@@ -195,9 +194,9 @@ class MaterialLink(Link):
 class ComponentLink(Link):
     """
     Link from subsystem to component.
-    
+
     .. seealso:: :attr:`seapy.subsystems.subsystem.Subsystem.component`
-    
+
     """
 
     attribute = "compattributent"
@@ -207,9 +206,9 @@ class ComponentLink(Link):
 class JunctionLink(Link):
     """
     Link from coupling to junction.
-    
+
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.junction`
-    
+
     """
 
     attribute = "junction"
@@ -219,9 +218,9 @@ class JunctionLink(Link):
 class SubsystemFromLink(Link):
     """
     Linked from coupling `from` to subsystem `from`.
-    
+
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.subsystem_from`
-    
+
     """
 
     attribute = "subsystem_from"
@@ -231,9 +230,9 @@ class SubsystemFromLink(Link):
 class SubsystemToLink(Link):
     """
     Link from coupling `to` to subsystem `to`.
-    
+
     .. seealso:: :attr:`seapy.couplings.coupling.Coupling.subsystem_to`
-    
+
     """
 
     attribute = "subsystem_to"
@@ -328,10 +327,10 @@ class NameWarning(Warning):
 class Name(object):
     """
     Unique Name descriptor.
-    
+
     This data descriptor checks with :class:`seapy.system.System` whether a name is not yet taken.
     In case the name is taken an integer is added to it.
-    
+
     """
 
     def __get__(self, instance, owner):
@@ -355,12 +354,12 @@ class Name(object):
 
 class MetaBase(type):
     """Metaclass that prepares :class:`Base`.
-    
+
     This metaclass
-    
+
     * sets :attr:`LinkedList.attribute`
     * sets :attr:`Attribute.attribute`
-    
+
     """
 
     def __new__(cls, name, bases, attrs):
@@ -438,7 +437,7 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
 
     def __init__(self, name, system, **properties):
         """Constructor.
-        
+
         :param name: Identifier of object
         :type name: string
         :param system: system objects belongs to
@@ -515,12 +514,12 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
     name = Name()
     """
     Name of object.
-    
+
     The name of the object is unique.
-    
+
     .. seealso:: :class:`Name`
-    
-    
+
+
     """
 
     @abc.abstractmethod
@@ -547,10 +546,10 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
 
         An object is included in the analysis if it is enabled, and when all it's
         dependencies are available.
-        
+
         :param extended: Whether to show a list of dependencies with outcomes.
         :type extended: bool
-        
+
         :rtype: bool or list
         """
         if extended:  # Should be a different property so return type is consistent
@@ -569,7 +568,7 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
         Switch indicating whether the object is enabled.
 
         An object can be enabled or disabled. This affects :attr:`included`.
-        
+
         :returns: A boolean indicating whether the object is enabled (`True`) or not (`False`)
         :rtype: :func:`bool`
         """
@@ -584,9 +583,9 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
     def frequency(self):
         """
         Frequency.
-        
+
         .. seealso:: :meth:`seapy.system.System.frequency`
-        
+
         """
         return self.system.frequency
 
@@ -598,9 +597,9 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
 
     def plot(self, quantity, yscale="linear"):
         """Plot `quantity`.
-        
+
         :seealso: :func:`seapy.tools.plot`
-        
+
         """
         return plot(
             self.frequency.center,
