@@ -100,7 +100,6 @@ setup(
     license="LICENSE.txt",
     packages=find_packages(exclude=["tests"]),
     url="https://github.com/FRidh/seapy",
-    # scripts=['bin/beams.py'],
     zip_safe=False,
     install_requires=[
         "numpy >= 1.8",
