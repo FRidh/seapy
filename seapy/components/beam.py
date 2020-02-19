@@ -173,7 +173,7 @@ class SubsystemBend(SubsystemStructural):
         return (
             self.component.material.young
             * self.component.height
-            * 3.0
+            ** 3.0
             * self.component.width
             / 12.0
         )
