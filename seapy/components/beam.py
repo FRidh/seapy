@@ -49,10 +49,7 @@ class SubsystemLong(SubsystemStructural):
 
         .. math:: c_{L,\\phi}^{1D} = \\frac{E}{\\rho}
         """
-        return np.repeat(
-            self.component.material.young / self.component.material.density,
-            len(self.frequency),
-        )
+        return self.component.material.young / self.component.material.density
 
     @property
     def soundspeed_group(self):
