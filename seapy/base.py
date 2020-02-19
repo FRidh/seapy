@@ -494,7 +494,7 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
                     setattr(self, key, value)
                 except AttributeError as exc:
                     raise AttributeError(
-                        f"Setting the attribute {key} to {value} on {self}. {key} is however not a valid attribute for {type(self)}"
+                        f"Cannot set the attribute {key} to {value} on {self}. {key} is not a valid attribute for {type(self)}. Likely {key} is a derived property of the class."
                     ) from exc
 
         logging.info(
