@@ -34,6 +34,7 @@ Acoustical
 
 from .beam import Component1DBeam
 from .plate import Component2DPlate
+from .pipe import ComponentPipe
 
 from .acoustical2d import Component2DAcoustical
 from .acoustical3d import Component3DAcoustical

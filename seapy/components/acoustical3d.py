@@ -26,9 +26,9 @@ class SubsystemLong(SubsystemAcoustical):
     def average_frequency_spacing(self):
         """
         Average frequency spacing for a fluid in a 3D cavity.
-        
+
         .. math:: \\overline{\\delta f}_0^{3D} = \\frac{c_0^^3}{4 \\pi V f^2}
-        
+
         See Lyon, eq 8.3.7
         """
         # try:
@@ -39,16 +39,16 @@ class SubsystemLong(SubsystemAcoustical):
     def impedance_point_volume(self, excitation):
         """
         Specific acoustic impedance of a 3D cavity when there is a monopole (volume) source in the cavity.
-        
+
         :param excitation: Excitation.
-        :type excitation: :class:`seapy.excitations.ExcitationPoint` 
-        
+        :type excitation: :class:`seapy.excitations.ExcitationPoint`
+
         .. math:: Z_0^{U,3D} = \\frac{\\pi \\rho f^2}{c_0} \\left( 1 + \\frac{j}{k_0 r}   \\right)
-        
+
         See Lyon, table 10.1, last row.
-        
+
         .. note:: This is the specific acoustic impedance i.e. pressure over volume velocity, and not pressure of particle velocity.
-        
+
         """
         return (
             np.pi
@@ -68,13 +68,13 @@ class Component3DAcoustical(ComponentAcoustical):
 
     def mean_free_path(self):
         """Mean free path.
-        
+
         .. math:: m = \\frac{4V}{S^{'}}
-    
+
         with:
-        
+
         * volume :math:`V`
         * total surface area :math:`S^{'}`
-    
+
         """
         raise NotImplementedError

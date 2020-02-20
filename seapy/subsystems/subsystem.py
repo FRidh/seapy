@@ -7,7 +7,7 @@ ABC
 """
 
 
-from ..base import Base, ComponentLink, LinkedList, Attribute
+from ..base import Base, ComponentLink, LinkedList, UnassignableAttribute, Attribute
 import abc
 import math
 import itertools
@@ -32,7 +32,7 @@ class Subsystem(Base):
     """
 
     linked_couplings_from = LinkedList()
-    """ 
+    """
     Set of couplings in which the subsystem is in the From field.
     """
 
@@ -46,15 +46,17 @@ class Subsystem(Base):
     Set of excitations this subsystem experiences.
     """
 
-    modal_energy = Attribute()
+    modal_energy = UnassignableAttribute()
     """Modal energy.
+
+    The value of this attribute is set when solving the system.
     """
 
-    loss_factor = Attribute()
+    loss_factor = UnassignableAttribute()  # TODO: make it an *optional* attribute
     """Internal loss factor.
-    
+
     .. seealso :: :attr:`dlf`
-    
+
     """
 
     def __del__(self):
@@ -89,7 +91,7 @@ class Subsystem(Base):
     def disable(self, couplings=False):
         """
         Disable this subsystem. Optionally disable dependent couplings as well.
-        
+
         :param couplings: Disable couplings
         :type couplings: bool
         """
@@ -104,7 +106,7 @@ class Subsystem(Base):
     def enable(self, couplings=False):
         """
         Enable this subsystem. Optionally enable dependent couplings as well.
-        
+
         :param couplings: Enable couplings
         :type couplings: bool
         """
@@ -168,9 +170,9 @@ class Subsystem(Base):
     def modal_density(self):
         """
         Modal density.
-       
+
         .. math:: n(\\omega) = \\frac{1}{2 \\pi \\overline{\\delta f}}
-        
+
         See Lyon, eq. 8.1.6
         """
         try:
@@ -182,17 +184,17 @@ class Subsystem(Base):
     def modal_overlap(self):
         """
         Modal overlap.
-        
+
         .. math:: M = \\eta_d \\omega n
-        
+
         with:
-        
+
         * damping loss factor :math:`\\eta`
         * angular frequency :math:`\\omega`
         * modal density :math:`n`
-        
+
         See Craik, equation 2.23, page 41.
-        
+
         """
         return self.dlf * self.frequency.angular * self.modal_density
 
@@ -215,7 +217,7 @@ class Subsystem(Base):
     def resistance(self):
         """
         Resistance :math:`R`, the real part of the impedance :math:`Z`.
-        
+
         .. math:: R = \\Re{Z}
         """
         return np.real(self.impedance)
@@ -224,7 +226,7 @@ class Subsystem(Base):
     def conductance(self):
         """
         Conductance :math:`G`.
-        
+
         .. math:: G = \\frac{1}{R}
         """
         return 1.0 / self.resistance
@@ -233,7 +235,7 @@ class Subsystem(Base):
     def mobility(self):
         """
         Mobility `Y`
-        
+
         .. math:: Y = \\frac{1}{Z}
         """
         try:
@@ -245,15 +247,15 @@ class Subsystem(Base):
     def damping_term(self):
         """
         The damping term is the ratio of the modal half-power bandwidth to the average modal frequency spacing.
-        
+
         .. math:: \\beta_{ii} = \\frac{f \\eta_{loss} }{\\overline{\\delta f}}
-        
+
         See Lyon, above equation 12.1.4
         """
         try:
             return (
                 self.frequency.center
-                * self.component.material.loss_factor
+                * self.component.material.dlf
                 / self.average_frequency_spacing
             )
         except FloatingPointError:
@@ -263,9 +265,9 @@ class Subsystem(Base):
     def modal_overlap_factor(self):
         """
         Modal overlap factor.
-        
+
         .. math:: M = \\frac{ \\pi \\beta_{ii} }{2}
-        
+
         See Lyon, above equation 12.1.4
         """
         return np.pi * self.damping_term / 2.0
@@ -284,7 +286,7 @@ class Subsystem(Base):
     def energy(self):
         """
         Total energy :math:`E` in subsystem.
-        
+
         .. math:: E = M(\\omega) n(\\omega)
         """
         return self.modal_energy * self.modal_density
@@ -292,26 +294,26 @@ class Subsystem(Base):
     @property
     def energy_level(self):
         """Energy level :math:`L_{E}`.
-        
+
         .. math:: L_{E} = 10 \\log_{10}{\\frac{E}{E_0}}
-        
+
         with:
-        
+
         * energy :math:`E`, see :meth:`energy`
         * energy reference :math:`E_{0}`, see :attr:`seapy.system.reference_energy`.
-        
+
         """
         return 10.0 * np.log10(self.energy / self.system.reference_energy)
 
     @property
     def dlf(self):
         """Damping loss factor of subsystem.
-        
-        If :attr:`loss_factor` has non-zero values, then those values are used. 
+
+        If :attr:`loss_factor` has non-zero values, then those values are used.
         Else, :attr:`component.material.loss_factor` is used.
-        
+
         By default this is the loss factor of the material of the component.
-        
+
         """
         if self.loss_factor.any():
             return self.loss_factor
@@ -321,11 +323,11 @@ class Subsystem(Base):
     @property
     def tlf(self):
         """Total loss factor.
-        
+
         .. math:: \\eta_i = \\eta_{id} + \\sum_{j=1, j \\neq i}^{n} \\eta_{ij}
-        
+
         See Craik, equation 3.18, page 60.
-        
+
         """
         return (
             np.sum(

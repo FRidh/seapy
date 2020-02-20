@@ -16,29 +16,18 @@ class ExcitationPoint(Excitation):
     Point excitation
     """
 
-    radius = Attribute()
-    """
-    Radius :math`r` of the source.
-    """
-
     @property
     def mobility(self):
         """The driving-point mobility or admittance :math:`Y`.
-        
+
         .. math:: Y = \\frac{1}{Z}
-        
+
         """
         return 1.0 / self.impedance
 
-    @property
-    def resistance(self):
-        return self.impedance.real
-
 
 class ExcitationPointForce(ExcitationPoint):
-    """
-    Point excitation by a force.
-    """
+    """Point excitation of a structure by a force."""
 
     force = Attribute()
     """Force :math:`F`.
@@ -50,16 +39,18 @@ class ExcitationPointForce(ExcitationPoint):
     @property
     def power(self):
         """Input power :math:`P`.
-        
+
         The input power is given  by
-        
+
         .. math:: P = F^2 \\Re{Y}
-        
+
         with:
-        
+
         * rms force :math:`F`
         * mobility :math:`Y`.
-        
+
+        Page 206, equation 11.1.1 in Lyon.
+
         """
         if self.force.any():
             return self.force ** 2.0 * self.mobility.real
@@ -74,9 +65,7 @@ class ExcitationPointForce(ExcitationPoint):
 
 
 class ExcitationPointMoment(ExcitationPoint):
-    """
-    Point excitation of a moment.
-    """
+    """Point excitation of a structure by a moment."""
 
     moment = Attribute()
     """Moment :math:`M`.
@@ -89,16 +78,16 @@ class ExcitationPointMoment(ExcitationPoint):
     @property
     def power(self):
         """Input power :math:`P`.
-        
+
         The input power is given  by
-        
+
         .. math:: P = M^2 \\Re{Y}
-        
+
         with:
-        
+
         * rms moment :math:`M`
         * mobility :math:`Y`.
-    
+
         """
         if self.moment.any():
             return self.moment ** 2.0 * self.mobility.real
@@ -125,20 +114,25 @@ class ExcitationPointVolume(ExcitationPoint):
     """Volume velocity :math:`U`.
     """
 
+    radius = Attribute()
+    """
+    Radius :math`r` of the source.
+    """
+
     @property
     def power(self):
         """Input power :math:`P`.
-        
+
         The input power is given  by
-        
+
         .. math:: P = p^2_{rms} G = p^2_{rms} \\mathrm{Re{(Y)}
-        
+
         with:
-        
+
         * rms pressure :math:`p`
         * conductance :math:`G`
         * mobility :math:`Y`
-        
+
         """
         if self.pressure.any():
             return self.pressure ** 2.0 * self.mobility.real

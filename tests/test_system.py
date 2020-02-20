@@ -1,17 +1,9 @@
-from weakref import WeakSet
-
-from acoustics.signal import OctaveBand
 import numpy as np
 import seapy
 
 import pytest
 
-
-@pytest.fixture
-def system():
-    frequency = OctaveBand(fstart=500.0, fstop=8000.0, fraction=1)
-    system = seapy.system.System(frequency)
-    return system
+from .common import steel_attributes, system
 
 
 class TestSystem:
@@ -40,35 +32,29 @@ class TestNewObject:
     """Test adding a new object to the System.
     """
 
-    def test_add_material(self, system):
+    def test_add_material(self, system, steel_attributes):
         """
         Add material.
         """
-        steel = system.add_material(
-            "steel",
-            "MaterialSolid",
-            young=1.0e7,
-            poisson=0.30,
-            loss_factor=np.ones(len(system.frequency.center)) * 0.2,
-        )
+        steel = system.add_material(**steel_attributes)
 
         assert len(list(system.objects)) == 1
         assert len(list(system.materials)) == 1
         assert len(list(steel.linked_components)) == 0
 
-    def test_add_component(self, system):
+    def test_add_component(self, system, steel_attributes):
         """
         Add component.
         """
-        steel = system.add_material(
-            "steel",
-            "MaterialSolid",
-            young=1.0e7,
-            poisson=0.30,
-            loss_factor=np.ones(len(system.frequency.center)) * 0.2,
-        )
+        steel = system.add_material(**steel_attributes)
+
         beam1 = system.add_component(
-            "beam1", "Component1DBeam", material="steel", length=2.0, width=0.5, height=0.6,
+            "beam1",
+            "Component1DBeam",
+            material="steel",
+            length=2.0,
+            width=0.5,
+            height=0.6,
         )
 
         assert (
@@ -91,21 +77,26 @@ class TestNewObject:
         junction1 = system.add_junction("junction1", "Junction", shape="Point")
         assert len(list(system.junctions)) == 1
 
-    def test_add_excitation(self, system):
+    def test_add_excitation(self, system, steel_attributes):
         """
         Add junction.
         """
-        steel = system.add_material(
-            "steel",
-            "MaterialSolid",
-            young=1.0e7,
-            poisson=0.30,
-            loss_factor=np.ones(len(system.frequency.center)) * 0.2,
-        )
+        steel = system.add_material(**steel_attributes)
+
         beam1 = system.add_component(
-            "beam1", "Component1DBeam", material="steel", length=2.0, width=0.5, height=0.6,
+            "beam1",
+            "Component1DBeam",
+            material="steel",
+            length=2.0,
+            width=0.5,
+            height=0.6,
         )
 
         subsystem1 = beam1.subsystem_long
-        ex1 = subsystem1.add_excitation("ex1", "ExcitationPointForce")
+        ex1 = subsystem1.add_excitation(
+            "ex1",
+            "ExcitationPointForce",
+            force=1.0,
+            velocity=0.0,
+        )
         assert len(list(system.excitations)) == 1

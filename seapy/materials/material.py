@@ -2,6 +2,12 @@
 Material
 --------
 
+This module defines the base class for materials.
+
+An instance of a material represents a material in a certain state.
+When state variables such as temperature, pressure and volume
+are different between components, new materials need to be added.
+
 .. autoclass:: Material
 
 """
@@ -35,11 +41,6 @@ class Material(Base):
     Temperature :math:`T` in kelvin.
     """
 
-    pressure = Attribute()
-    """
-    Pressure :math:`p`
-    """
-
     bulk = Attribute()
     """
     Bulk modulus
@@ -65,7 +66,6 @@ class Material(Base):
 
         """
         super().__init__(name, system, **properties)
-        self.temperature = 293.0
 
     def disable(self, components=False):
         """

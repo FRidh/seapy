@@ -1,3 +1,4 @@
+from ..base import Attribute
 from .material import Material
 
 
@@ -6,4 +7,7 @@ class MaterialGas(Material):
     Gas material.
     """
 
-    pass
+    pressure = Attribute()
+    """
+    Pressure :math:`p`
+    """

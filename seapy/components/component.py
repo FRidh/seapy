@@ -47,34 +47,17 @@ class Component(Base):
     By default each of these subsystems is added to the component.
     """
 
-    # TODO: Move these length, height, width attributes to subclasses.
-    # Make volume an abstract property.
-
-    length = Attribute()
-    """
-    Length.
-    """
-
-    height = Attribute()
-    """
-    Height.
-    """
-
-    width = Attribute()
-    """
-    Width.
-    """
 
     def __init__(self, name, system, **properties):
         """Constructor.
-        
+
         :param name: Identifier
         :type name: string
         :param system: System
         :type system: :class:`seapy.system.System`
         :param component: Component
         :type component: :class:`seapy.components.component`
-        
+
         """
         super().__init__(name, system, **properties)
 
@@ -94,7 +77,7 @@ class Component(Base):
     def disable(self, subsystems=False):
         """
         Disable this component. Optionally disable components' subsystems.
-        
+
         :param subsystems: Disable subsystems
         :type subsystems: bool
         """
@@ -107,7 +90,7 @@ class Component(Base):
     def enable(self, subsystems=False):
         """
         Enable this coupling. Optionally enable components' subsystems.
-        
+
         :param subsystems: Enable subsystems
         :type subsystems: bool
         """
@@ -120,9 +103,9 @@ class Component(Base):
     def _add_subsystems(self):
         """
         Add subsystems to component.
-        
-        .. note:: Add the mentioned subsystems to the component. 
-        This function can only be called after creation of the Component 
+
+        .. note:: Add the mentioned subsystems to the component.
+        This function can only be called after creation of the Component
         because it needs a weakref to the object given by system.get_object.
         It would be possible to create a weakref 'manually'.
         """
@@ -132,7 +115,7 @@ class Component(Base):
 
     def _add_subsystem(self, name, model, **properties):
         """
-        Add subsystem to component. 
+        Add subsystem to component.
         This method is called only from :meth:`seapy.components.Component._add_subsystems`, which is called immediately after creation of the component.
         """
         properties["component"] = self.system.get_object(self.name)
@@ -163,19 +146,20 @@ class Component(Base):
         return attrs
 
     @property
+    @abc.abstractmethod
     def volume(self):
         """
         Volume :math:`V` of the component.
         """
-        return self.length * self.width * self.height
+        pass
 
     @property
     def mass(self):
         """Mass :math:`m` of the component.
-        
+
         :rtype: :func:`float`
-        
-        .. math:: m = \\rho V 
+
+        .. math:: m = \\rho V
 
         """
         return self.volume * self.material.density

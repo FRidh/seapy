@@ -162,15 +162,14 @@ class SubsystemBend(SubsystemStructural):
 
         * Young's modulus :math:`E`
         * Beam height :math:`h`
-        * Beam width :math:`b`: 
-        
+        * Beam width :math:`b`:
+
         See Craik, equation 3.3, page 48.
 
         """
         return (
             self.component.material.young
-            * self.component.height
-            ** 3.0
+            * self.component.height ** 3.0
             * self.component.width
             / 12.0
         )

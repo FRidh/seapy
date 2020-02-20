@@ -37,13 +37,14 @@ Descriptors
 import abc
 import math
 import cmath
+import itertools
 import numpy as np
 import logging
 
 import warnings
 from weakref import WeakSet
 
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Generator, List, Union
 
 from .tools import plot
 
@@ -109,7 +110,25 @@ import pandas as pd
 # setattr(instance, self.one, None)
 
 
-class Link(object, metaclass=abc.ABCMeta):
+class AbstractAttribute(metaclass=abc.ABCMeta):
+    """Base class for fields."""
+
+
+class UnassignableAttribute(AbstractAttribute):
+    """Descriptor for fields the user cannot assign to."""
+
+    def __set__(self, instance, value):
+        raise ValueError("Cannot set this attribute.")
+
+
+class RequiredAttribute(AbstractAttribute):
+    """Descriptor for fields the user needs to assign to when creating an object of the parent class.
+
+    E.g., in case of a material, the density is needed. This attribute is to indicate it is needed.
+    """
+
+
+class Link(RequiredAttribute, metaclass=abc.ABCMeta):
     """One-to-Many link from `local` to `remotes`.
 
     Descriptor.
@@ -257,7 +276,7 @@ class SubsystemExcitationLink(Link):
 # pass
 
 
-class SubsystemDescriptor(object):
+class SubsystemDescriptor(UnassignableAttribute):
     """Subsystem descriptor.
     """
 
@@ -273,7 +292,7 @@ class SubsystemDescriptor(object):
             return None
 
 
-class LinkedList(object):
+class LinkedList(UnassignableAttribute):
     """
     Receiving Many part of One-to-Many link.
     """
@@ -312,9 +331,6 @@ class LinkedList(object):
     # else:
     # raise ValueError("Does not allows to be set again.")
 
-    def __set__(self, instance, value):
-        raise ValueError("Cannot set this attribute.")
-
 
 class NameWarning(Warning):
     """
@@ -324,7 +340,7 @@ class NameWarning(Warning):
     pass
 
 
-class Name(object):
+class Name(AbstractAttribute):
     """
     Unique Name descriptor.
 
@@ -401,7 +417,7 @@ class MetaBase(type):
     # super(MetaBase, cls).__init__(name, bases, attrs)
 
 
-class Attribute(object):
+class Attribute(RequiredAttribute):
     """Descriptor for storing spectral values.
     """
 
@@ -418,6 +434,7 @@ class Attribute(object):
 
     def __set__(self, instance, value):
         try:
+            # value = np.ones(len(instance.system.frequency.center)) * value
             instance.__dict__[self.attribute][:] = value
         except ValueError:
             raise ValueError("Invalid value.")
@@ -426,7 +443,7 @@ class Attribute(object):
 class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
 
     """
-    Abstract Base Class for all components, junctions, 
+    Abstract Base Class for all components, junctions,
     materials, subsystems, couplings and excitation.
     """
 
@@ -484,6 +501,26 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
         ##if isinstance(value, LinkedList):
         # print(key, value)
 
+        # Check that all required keyword arguments have been passed in.
+        required_properties = set(self._attributes)
+        given_properties = set(properties.keys())
+        extra_properties = given_properties - required_properties
+        missing_properties = required_properties - given_properties
+
+        logging.debug("Required properties: {}", required_properties)
+        logging.debug("Given properties: {}", given_properties)
+        logging.debug("Extra properties: {}", extra_properties)
+        logging.debug("Missing properties: {}", missing_properties)
+
+        if extra_properties:
+            raise TypeError(
+                f"The object named {self.name} was given the following invalid keyword arguments: {extra_properties}"
+            )
+        if missing_properties:
+            raise TypeError(
+                f"The object named {self.name} was not given the following required keyword arguments: {missing_properties}"
+            )
+
         if properties:
             for key, value in properties.items():
                 logging.debug("Setting the attribute %s to %s on %s", key, value, self)
@@ -521,6 +558,18 @@ class Base(object, metaclass=MetaBase):  # , metaclass=abc.ABCMeta):
 
 
     """
+
+    @property
+    def _attributes(self) -> Generator[str, None, None]:
+        """Yield all required attributes attached to the class."""
+
+        # for key, value in self.__class__.__dict__.items():
+        #     if isinstance(value, Attribute):
+        #         yield key
+        for kls in self.__class__.__mro__:
+            for key, value in kls.__dict__.items():
+                if isinstance(value, RequiredAttribute):
+                    yield key
 
     @abc.abstractmethod
     def disable(self):
