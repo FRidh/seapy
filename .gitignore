@@ -43,3 +43,5 @@ _build
 
 docs/reference/generated/
 examples/.ipynb_checkpoints/
+
+seapy/version.py
