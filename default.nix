@@ -22,7 +22,7 @@ in buildPythonPackage rec {
   pname = "seapy";
   version = "dev";
 
-  src = fetchGit ./.;
+  src = ./.;
 
   nativeBuildInputs = [ sphinx ];
 
