@@ -23,7 +23,7 @@ Finally, when all properties have been set, the modal energies can be solved by 
 
 Required are:
 
-- Python 3.4 or higher
+- Python 3.8 or higher
 - NumPy
 - matplotlib
 - pandas
@@ -33,20 +33,19 @@ Required are:
 
 # Installing
 
-Via pip:
+To install the development version
 
-    pip install seapy
-
-Via conda:
-
-    conda install -c ...
+   pip install git+https://github.com/FRidh/seapy.git
     
 # Developing
 
-    git clone https://github.com/FRidh/seapy.git
-    cd seapy
-    python setup.py develop
+To develop clone this repository
 
+    git clone https://github.com/FRidh/seapy.git
+
+It is recommended to use Nix
+
+    nix develop
 
 ## Documentation
 

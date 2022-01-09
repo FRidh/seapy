@@ -32,6 +32,8 @@ The :class:`seapy.system.System` class contains methods for solving the SEA mode
 
 """
 
+__version__ = "0.0.0"
+
 from . import system
 from . import junctions
 from . import components

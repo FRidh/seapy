@@ -1,0 +1,28 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "seapy"
+author = "Frederik Rietdijk"
+requires = [
+    "numpy >= 1.8",
+    "matplotlib",
+    "pandas",
+    "toolz",
+    "networkx >= 2.0",
+    "pyyaml",
+]
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py38, py39, py310
+
+[gh-actions]
+python =
+    3.8: py38
+    3.9: py39
+    3.10: py310
+
+[testenv]
+"""
