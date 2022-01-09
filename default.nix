@@ -10,6 +10,7 @@
 , black
 , pylint
 , sphinx
+, flit-core
 }:
 
 let
@@ -20,11 +21,12 @@ let
 
 in buildPythonPackage rec {
   pname = "seapy";
-  version = "dev";
+  version = "0.0.0";
+  format = "pyproject";
 
   src = ./.;
 
-  nativeBuildInputs = [ sphinx ];
+  nativeBuildInputs = [ sphinx flit-core ];
 
   propagatedBuildInputs = [ 
     numpy

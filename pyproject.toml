@@ -1,0 +1,15 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "seapy"
+author = "Frederik Rietdijk"
+requires = [
+    "numpy >= 1.8",
+    "matplotlib",
+    "pandas",
+    "toolz",
+    "networkx >= 2.0",
+    "pyyaml",
+]

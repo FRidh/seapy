@@ -20,12 +20,26 @@
         };
       in self;
     };
-  } // (utils.lib.eachSystem [ "x86_64-linux" ] (system: {
-    # Our own overlay does not get applied to nixpkgs because that would lead to
-    # an infinite recursion. Therefore, we need to import nixpkgs and apply it ourselves.
-    defaultPackage = (import nixpkgs {
+  } // (utils.lib.eachSystem [ "x86_64-linux" ] (system: let
+    pkgs = (import nixpkgs {
       inherit system;
       overlays = [ self.overlay ];
-    }).python3.pkgs.seapy;
+    });
+    python = pkgs.python3;
+    seapy = python.pkgs.seapy;
+    devEnv = python.withPackages(ps: with ps.seapy; nativeBuildInputs ++ propagatedBuildInputs);
+  in {
+    # Our own overlay does not get applied to nixpkgs because that would lead to
+    # an infinite recursion. Therefore, we need to import nixpkgs and apply it ourselves.
+    defaultPackage = seapy;
+
+    devShell = pkgs.mkShell {
+      nativeBuildInputs = [
+        devEnv
+      ];
+      shellHook = ''
+        export PYTHONPATH=$(readlink -f $(find . -maxdepth 1  -type d ) | tr '\n' ':'):$PYTHONPATH
+      '';
+    };
   }));
 }
