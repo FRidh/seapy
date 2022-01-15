@@ -18,7 +18,6 @@ jobs:
         py:
           - "3.10"
           - "3.9"
-          - "3.8"
     steps:
       - name: Setup python for test ${{ matrix.py }}
         uses: actions/setup-python@v2
