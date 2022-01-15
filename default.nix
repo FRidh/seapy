@@ -58,7 +58,7 @@ in buildPythonPackage rec {
 
   preCheck = ''
     echo "Checking formatting with black..."
-    black --check seapy tests setup.py docs/conf.py
+    black --check seapy tests docs/conf.py
     echo "Static analysis with pylint..."
     pylint -E seapy
   '';
