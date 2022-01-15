@@ -6,6 +6,7 @@ build-backend = "flit_core.buildapi"
 module = "seapy"
 author = "Frederik Rietdijk"
 requires = [
+    "acoustics",
     "numpy >= 1.8",
     "matplotlib",
     "pandas",
